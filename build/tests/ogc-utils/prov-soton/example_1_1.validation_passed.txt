@@ -1,0 +1,15 @@
+Validation report for ogc.ogc-utils.prov-soton - 2024 w3c
+Generated 2026-09-02T07:22:40.825096+00:00
+=== Files ===
+Using examples/soton-eg-43.json from examples
+"@graph" found, trying validation with contents unwrapped
+Validation of unwrapped "@graph" contents failed; validated successfully as a full object instead
+JSON-LD context is present - uplifting
+Output JSON-LD example_1_1.jsonld created
+Output Turtle example_1_1.ttl created
+=== End Files ===
+
+=== JSON Schema ===
+Validation passed
+=== End JSON Schema ===
+

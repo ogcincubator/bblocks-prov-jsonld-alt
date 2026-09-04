@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Provenance Chain using PROV-O core model supporting both an ID based object graph and nesting",
+  "allOf": [
+    {
+      "$ref": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/schema.json"
+    }
+  ]
+}

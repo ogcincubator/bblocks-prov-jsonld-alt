@@ -1,0 +1,12 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/examples.schema.yaml
+## Prefixes for examples
+prefixes:
+  iana: http://www.iana.org/assignments/
+## List of examples
+examples:
+  - title: Example 43
+    snippets:
+      - language: json
+        ref: examples/soton-eg-43.json
+        base-uri: http://www.example.com/exampleEntities/
+

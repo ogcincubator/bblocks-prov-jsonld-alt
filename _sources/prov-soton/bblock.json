@@ -1,0 +1,22 @@
+{
+  "name": "2024 w3c",
+  "highlighted": true ,
+  "abstract": "A BBlock to cross check examples across the University of The PROV-JSONLD Serialization w3c member submission",
+  "status": "under-development",
+  "dateTimeAddition": "2023-07-10T00:00:00Z",
+  "itemClass": "schema",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2023-07-10",
+  "dependsOn": [
+      ],
+  "sources": [
+    {
+      "link": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/#Example",
+      "title": "The PROV-JSONLD Serialization"
+    }
+  ],
+  "maturity": "development",
+  "scope": "unstable",
+  "tags": ["prov", "utils"]
+}

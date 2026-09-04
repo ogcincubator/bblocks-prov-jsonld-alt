@@ -2,8 +2,8 @@
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix ns1: <http://www.w3.org/ns/oa#> .
-@prefix ns2: <http://www.iana.org/assignments/> .
+@prefix ns1: <http://www.iana.org/assignments/> .
+@prefix ns2: <http://www.w3.org/ns/oa#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prof: <http://www.w3.org/ns/dx/prof/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
@@ -21,54 +21,54 @@
     dct:abstract "A BBlock to cross check examples across the University of The PROV-JSONLD Serialization w3c member submission"^^<https://www.w3.org/ns/iana/media-types/text/markdown> ;
     dct:created "2023-07-10T00:00:00+00:00"^^xsd:dateTime ;
     dct:description [ dct:format "text/html" ;
-            rdfs:isDefinedBy <https://ogcincubator.github.io/bblock-prov-schema-x/bblock/ogc.ogc-utils.prov-soton> ],
-        [ dct:format "application/json" ;
-            rdfs:isDefinedBy <https://ogcincubator.github.io/bblock-prov-schema-x/build/generateddocs/json-full/ogc-utils/prov-soton/index.json> ],
+            rdfs:isDefinedBy <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/bblock/ogc.ogc-utils.prov-soton> ],
         [ dct:format "text/markdown" ;
-            rdfs:isDefinedBy <https://ogcincubator.github.io/bblock-prov-schema-x/build/generateddocs/markdown/ogc-utils/prov-soton/index.md> ] ;
+            rdfs:isDefinedBy <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/generateddocs/markdown/ogc-utils/prov-soton/index.md> ],
+        [ dct:format "application/json" ;
+            rdfs:isDefinedBy <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/generateddocs/json-full/ogc-utils/prov-soton/index.json> ] ;
     dct:hasVersion "0.1" ;
-    dct:modified "2023-07-10"^^xsd:date ;
+    dct:modified "2026-09-04"^^xsd:date ;
     dct:source <https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/#Example> ;
-    skos:inScheme <https://ogcincubator.github.io/bblock-prov-schema-x/> ;
+    skos:inScheme <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/> ;
     skos:prefLabel "2024 w3c" ;
-    skos:topConceptOf <https://ogcincubator.github.io/bblock-prov-schema-x/> ;
+    skos:topConceptOf <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/> ;
     dcat:keyword "prov",
         "utils" ;
-    prof:hasResource [ dct:conformsTo <https://json-schema.org/draft/2020-12/schema> ;
-            dct:format "application/yaml" ;
-            prof:hasArtifact <https://ogcincubator.github.io/bblock-prov-schema-x/build/annotated/ogc-utils/prov-soton/schema.yaml> ;
-            prof:hasRole role:schema ],
-        [ dct:conformsTo <https://www.w3.org/TR/json-ld11/> ;
+    prof:hasResource [ dct:conformsTo <https://www.w3.org/TR/json-ld11/> ;
             dct:format "application/ld+json" ;
-            prof:hasArtifact <https://ogcincubator.github.io/bblock-prov-schema-x/build/annotated/ogc-utils/prov-soton/context.jsonld> ;
+            prof:hasArtifact <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld> ;
             prof:hasRole role:mapping ],
         [ dct:conformsTo <https://json-schema.org/draft/2020-12/schema> ;
+            dct:format "application/yaml" ;
+            prof:hasArtifact <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.yaml> ;
+            prof:hasRole role:schema ],
+        [ dct:conformsTo <https://json-schema.org/draft/2020-12/schema> ;
             dct:format "application/json" ;
-            prof:hasArtifact <https://ogcincubator.github.io/bblock-prov-schema-x/build/annotated/ogc-utils/prov-soton/schema.json> ;
+            prof:hasArtifact <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.json> ;
             prof:hasRole role:schema ] ;
-    bblocks:hasSourceJsonLdContext <https://ogcincubator.github.io/bblock-prov-schema-x/_sources/prov-soton/context.jsonld> ;
+    bblocks:hasSourceJsonLdContext <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/context.jsonld> ;
     bblocks:scope <http://www.opengis.net/def/bblocks/scope/unstable> ;
     bblocks:status <http://www.opengis.net/def/status/under-development> ;
     bblocks:validationPassed true .
 
-<https://ogcincubator.github.io/bblock-prov-schema-x/build/bblocks.ttl> a prov:Entity ;
+<https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/bblocks.ttl> a prov:Entity ;
     dct:format "text/turtle" ;
-    prov:wasAttributedTo _:Na250306a59dc481188d0fd158e9de010 ;
+    prov:wasAttributedTo _:N06f9e81b817d45fbba6e7e957151b55a ;
     prov:wasGeneratedBy [ a prov:Activity ;
-            prov:endedAtTime "2026-09-02T07:22:40.946981"^^xsd:dateTime ;
-            prov:startedAtTime "2026-09-02T07:22:40.841811"^^xsd:dateTime ;
+            prov:endedAtTime "2026-09-04T03:46:21.744529"^^xsd:dateTime ;
+            prov:startedAtTime "2026-09-04T03:46:21.584981"^^xsd:dateTime ;
             prov:used [ a prov:Entity ;
                     dct:format "application/json" ;
-                    dct:hasVersion "git:d3dc6eb245b2325341341186eb4572ff37a761b3" ;
-                    rdfs:seeAlso <https://ogcincubator.github.io/bblock-prov-schema-x/build/register.json> ],
+                    dct:hasVersion "git:08b34247e34c7566aa6e7a3e03358573e1df37c9" ;
+                    rdfs:seeAlso <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/register.json> ],
                 [ a prov:Entity ;
                     dct:format "application/yaml" ;
                     rdfs:seeAlso <file:///src/ogc/bblocks/register-context.yaml> ] ;
-            prov:wasAssociatedWith _:Na250306a59dc481188d0fd158e9de010 ] .
+            prov:wasAssociatedWith _:N06f9e81b817d45fbba6e7e957151b55a ] .
 
 <https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/#Example> rdfs:label "The PROV-JSONLD Serialization" .
 
-<https://ogcincubator.github.io/bblock-prov-schema-x/> a skos:ConceptScheme,
+<https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/> a skos:ConceptScheme,
         dcat:Catalog,
         bblocks:BBlocksRegister ;
     rdfs:label "Building Blocks - Alternative JSON schemas for W3C PROV model" ;
@@ -97,28 +97,28 @@ In our view, none of the existing PROV serializations supports all these require
 
 This repository is designed to document and explore the potential for reconciliation of these models.
 """^^<https://www.w3.org/ns/iana/media-types/text/markdown> ;
-    dct:modified "2026-09-02T07:22:37.339872"^^xsd:dateTime ;
+    dct:modified "2026-09-04T03:46:19.046821"^^xsd:dateTime ;
     owl:imports <https://ogcincubator.github.io/bblock-prov-schema/build/register.json>,
         <https://ogcincubator.github.io/cross-domain-model/build/register.json>,
         <https://opengeospatial.github.io/bblocks/register.json> ;
     skos:hasTopConcept <bblocks://ogc.ogc-utils.prov-soton> ;
     skos:prefLabel "Building Blocks - Alternative JSON schemas for W3C PROV model" ;
-    prof:hasResource [ rdfs:label "This Building Blocks Register in RDF Turtle format" ;
-            dct:type "text/turtle" ;
-            ns2:relation <http://www.iana.org/assignments/relation/self> ;
-            ns1:hasTarget <https://ogcincubator.github.io/bblock-prov-schema-x/build/bblocks.ttl> ],
-        [ rdfs:label "This Building Blocks Register in JSON-LD format" ;
+    prof:hasResource [ rdfs:label "This Building Blocks Register in JSON-LD format" ;
             dct:type "application/ld+json" ;
-            ns2:relation <http://www.iana.org/assignments/relation/self> ;
-            ns1:hasTarget <https://ogcincubator.github.io/bblock-prov-schema-x/build/bblocks.jsonld> ],
+            ns1:relation <http://www.iana.org/assignments/relation/self> ;
+            ns2:hasTarget <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/bblocks.jsonld> ],
+        [ rdfs:label "This Building Blocks Register in RDF Turtle format" ;
+            dct:type "text/turtle" ;
+            ns1:relation <http://www.iana.org/assignments/relation/self> ;
+            ns2:hasTarget <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/bblocks.ttl> ],
         [ rdfs:label "This Building Blocks Register in JSON format" ;
             dct:type "application/json" ;
-            ns2:relation <http://www.iana.org/assignments/relation/self> ;
-            ns1:hasTarget <https://ogcincubator.github.io/bblock-prov-schema-x/build/register.json> ] ;
-    foaf:homepage <https://ogcincubator.github.io/bblock-prov-schema-x/> ;
-    bblocks:hasValidationReport <https://ogcincubator.github.io/bblock-prov-schema-x/build/tests/report.html> .
+            ns1:relation <http://www.iana.org/assignments/relation/self> ;
+            ns2:hasTarget <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/register.json> ] ;
+    foaf:homepage <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/> ;
+    bblocks:hasValidationReport <https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/report.html> .
 
-_:Na250306a59dc481188d0fd158e9de010 a prov:Agent,
+_:N06f9e81b817d45fbba6e7e957151b55a a prov:Agent,
         schema:SoftwareApplication ;
     rdfs:label "OGC-NA tools" ;
     dct:hasVersion "0.5.33" ;

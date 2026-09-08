@@ -1,0 +1,73 @@
+{
+  "@context": [
+    {
+      "ex": "https://example.org/cwlprov/"
+    },
+    "https://openprovenance.org/prov-jsonld/context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@type": "Entity",
+      "@id": "ex:plan/main"
+    },
+    {
+      "@type": "Activity",
+      "@id": "ex:activity/step1",
+      "startTime": "2024-01-01T00:00:00+00:00",
+      "endTime": "2024-01-01T00:01:00+00:00"
+    },
+    {
+      "@type": "Agent",
+      "@id": "ex:engine/cwltool",
+      "type": [
+        "prov:SoftwareAgent"
+      ]
+    },
+    {
+      "@type": "Association",
+      "activity": "ex:activity/step1",
+      "agent": "ex:engine/cwltool",
+      "plan": "ex:plan/main"
+    },
+    {
+      "@type": "Association",
+      "activity": "ex:activity/step1",
+      "agent": "ex:engine/cwltool"
+    },
+    {
+      "@type": "Entity",
+      "@id": "ex:data/output.txt"
+    },
+    {
+      "@type": "Generation",
+      "entity": "ex:data/output.txt",
+      "activity": "ex:activity/step1"
+    },
+    {
+      "@type": "Specialization",
+      "specificEntity": "ex:data/output.txt",
+      "generalEntity": "ex:data/output.txt"
+    },
+    {
+      "@type": "Entity",
+      "@id": "ex:data/output.txt",
+      "prov:asInBundle": [
+        {
+          "@value": "ex:bundle/nested-run",
+          "@type": "xsd:QName"
+        }
+      ]
+    },
+    {
+      "@type": "Bundle",
+      "@id": "ex:bundle/nested-run",
+      "@context": [],
+      "@graph": [
+        {
+          "@type": "Entity",
+          "@id": "ex:data/output.txt"
+        }
+      ]
+    }
+  ]
+}

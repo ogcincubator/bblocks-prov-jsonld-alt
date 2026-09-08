@@ -1,0 +1,15 @@
+{
+  "name": "PROV-JSON",
+  "abstract": "The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON encoding of the PROV data model (W3C Member Submission).",
+  "status": "under-development",
+  "dateTimeAddition": "2026-09-08T00:00:00Z",
+  "itemClass": "model",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2026-09-08",
+  "isProfileOf": "bblocks://ogc.ogc-utils.prov.base",
+  "sources": [
+    { "link": "https://www.w3.org/submissions/prov-json/", "title": "PROV-JSON: JSON representation for the PROV Data Model" }
+  ],
+  "tags": ["prov", "utils", "json"]
+}

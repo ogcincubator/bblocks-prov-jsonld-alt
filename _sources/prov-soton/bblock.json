@@ -1,22 +1,20 @@
 {
   "name": "2024 w3c",
-  "highlighted": true ,
-  "abstract": "A BBlock to cross check examples across the University of The PROV-JSONLD Serialization w3c member submission",
-  "status": "under-development",
+  "highlighted": false,
+  "abstract": "A BBlock to cross check examples across the PROV-JSONLD Serialization W3C member submission. Retired in favor of ogc.ogc-utils.prov.prov-jsonld, which references the same specification but with an up-to-date example and a Provenance-Chain transform.",
+  "status": "retired",
   "dateTimeAddition": "2023-07-10T00:00:00Z",
+  "dateTimeRetirement": "2026-09-08T00:00:00Z",
   "itemClass": "schema",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2023-07-10",
-  "dependsOn": [
-      ],
+  "dateOfLastChange": "2026-09-08",
+  "successor": "ogc.ogc-utils.prov.prov-jsonld",
   "sources": [
     {
       "link": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/#Example",
       "title": "The PROV-JSONLD Serialization"
     }
   ],
-  "maturity": "development",
-  "scope": "unstable",
   "tags": ["prov", "utils"]
 }

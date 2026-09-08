@@ -1,0 +1,38 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/transforms.schema.yaml
+transforms:
+  - id: to-provenance-chain
+    description: |
+      Converts a PROV-JSONLD document (`@context`/`@graph`) into the nested "Provenance Chain"
+      JSON representation (`ogc.ogc-utils.prov`), using the `prov` library's PROV-JSONLD parser.
+      Limited to `Entity`/`Activity`/`Agent` core records and the `wasGeneratedBy`, `used`,
+      `wasAssociatedWith`, `wasAttributedTo`, `wasDerivedFrom` and `actedOnBehalfOf` relations.
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [application/json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/to_provenance_chain.py
+
+  - id: from-provenance-chain
+    description: |
+      Converts a "Provenance Chain" JSON document (`ogc.ogc-utils.prov`) into a PROV-JSONLD
+      document (`@context`/`@graph`), using the `prov` library's PROV-JSONLD serializer. Same
+      scope limitation as `to-provenance-chain`.
+    type: python
+    inputs:
+      mediaTypes: [application/json]
+    outputs:
+      mediaTypes: [application/ld+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.prov-jsonld
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/from_provenance_chain.py

@@ -1,0 +1,21 @@
+{
+  "name": "PROV-O / RDF",
+  "abstract": "The RDF binding of PROV-DM via the PROV Ontology (PROV-O), serializable as Turtle, N-Triples, RDF/XML, N-Quads, TriG, etc.",
+  "status": "under-development",
+  "dateTimeAddition": "2026-09-08T00:00:00Z",
+  "itemClass": "model",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2026-09-08",
+  "isProfileOf": "bblocks://ogc.ogc-utils.prov.base",
+  "ontology": "https://www.w3.org/ns/prov-o#",
+  "concept": [
+    "http://www.w3.org/ns/prov#Entity",
+    "http://www.w3.org/ns/prov#Activity",
+    "http://www.w3.org/ns/prov#Agent"
+  ],
+  "sources": [
+    { "link": "https://www.w3.org/TR/prov-o/", "title": "PROV-O: The PROV Ontology" }
+  ],
+  "tags": ["prov", "utils", "rdf", "turtle"]
+}

@@ -1,0 +1,15 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/examples.schema.yaml
+examples:
+  - title: A minimal CWL-style run (activity, plan-qualified and plain association, generation)
+    snippets:
+      - language: provn
+        ref: examples/example.provn
+  - title: >-
+      A real-world cwltool provenance run, as used in the OGC API - Processes
+      Provenance Extension (https://docs.ogc.org/DRAFTS/26-038.html), re-serialized
+      from the extension's job_prov.json PROV-JSON fixture with the `prov` library
+      to guarantee it is byte-for-byte the same document as the other profiles'
+      "ogcapi-processes-job" examples
+    snippets:
+      - language: provn
+        ref: examples/example-ogcapi-processes-job.provn

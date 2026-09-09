@@ -1,0 +1,21 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/examples.schema.yaml
+examples:
+  - title: A minimal CWL-style run (activity, plan-qualified and plain association, generation, bundle mention via asInBundle)
+    snippets:
+      - language: jsonld
+        ref: examples/example.json
+  - title: >-
+      A real-world cwltool provenance run, as used in the OGC API - Processes
+      Provenance Extension (https://docs.ogc.org/DRAFTS/26-038.html). The extension's
+      own job_prov.jsonld fixture predates a fix and is a bare top-level array with no
+      `@context`/`@graph` wrapper - not valid PROV-JSONLD (see
+      https://github.com/common-workflow-language/cwltool/pull/2349, which switched
+      cwltool to `ProvDocument.serialize(format="jsonld")` from `prov` 3.1.0's native
+      PROV-JSONLD serializer instead of a manual RDF-graph-patching workaround). This
+      example is re-serialized from the extension's job_prov.json PROV-JSON fixture with
+      that same native serializer, producing the correctly-wrapped
+      `{"@context": [...], "@graph": [...]}` shape; it is byte-for-byte the same document
+      as the other profiles' "ogcapi-processes-job" examples
+    snippets:
+      - language: jsonld
+        ref: examples/example-ogcapi-processes-job.json

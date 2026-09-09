@@ -1,0 +1,43 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/transforms.schema.yaml
+transforms:
+  - id: ogc-prov-chain-object-to-array
+    description: |
+      Flattens a single-**object** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`),
+      with relation targets inlined and/or supplied via a `has_provenance` sibling list, into
+      its flat top-level **array** form (every record referencing others by `id`). Always
+      applicable - any single-object OGC PROV Chain document, however deeply nested, can be
+      flattened. Purely internal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any
+      other W3C PROV representation.
+    type: python
+    inputs:
+      mediaTypes: [application/json]
+    outputs:
+      mediaTypes: [application/json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov
+    metadata:
+      dependencies:
+        python: ">=3.9"
+    ref: transforms/ogc_prov_chain_object_to_array.py
+
+  - id: ogc-prov-chain-array-to-object
+    description: |
+      Nests a flat top-level **array** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`)
+      into its single-**object** form, by inlining relation targets recursively from a single
+      detected root record. Only **conditionally applicable**: fails with a descriptive error
+      (rather than a malformed result) when the input does not reduce to exactly one
+      unreferenced root reachable from a cycle-free walk of every other record - callers should
+      treat that failure as "not applicable to this input", not a transform bug. Purely
+      internal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any other W3C PROV
+      representation.
+    type: python
+    inputs:
+      mediaTypes: [application/json]
+    outputs:
+      mediaTypes: [application/json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov
+    metadata:
+      dependencies:
+        python: ">=3.9"
+    ref: transforms/ogc_prov_chain_array_to_object.py

@@ -1,0 +1,197 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/transforms.schema.yaml
+transforms:
+  - id: w3c-prov-jsonld-to-ogc-prov-chain
+    description: |
+      Converts a **W3C PROV-JSONLD** document (`@context`/`@graph`) into the flat **array**
+      form of the **OGC PROV Chain** representation (`ogc.ogc-utils.prov`), using the `prov`
+      library's PROV-JSONLD parser. Limited to `Entity`/`Activity`/`Agent` core records and the
+      `wasGeneratedBy`, `used`, `wasAssociatedWith`, `wasAttributedTo`, `wasDerivedFrom` and
+      `actedOnBehalfOf` relations. Output is always the bare-array OGC PROV Chain form with
+      full-IRI identifiers (never the single-object/CURIE form); use the
+      `ogc-prov-chain-array-to-object` transform (see the `ogc-prov-chain-forms` block) if a
+      single-object result is needed and the record graph supports it.
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [application/json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_jsonld_to_ogc_prov_chain.py
+
+  - id: ogc-prov-chain-to-w3c-prov-jsonld
+    description: |
+      Converts the flat **array** form of an **OGC PROV Chain** document (`ogc.ogc-utils.prov`)
+      into a **W3C PROV-JSONLD** document (`@context`/`@graph`), using the `prov` library's
+      PROV-JSONLD serializer. Same record/relation scope as
+      `w3c-prov-jsonld-to-ogc-prov-chain`. Requires the bare-array, full-IRI input shape; if the
+      input is instead a single OGC PROV Chain object, first run the
+      `ogc-prov-chain-object-to-array` transform (see the `ogc-prov-chain-forms` block).
+    type: python
+    inputs:
+      mediaTypes: [application/json]
+    outputs:
+      mediaTypes: [application/ld+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/ogc_prov_chain_to_w3c_prov_jsonld.py
+
+  - id: w3c-prov-json-to-w3c-prov-jsonld
+    description: |
+      Converts a **W3C PROV-JSON** document into **W3C PROV-JSONLD** (`@context`/`@graph`),
+      using the `prov` library as both the PROV-JSON parser and the PROV-JSONLD serializer.
+      Chain with `ogc-prov-chain-to-w3c-prov-jsonld`'s reverse
+      (`w3c-prov-jsonld-to-ogc-prov-chain`) to reach **OGC PROV Chain** from PROV-JSON.
+      Accepts both `application/provenance+json` - the media type registered for PROV-JSON by
+      the OGC API - Processes - Part 5: Provenance extension
+      (https://docs.ogc.org/DRAFTS/26-038.html) - and its declared alias `application/json`.
+    type: python
+    inputs:
+      mediaTypes: [application/provenance+json, application/json]
+    outputs:
+      mediaTypes: [application/ld+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_json_to_w3c_prov_jsonld.py
+
+  - id: w3c-prov-jsonld-to-w3c-prov-json
+    description: |
+      Converts a **W3C PROV-JSONLD** document (`@context`/`@graph`) into **W3C PROV-JSON**,
+      using the `prov` library as both the PROV-JSONLD parser and the PROV-JSON serializer.
+      Output uses `application/provenance+json`, the media type registered for PROV-JSON by
+      the OGC API - Processes - Part 5: Provenance extension
+      (https://docs.ogc.org/DRAFTS/26-038.html).
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [application/provenance+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-json
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_jsonld_to_w3c_prov_json.py
+
+  - id: w3c-prov-rdf-to-w3c-prov-jsonld
+    description: |
+      Converts a **W3C PROV-O / RDF** document (Turtle, media type `text/turtle` - "PROV-TURTLE"
+      per the OGC API - Processes - Part 5: Provenance extension,
+      https://docs.ogc.org/DRAFTS/26-038.html) into **W3C PROV-JSONLD** (`@context`/`@graph`),
+      using the `prov` library, which parses RDF via `rdflib` and serializes PROV-JSONLD
+      natively. Chain with `w3c-prov-jsonld-to-ogc-prov-chain` to reach **OGC PROV Chain** from
+      RDF. Only Turtle is supported as an input here, not the extension's other registered RDF
+      serialization, PROV-NT/`application/n-triples` (N-Triples) - re-serialize to Turtle first
+      if starting from N-Triples.
+    type: python
+    inputs:
+      mediaTypes: [text/turtle]
+    outputs:
+      mediaTypes: [application/ld+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld
+    metadata:
+      dependencies:
+        pip: prov[rdf]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_rdf_to_w3c_prov_jsonld.py
+
+  - id: w3c-prov-jsonld-to-w3c-prov-rdf
+    description: |
+      Converts a **W3C PROV-JSONLD** document (`@context`/`@graph`) into **W3C PROV-O / RDF**
+      (Turtle), using the `prov` library, which parses PROV-JSONLD natively and serializes RDF
+      via `rdflib`. Output uses `text/turtle` ("PROV-TURTLE"), one of the two RDF media types
+      registered by the OGC API - Processes - Part 5: Provenance extension
+      (https://docs.ogc.org/DRAFTS/26-038.html), alongside `application/n-triples` (PROV-NT,
+      not produced by this transform).
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [text/turtle]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-rdf
+    metadata:
+      dependencies:
+        pip: prov[rdf]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_jsonld_to_w3c_prov_rdf.py
+
+  - id: w3c-prov-xml-to-w3c-prov-jsonld
+    description: |
+      Converts a **W3C PROV-XML** document into **W3C PROV-JSONLD** (`@context`/`@graph`),
+      using the `prov` library as both the PROV-XML parser and the PROV-JSONLD serializer.
+      Chain with `w3c-prov-jsonld-to-ogc-prov-chain` to reach **OGC PROV Chain** from PROV-XML.
+      Note: `prov`'s PROV-XML parser only reliably reads XML produced by its own serializer or
+      strictly XSD-conformant documents; hand-written/third-party PROV-XML may need
+      re-serializing through PROV-JSON or RDF first. Accepts `application/provenance+xml` - the
+      media type registered for PROV-XML by the OGC API - Processes - Part 5: Provenance
+      extension (https://docs.ogc.org/DRAFTS/26-038.html) - plus its declared aliases
+      `application/xml` and `text/xml`.
+    type: python
+    inputs:
+      mediaTypes: [application/provenance+xml, application/xml, text/xml]
+    outputs:
+      mediaTypes: [application/ld+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld
+    metadata:
+      dependencies:
+        pip: prov[xml]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_xml_to_w3c_prov_jsonld.py
+
+  - id: w3c-prov-jsonld-to-w3c-prov-xml
+    description: |
+      Converts a **W3C PROV-JSONLD** document (`@context`/`@graph`) into **W3C PROV-XML**, using
+      the `prov` library as both the PROV-JSONLD parser and the PROV-XML serializer. Output uses
+      `application/provenance+xml`, the media type registered for PROV-XML by the OGC API -
+      Processes - Part 5: Provenance extension (https://docs.ogc.org/DRAFTS/26-038.html).
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [application/provenance+xml]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-xml
+    metadata:
+      dependencies:
+        pip: prov[xml]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_jsonld_to_w3c_prov_xml.py
+
+  - id: w3c-prov-jsonld-to-w3c-prov-n
+    description: |
+      Converts a **W3C PROV-JSONLD** document (`@context`/`@graph`) into **W3C PROV-N**, using
+      the `prov` library as the PROV-JSONLD parser and PROV-N serializer. Output uses
+      `text/provenance-notation`, the media type registered for PROV-N by the OGC API -
+      Processes - Part 5: Provenance extension (https://docs.ogc.org/DRAFTS/26-038.html). There
+      is intentionally no reverse transform: `prov` implements a PROV-N serializer but not a
+      parser, so PROV-N can only ever be a transform target, never a source - to convert *from*
+      PROV-N, use that document's original PROV-JSON/XML/RDF source instead.
+    type: python
+    inputs:
+      mediaTypes: [application/ld+json]
+    outputs:
+      mediaTypes: [text/provenance-notation]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-n
+    metadata:
+      dependencies:
+        pip: prov>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_jsonld_to_w3c_prov_n.py
+

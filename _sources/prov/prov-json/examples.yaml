@@ -1,6 +1,0 @@
-$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/examples.schema.yaml
-examples:
-  - title: A minimal CWL-style run (activity, plan-qualified and plain association, generation)
-    snippets:
-      - language: json
-        ref: examples/example.json

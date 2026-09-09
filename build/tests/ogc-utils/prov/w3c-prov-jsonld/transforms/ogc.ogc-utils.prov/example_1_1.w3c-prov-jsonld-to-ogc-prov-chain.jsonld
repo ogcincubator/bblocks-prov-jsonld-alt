@@ -1,0 +1,23 @@
+{
+  "@context": "https://ogcincubator.github.io/bblock-prov-schema/build/annotated/ogc-utils/prov/context.jsonld",
+  "@graph": [
+    {
+      "id": "https://example.org/cwlprov/plan/main",
+      "provType": "Entity"
+    },
+    {
+      "id": "https://example.org/cwlprov/activity/step1",
+      "provType": "Activity",
+      "wasAssociatedWith": "https://example.org/cwlprov/engine/cwltool"
+    },
+    {
+      "id": "https://example.org/cwlprov/engine/cwltool",
+      "provType": "Agent"
+    },
+    {
+      "id": "https://example.org/cwlprov/data/output.txt",
+      "provType": "Entity",
+      "wasGeneratedBy": "https://example.org/cwlprov/activity/step1"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "https://example.org/cwlprov/entities/input",
+    "provType": "Entity"
+  },
+  {
+    "id": "https://example.org/cwlprov/agents/user",
+    "provType": "Agent"
+  },
+  {
+    "id": "https://example.org/cwlprov/activities/run",
+    "provType": "Activity",
+    "startedAtTime": "2024-03-01T09:00:00Z",
+    "endedAtTime": "2024-03-01T09:05:00Z",
+    "used": "https://example.org/cwlprov/entities/input",
+    "wasAssociatedWith": "https://example.org/cwlprov/agents/user"
+  },
+  {
+    "id": "https://example.org/cwlprov/entities/output",
+    "provType": "Entity",
+    "wasGeneratedBy": "https://example.org/cwlprov/activities/run"
+  }
+]

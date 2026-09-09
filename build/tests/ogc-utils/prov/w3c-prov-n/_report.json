@@ -1,0 +1,14 @@
+{
+  "title": "Validation report for ogc.ogc-utils.prov.w3c-prov-n - W3C PROV-N",
+  "bblockName": "W3C PROV-N",
+  "bblockId": "ogc.ogc-utils.prov.w3c-prov-n",
+  "generated": "2026-09-09T13:18:52.065546+00:00",
+  "result": true,
+  "items": [],
+  "globalErrors": {},
+  "counts": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0
+  }
+}

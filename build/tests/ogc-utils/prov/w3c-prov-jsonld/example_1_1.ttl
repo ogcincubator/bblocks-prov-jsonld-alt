@@ -1,0 +1,27 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix provext: <https://openprovenance.org/ns/provext#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<ex:bundle/nested-run> a <file:///github/workspace/Bundle> .
+
+<https://example.org/cwlprov/activity/step1> a prov:Activity ;
+    prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
+    prov:qualifiedAssociation [ a prov:Association ;
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ;
+            prov:hadPlan <https://example.org/cwlprov/plan/main> ],
+        [ a prov:Association ;
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ] ;
+    prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
+
+<https://example.org/cwlprov/data/output.txt> a prov:Entity ;
+    prov:asInBundle "ex:bundle/nested-run"^^xsd:QName ;
+    prov:qualifiedGeneration [ a prov:Generation ;
+            prov:activity <https://example.org/cwlprov/activity/step1> ] ;
+    provext:qualifiedSpecialization [ a provext:Specialization ;
+            provext:generalEntity <https://example.org/cwlprov/data/output.txt> ] .
+
+<https://example.org/cwlprov/plan/main> a prov:Entity .
+
+<https://example.org/cwlprov/engine/cwltool> a prov:Agent,
+        prov:SoftwareAgent .
+

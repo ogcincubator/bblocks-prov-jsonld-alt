@@ -1,0 +1,25 @@
+@prefix ns2: <https://example.org/cwlprov/activity/> .
+@prefix ns3: <https://example.org/cwlprov/data/> .
+@prefix ns4: <https://example.org/cwlprov/plan/> .
+@prefix ns5: <https://example.org/cwlprov/engine/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns3:output.txt a prov:Entity ;
+    prov:qualifiedGeneration [ a prov:Generation ;
+            prov:activity ns2:step1 ] .
+
+ns2:step1 a prov:Activity ;
+    prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
+    prov:qualifiedAssociation [ a prov:Association ;
+            prov:agent ns5:cwltool ;
+            prov:hadPlan ns4:main ],
+        [ a prov:Association ;
+            prov:agent ns5:cwltool ] ;
+    prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
+
+ns4:main a prov:Entity .
+
+ns5:cwltool a prov:Agent,
+        prov:SoftwareAgent .
+

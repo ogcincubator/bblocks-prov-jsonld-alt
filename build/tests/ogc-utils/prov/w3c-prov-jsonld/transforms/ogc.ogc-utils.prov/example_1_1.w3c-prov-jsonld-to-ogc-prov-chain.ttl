@@ -1,0 +1,12 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<https://example.org/cwlprov/data/output.txt> a prov:Entity ;
+    prov:wasGeneratedBy <https://example.org/cwlprov/activity/step1> .
+
+<https://example.org/cwlprov/plan/main> a prov:Entity .
+
+<https://example.org/cwlprov/activity/step1> a prov:Activity ;
+    prov:wasAssociatedWith <https://example.org/cwlprov/engine/cwltool> .
+
+<https://example.org/cwlprov/engine/cwltool> a prov:Agent .
+

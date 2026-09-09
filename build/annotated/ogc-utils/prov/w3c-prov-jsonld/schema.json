@@ -1,0 +1,1222 @@
+{
+  "definitions": {
+    "DateTime": {
+      "$id": "#/definitions/DateTime",
+      "type": "string",
+      "format": "date-time"
+    },
+    "QualifiedName": {
+      "$id": "#/definitions/QualifiedName",
+      "type": "string",
+      "title": "The QualifiedName Schema",
+      "default": "",
+      "pattern": "(^[A-Za-z0-9_]+:)?(.*)$"
+    },
+    "QualifiedName+": {
+      "$id": "#/definitions/QualifiedName+",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QualifiedName"
+          }
+        }
+      ]
+    },
+    "non_prov_properties": {
+      "$id": "#/definitions/non_prov_properties",
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {}
+      }
+    },
+    "typed_value": {
+      "type": "object",
+      "required": [
+        "@value",
+        "@type"
+      ],
+      "properties": {
+        "@value": {
+          "type": "string"
+        },
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "lang_string": {
+      "type": "object",
+      "required": [
+        "@value"
+      ],
+      "properties": {
+        "@value": {
+          "type": "string"
+        },
+        "@language": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ArrayOfValues": {
+      "$id": "#/definitions/ArrayOfValues",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/definitions/QualifiedName"
+          },
+          {
+            "$ref": "#/definitions/typed_value"
+          },
+          {
+            "$ref": "#/definitions/lang_string"
+          }
+        ]
+      }
+    },
+    "ArrayOfLabelValues": {
+      "$id": "#/definitions/ArrayOfLabelValues",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/lang_string"
+      }
+    },
+    "Context": {
+      "$id": "#/definitions/Context",
+      "type": "array",
+      "title": "The @context Schema",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "uri"
+          },
+          {
+            "type": "object",
+            "title": "The Items Schema",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "prov:StatementOrBundle": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/prov:Statement"
+        },
+        {
+          "$ref": "#/definitions/prov:Bundle"
+        }
+      ]
+    },
+    "prov:Statement": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/prov:Entity"
+        },
+        {
+          "$ref": "#/definitions/prov:Activity"
+        },
+        {
+          "$ref": "#/definitions/prov:Agent"
+        },
+        {
+          "$ref": "#/definitions/prov:Usage"
+        },
+        {
+          "$ref": "#/definitions/prov:Generation"
+        },
+        {
+          "$ref": "#/definitions/prov:Attribution"
+        },
+        {
+          "$ref": "#/definitions/prov:Association"
+        },
+        {
+          "$ref": "#/definitions/prov:Delegation"
+        },
+        {
+          "$ref": "#/definitions/prov:Invalidation"
+        },
+        {
+          "$ref": "#/definitions/prov:Start"
+        },
+        {
+          "$ref": "#/definitions/prov:End"
+        },
+        {
+          "$ref": "#/definitions/prov:Derivation"
+        },
+        {
+          "$ref": "#/definitions/prov:Alternate"
+        },
+        {
+          "$ref": "#/definitions/prov:Specialization"
+        },
+        {
+          "$ref": "#/definitions/prov:Membership"
+        },
+        {
+          "$ref": "#/definitions/prov:Influence"
+        },
+        {
+          "$ref": "#/definitions/prov:Communication"
+        }
+      ]
+    },
+    "prov:Entity": {
+      "type": "object",
+      "required": [
+        "@type",
+        "@id"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Entity"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "value": {
+          "$ref": "#/definitions/ArrayOfValues"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Agent": {
+      "type": "object",
+      "required": [
+        "@type",
+        "@id"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Agent"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Activity": {
+      "type": "object",
+      "required": [
+        "@type",
+        "@id"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Activity"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "startTime": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "endTime": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Usage": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Usage"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "entity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+          "x-jsonld-type": "@id"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "time": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Generation": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Generation"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "entity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+          "x-jsonld-type": "@id"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "time": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Invalidation": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Invalidation"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "entity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+          "x-jsonld-type": "@id"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "time": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Start": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Start"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "starter": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "trigger": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "time": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:End": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "End"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "ender": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "trigger": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "time": {
+          "$ref": "#/definitions/DateTime"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "location": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Attribution": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Attribution"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "entity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+          "x-jsonld-type": "@id"
+        },
+        "agent": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#agent",
+          "x-jsonld-type": "@id"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Association": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Association"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "agent": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#agent",
+          "x-jsonld-type": "@id"
+        },
+        "plan": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "role": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Delegation": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Delegation"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "delegate": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "responsible": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Derivation": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Derivation"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "activity": {
+          "$ref": "#/definitions/QualifiedName",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+          "x-jsonld-type": "@id"
+        },
+        "generation": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "usage": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "generatedEntity": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "usedEntity": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Alternate": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Alternate"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "alternate1": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "alternate2": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Specialization": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Specialization"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "generalEntity": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "specificEntity": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Membership": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Membership"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "entity": {
+          "$ref": "#/definitions/QualifiedName+",
+          "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+          "x-jsonld-type": "@id"
+        },
+        "collection": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Influence": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Influence"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "influencer": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "influencee": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Communication": {
+      "type": "object",
+      "required": [
+        "@type"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Communication"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "informant": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "informed": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "type": {
+          "$ref": "#/definitions/ArrayOfValues",
+          "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "x-jsonld-type": "@id"
+        },
+        "label": {
+          "$ref": "#/definitions/ArrayOfLabelValues",
+          "x-jsonld-id": "http://www.w3.org/2000/01/rdf-schema#label"
+        }
+      },
+      "patternProperties": {
+        "^[A-Za-z0-9_]+:(.*)$": {
+          "$ref": "#/definitions/ArrayOfValues"
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Bundle": {
+      "type": "object",
+      "required": [
+        "@type",
+        "@id",
+        "@graph",
+        "@context"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Bundle"
+        },
+        "@id": {
+          "$ref": "#/definitions/QualifiedName"
+        },
+        "@context": {
+          "$ref": "#/definitions/Context"
+        },
+        "@graph": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/prov:Statement"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "prov:Document": {
+      "type": "object",
+      "required": [
+        "@context",
+        "@graph"
+      ],
+      "properties": {
+        "@type": {
+          "pattern": "Document"
+        },
+        "@context": {
+          "$ref": "#/definitions/Context"
+        },
+        "@graph": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/prov:StatementOrBundle"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://openprovenance.org/prov-jsonld/schema.json",
+  "$ref": "#/definitions/prov:Document",
+  "x-jsonld-extra-terms": {
+    "role": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#hadRole",
+      "x-jsonld-type": "@id"
+    },
+    "type": {
+      "x-jsonld-id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "x-jsonld-type": "@id"
+    },
+    "label": "http://www.w3.org/2000/01/rdf-schema#label",
+    "location": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#atLocation",
+      "x-jsonld-type": "@id"
+    },
+    "entity": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#entity",
+      "x-jsonld-type": "@id"
+    },
+    "activity": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#activity",
+      "x-jsonld-type": "@id"
+    },
+    "agent": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#agent",
+      "x-jsonld-type": "@id"
+    },
+    "Activity": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Activity",
+      "x-jsonld-context": {
+        "startTime": {
+          "@id": "http://www.w3.org/ns/prov#startedAtTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        },
+        "endTime": {
+          "@id": "http://www.w3.org/ns/prov#endedAtTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "Entity": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Entity",
+      "x-jsonld-context": {
+        "value": {
+          "@id": "http://www.w3.org/ns/prov#value"
+        }
+      }
+    },
+    "Agent": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Agent",
+      "x-jsonld-context": {}
+    },
+    "Delegation": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Delegation",
+      "x-jsonld-context": {
+        "responsible": {
+          "@id": "http://www.w3.org/ns/prov#agent",
+          "@type": "@id"
+        },
+        "delegate": {
+          "@reverse": "prov:qualifiedDelegation",
+          "@type": "@id"
+        },
+        "activity": {
+          "@id": "http://www.w3.org/ns/prov#hadActivity",
+          "@type": "@id"
+        }
+      }
+    },
+    "Usage": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Usage",
+      "x-jsonld-context": {
+        "activity": {
+          "@reverse": "prov:qualifiedUsage",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "http://www.w3.org/ns/prov#atTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "Generation": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Generation",
+      "x-jsonld-context": {
+        "entity": {
+          "@reverse": "prov:qualifiedGeneration",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "http://www.w3.org/ns/prov#atTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "Invalidation": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Invalidation",
+      "x-jsonld-context": {
+        "entity": {
+          "@reverse": "prov:qualifiedInvalidation",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "http://www.w3.org/ns/prov#atTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "Attribution": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Attribution",
+      "x-jsonld-context": {
+        "entity": {
+          "@reverse": "prov:qualifiedAttribution",
+          "@type": "@id"
+        }
+      }
+    },
+    "Association": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Association",
+      "x-jsonld-context": {
+        "activity": {
+          "@reverse": "prov:qualifiedAssociation",
+          "@type": "@id"
+        },
+        "plan": {
+          "@id": "http://www.w3.org/ns/prov#hadPlan",
+          "@type": "@id"
+        }
+      }
+    },
+    "Communication": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Communication",
+      "x-jsonld-context": {
+        "informed": {
+          "@reverse": "prov:qualifiedCommunication",
+          "@type": "@id"
+        },
+        "informant": {
+          "@id": "http://www.w3.org/ns/prov#activity",
+          "@type": "@id"
+        }
+      }
+    },
+    "Influence": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Influence",
+      "x-jsonld-context": {
+        "influencee": {
+          "@reverse": "prov:qualifiedInfluence",
+          "@type": "@id"
+        },
+        "influencer": {
+          "@id": "http://www.w3.org/ns/prov#influencer",
+          "@type": "@id"
+        }
+      }
+    },
+    "Derivation": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Derivation",
+      "x-jsonld-context": {
+        "generatedEntity": {
+          "@reverse": "prov:qualifiedDerivation",
+          "@type": "@id"
+        },
+        "usedEntity": {
+          "@id": "http://www.w3.org/ns/prov#entity",
+          "@type": "@id"
+        },
+        "generation": {
+          "@id": "http://www.w3.org/ns/prov#hadGeneration",
+          "@type": "@id"
+        },
+        "activity": {
+          "@id": "http://www.w3.org/ns/prov#hadActivity",
+          "@type": "@id"
+        },
+        "usage": {
+          "@id": "http://www.w3.org/ns/prov#hadUsage",
+          "@type": "@id"
+        }
+      }
+    },
+    "Start": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#Start",
+      "x-jsonld-context": {
+        "activity": {
+          "@reverse": "prov:qualifiedStart",
+          "@type": "@id"
+        },
+        "trigger": {
+          "@id": "http://www.w3.org/ns/prov#entity",
+          "@type": "@id"
+        },
+        "starter": {
+          "@id": "http://www.w3.org/ns/prov#hadActivity",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "http://www.w3.org/ns/prov#atTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "End": {
+      "x-jsonld-id": "http://www.w3.org/ns/prov#End",
+      "x-jsonld-context": {
+        "activity": {
+          "@reverse": "prov:qualifiedEnd",
+          "@type": "@id"
+        },
+        "trigger": {
+          "@id": "http://www.w3.org/ns/prov#entity",
+          "@type": "@id"
+        },
+        "ender": {
+          "@id": "http://www.w3.org/ns/prov#hadActivity",
+          "@type": "@id"
+        },
+        "time": {
+          "@id": "http://www.w3.org/ns/prov#atTime",
+          "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        }
+      }
+    },
+    "Specialization": {
+      "x-jsonld-id": "https://openprovenance.org/ns/provext#Specialization",
+      "x-jsonld-context": {
+        "specificEntity": {
+          "@reverse": "provext:qualifiedSpecialization",
+          "@type": "@id"
+        },
+        "generalEntity": {
+          "@id": "https://openprovenance.org/ns/provext#generalEntity",
+          "@type": "@id"
+        }
+      }
+    },
+    "Membership": {
+      "x-jsonld-id": "https://openprovenance.org/ns/provext#Membership",
+      "x-jsonld-context": {
+        "collection": {
+          "@reverse": "provext:qualifiedMembership",
+          "@type": "@id"
+        },
+        "entity": {
+          "@id": "https://openprovenance.org/ns/provext#member",
+          "@type": "@id"
+        }
+      }
+    },
+    "Alternate": {
+      "x-jsonld-id": "https://openprovenance.org/ns/provext#Alternate",
+      "x-jsonld-context": {
+        "alternate1": {
+          "@reverse": "provext:qualifiedAlternate",
+          "@type": "@id"
+        },
+        "alternate2": {
+          "@id": "https://openprovenance.org/ns/provext#alternate",
+          "@type": "@id"
+        }
+      }
+    }
+  },
+  "x-jsonld-prefixes": {
+    "prov": "http://www.w3.org/ns/prov#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "provext": "https://openprovenance.org/ns/provext#"
+  }
+}

@@ -1,0 +1,16 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.org/cwlprov/entities/output> a prov:Entity ;
+    prov:wasGeneratedBy <https://example.org/cwlprov/activities/run> .
+
+<https://example.org/cwlprov/activities/run> a prov:Activity ;
+    prov:endedAtTime "2024-03-01T09:05:00+00:00"^^xsd:dateTime ;
+    prov:startedAtTime "2024-03-01T09:00:00+00:00"^^xsd:dateTime ;
+    prov:used <https://example.org/cwlprov/entities/input> ;
+    prov:wasAssociatedWith <https://example.org/cwlprov/agents/user> .
+
+<https://example.org/cwlprov/agents/user> a prov:Agent .
+
+<https://example.org/cwlprov/entities/input> a prov:Entity .
+

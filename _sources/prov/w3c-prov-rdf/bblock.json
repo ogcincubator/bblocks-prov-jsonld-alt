@@ -1,0 +1,23 @@
+{
+  "name": "W3C PROV-O / RDF",
+  "abstract": "The RDF binding of the W3C PROV data model via the PROV Ontology (PROV-O), serializable as Turtle, N-Triples, RDF/XML, N-Quads, TriG, etc. A profile of the W3C PROV Representation Base.",
+  "status": "under-development",
+  "dateTimeAddition": "2026-09-08T00:00:00Z",
+  "highlighted": true,
+  "itemClass": "model",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2026-09-08",
+  "isProfileOf": "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
+  "ontology": "https://www.w3.org/ns/prov-o#",
+  "concept": [
+    "http://www.w3.org/ns/prov#Entity",
+    "http://www.w3.org/ns/prov#Activity",
+    "http://www.w3.org/ns/prov#Agent"
+  ],
+  "sources": [
+    { "link": "https://www.w3.org/TR/prov-o/", "title": "PROV-O: The PROV Ontology" },
+    { "link": "https://docs.ogc.org/DRAFTS/26-038.html", "title": "OGC API - Processes - Part 5: Provenance (registers `text/turtle` for PROV-TURTLE and `application/n-triples` for PROV-NT)" }
+  ],
+  "tags": ["prov", "utils", "rdf", "turtle"]
+}

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<prov:document xmlns:ex="https://example.org/cwlprov/" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <prov:entity prov:id="ex:plan/main"/>
+  <prov:activity prov:id="ex:activity/step1">
+    <prov:startTime>2024-01-01T00:00:00+00:00</prov:startTime>
+    <prov:endTime>2024-01-01T00:01:00+00:00</prov:endTime>
+  </prov:activity>
+  <prov:softwareAgent prov:id="ex:engine/cwltool"/>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="ex:activity/step1"/>
+    <prov:agent prov:ref="ex:engine/cwltool"/>
+    <prov:plan prov:ref="ex:plan/main"/>
+  </prov:wasAssociatedWith>
+  <prov:wasAssociatedWith>
+    <prov:activity prov:ref="ex:activity/step1"/>
+    <prov:agent prov:ref="ex:engine/cwltool"/>
+  </prov:wasAssociatedWith>
+  <prov:entity prov:id="ex:data/output.txt"/>
+  <prov:wasGeneratedBy>
+    <prov:entity prov:ref="ex:data/output.txt"/>
+    <prov:activity prov:ref="ex:activity/step1"/>
+  </prov:wasGeneratedBy>
+</prov:document>

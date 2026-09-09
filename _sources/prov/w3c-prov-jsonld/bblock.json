@@ -1,0 +1,22 @@
+{
+  "name": "W3C PROV-JSONLD",
+  "abstract": "The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using `@context`/`@graph` rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.",
+  "status": "under-development",
+  "dateTimeAddition": "2026-09-08T00:00:00Z",
+  "highlighted": true,
+  "itemClass": "schema",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2026-09-08",
+  "isProfileOf": [
+    "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
+    "bblocks://ogc.ogc-utils.prov"
+  ],
+  "schema": "https://openprovenance.org/prov-jsonld/schema.json",
+  "ldContext": "https://openprovenance.org/prov-jsonld/context.jsonld",
+  "sources": [
+    { "link": "https://www.w3.org/submissions/2024/SUBM-prov-jsonld-20240825/", "title": "The PROV-JSONLD Serialization" },
+    { "link": "https://docs.ogc.org/DRAFTS/26-038.html", "title": "OGC API - Processes - Part 5: Provenance (registers `application/ld+json` for PROV-JSONLD)" }
+  ],
+  "tags": ["prov", "utils", "jsonld", "json-ld"]
+}

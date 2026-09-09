@@ -1,0 +1,33 @@
+{
+  "name": "W3C PROV Representation Base",
+  "highlighted": true,
+  "abstract": "Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares `isProfileOf` this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts (`dependsOn`), and documents how those can be used as an `extensionPoints` substitution target for anyone wanting a specialized OGC PROV Chain profile.",
+  "status": "under-development",
+  "dateTimeAddition": "2026-09-08T00:00:00Z",
+  "itemClass": "model",
+  "register": "ogc-utils",
+  "version": "0.1",
+  "dateOfLastChange": "2026-09-08",
+  "ontology": "https://www.w3.org/ns/prov-o#",
+  "concept": [
+    "http://www.w3.org/ns/prov#Entity",
+    "http://www.w3.org/ns/prov#Activity",
+    "http://www.w3.org/ns/prov#Agent"
+  ],
+  "dependsOn": [
+    "bblocks://ogc.ogc-utils.prov",
+    "bblocks://ogc.ogc-utils.prov-bundled",
+    "bblocks://ogc.ogc-utils.prov-entity",
+    "bblocks://ogc.ogc-utils.prov-activity",
+    "bblocks://ogc.ogc-utils.prov-agent"
+  ],
+  "sources": [
+    { "link": "https://www.w3.org/TR/prov-overview/", "title": "PROV-Overview: An Overview of the PROV Family of Documents" },
+    { "link": "https://www.w3.org/TR/prov-dm/", "title": "PROV-DM: The PROV Data Model" },
+    { "link": "https://www.w3.org/TR/prov-o/", "title": "PROV-O: The PROV Ontology" }
+  ],
+  "seeAlso": [
+    "bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms"
+  ],
+  "tags": ["prov", "utils", "base"]
+}

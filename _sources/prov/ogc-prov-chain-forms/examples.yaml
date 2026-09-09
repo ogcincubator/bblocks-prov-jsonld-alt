@@ -1,0 +1,10 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/examples.schema.yaml
+examples:
+  - title: OGC PROV Chain, flat array form (every record referencing others by full-IRI id)
+    snippets:
+      - language: json
+        ref: examples/example-array.json
+  - title: OGC PROV Chain, single-object form (relation targets inlined from a single root)
+    snippets:
+      - language: json
+        ref: examples/example-object.json

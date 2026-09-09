@@ -10,7 +10,7 @@
   "itemClass": "schema",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2026-09-04",
+  "dateOfLastChange": "2023-07-10",
   "dependsOn": [],
   "sources": [
     {
@@ -25,14 +25,14 @@
     "utils"
   ],
   "shaclShapes": {},
-  "ldContext": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld",
+  "ldContext": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld",
   "schema": {
-    "application/yaml": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.yaml",
-    "application/json": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.json"
+    "application/yaml": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.yaml",
+    "application/json": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.json"
   },
-  "sourceSchema": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/schema.json",
-  "sourceLdContext": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/context.jsonld",
-  "sourceFiles": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/",
+  "sourceSchema": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/schema.json",
+  "sourceLdContext": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/context.jsonld",
+  "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/",
   "validationPassed": true,
   "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov-soton/",
   "description": "## TBD\n",
@@ -42,21 +42,21 @@
       "snippets": [
         {
           "language": "json",
-          "ref": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/examples/soton-eg-43.json",
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/examples/soton-eg-43.json",
           "base-uri": "http://www.example.com/exampleEntities/",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/ogc-utils/prov-soton/example_1_1.json",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/ogc-utils/prov-soton/example_1_1.json",
           "sizeBytes": 1182,
           "code": "{\n  \"@context\" : [ {\n    \"xsd\" : \"http://www.w3.org/2001/XMLSchema#\",\n    \"dcterms\" : \"http://purl.org/dc/terms/\",\n    \"ex\" : \"http://example/\",\n    \"prov\" : \"http://www.w3.org/ns/prov#\",\n    \"foaf\" : \"http://xmlns.com/foaf/0.1/\"\n  }, \"https://openprovenance.org/prov-jsonld/context.jsonld\" ],\n  \"@graph\" : [ {\n    \"@type\" : \"Entity\",\n    \"@id\" : \"ex:dataSet1\"\n  }, {\n    \"@type\" : \"Entity\",\n    \"@id\" : \"ex:article1\",\n    \"dcterms:title\" : [ {\n\t\"@value\" : \"Crime rises in cities\",\n\t\"@language\" : \"EN\"\n    } ]\n  }, {\n    \"@type\" : \"Derivation\",\n    \"generatedEntity\" : \"ex:article1\",\n    \"usedEntity\" : \"ex:dataSet1\"\n  }, {\n    \"@type\" : \"Agent\",\n    \"@id\" : \"ex:derek\",\n    \"type\" : [ \"prov:Person\" ],\n    \"foaf:givenName\" : [ {\n      \"@value\" : \"Derek\"\n    } ],\n    \"foaf:mbox\" : [ {\n      \"@value\" : \"<mailto:derek@example.org>\"\n    } ]\n  }, {\n    \"@type\" : \"Association\",\n    \"activity\" : \"ex:compose\",\n    \"agent\" : \"ex:derek\"\n  }, {\n    \"@type\" : \"Activity\",\n    \"@id\" : \"ex:compose\"\n  }, {\n    \"@type\" : \"Usage\",\n    \"activity\" : \"ex:compose\",\n    \"entity\" : \"ex:dataSet1\"\n  }, {\n    \"@type\" : \"Generation\",\n    \"entity\" : \"ex:article1\",\n    \"activity\" : \"ex:compose\"\n  } ]\n}"
         },
         {
           "language": "jsonld",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/ogc-utils/prov-soton/example_1_1.jsonld",
-          "sizeBytes": 1563,
-          "code": "{\n  \"@context\": [\n    {\n      \"iana\": \"http://www.iana.org/assignments/\"\n    },\n    \"https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld\",\n    {\n      \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n      \"dcterms\": \"http://purl.org/dc/terms/\",\n      \"ex\": \"http://example/\",\n      \"prov\": \"http://www.w3.org/ns/prov#\",\n      \"foaf\": \"http://xmlns.com/foaf/0.1/\"\n    },\n    \"https://openprovenance.org/prov-jsonld/context.jsonld\"\n  ],\n  \"@graph\": [\n    {\n      \"@type\": \"Entity\",\n      \"@id\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Entity\",\n      \"@id\": \"ex:article1\",\n      \"dcterms:title\": [\n        {\n          \"@value\": \"Crime rises in cities\",\n          \"@language\": \"EN\"\n        }\n      ]\n    },\n    {\n      \"@type\": \"Derivation\",\n      \"generatedEntity\": \"ex:article1\",\n      \"usedEntity\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Agent\",\n      \"@id\": \"ex:derek\",\n      \"type\": [\n        \"prov:Person\"\n      ],\n      \"foaf:givenName\": [\n        {\n          \"@value\": \"Derek\"\n        }\n      ],\n      \"foaf:mbox\": [\n        {\n          \"@value\": \"<mailto:derek@example.org>\"\n        }\n      ]\n    },\n    {\n      \"@type\": \"Association\",\n      \"activity\": \"ex:compose\",\n      \"agent\": \"ex:derek\"\n    },\n    {\n      \"@type\": \"Activity\",\n      \"@id\": \"ex:compose\"\n    },\n    {\n      \"@type\": \"Usage\",\n      \"activity\": \"ex:compose\",\n      \"entity\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Generation\",\n      \"entity\": \"ex:article1\",\n      \"activity\": \"ex:compose\"\n    }\n  ]\n}"
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/ogc-utils/prov-soton/example_1_1.jsonld",
+          "sizeBytes": 1537,
+          "code": "{\n  \"@context\": [\n    {\n      \"iana\": \"http://www.iana.org/assignments/\"\n    },\n    \"https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld\",\n    {\n      \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",\n      \"dcterms\": \"http://purl.org/dc/terms/\",\n      \"ex\": \"http://example/\",\n      \"prov\": \"http://www.w3.org/ns/prov#\",\n      \"foaf\": \"http://xmlns.com/foaf/0.1/\"\n    },\n    \"https://openprovenance.org/prov-jsonld/context.jsonld\"\n  ],\n  \"@graph\": [\n    {\n      \"@type\": \"Entity\",\n      \"@id\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Entity\",\n      \"@id\": \"ex:article1\",\n      \"dcterms:title\": [\n        {\n          \"@value\": \"Crime rises in cities\",\n          \"@language\": \"EN\"\n        }\n      ]\n    },\n    {\n      \"@type\": \"Derivation\",\n      \"generatedEntity\": \"ex:article1\",\n      \"usedEntity\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Agent\",\n      \"@id\": \"ex:derek\",\n      \"type\": [\n        \"prov:Person\"\n      ],\n      \"foaf:givenName\": [\n        {\n          \"@value\": \"Derek\"\n        }\n      ],\n      \"foaf:mbox\": [\n        {\n          \"@value\": \"<mailto:derek@example.org>\"\n        }\n      ]\n    },\n    {\n      \"@type\": \"Association\",\n      \"activity\": \"ex:compose\",\n      \"agent\": \"ex:derek\"\n    },\n    {\n      \"@type\": \"Activity\",\n      \"@id\": \"ex:compose\"\n    },\n    {\n      \"@type\": \"Usage\",\n      \"activity\": \"ex:compose\",\n      \"entity\": \"ex:dataSet1\"\n    },\n    {\n      \"@type\": \"Generation\",\n      \"entity\": \"ex:article1\",\n      \"activity\": \"ex:compose\"\n    }\n  ]\n}"
         },
         {
           "language": "ttl",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/ogc-utils/prov-soton/example_1_1.ttl",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/ogc-utils/prov-soton/example_1_1.ttl",
           "sizeBytes": 778,
           "code": "@prefix dcterms: <http://purl.org/dc/terms/> .\n@prefix ex: <http://example/> .\n@prefix foaf: <http://xmlns.com/foaf/0.1/> .\n@prefix prov: <http://www.w3.org/ns/prov#> .\n\nex:article1 a prov:Entity ;\n    dcterms:title \"Crime rises in cities\"@EN ;\n    prov:qualifiedDerivation [ a prov:Derivation ;\n            prov:entity ex:dataSet1 ] ;\n    prov:qualifiedGeneration [ a prov:Generation ;\n            prov:activity ex:compose ] .\n\nex:compose a prov:Activity ;\n    prov:qualifiedAssociation [ a prov:Association ;\n            prov:agent ex:derek ] ;\n    prov:qualifiedUsage [ a prov:Usage ;\n            prov:entity ex:dataSet1 ] .\n\nex:derek a prov:Agent,\n        prov:Person ;\n    foaf:givenName \"Derek\" ;\n    foaf:mbox \"<mailto:derek@example.org>\" .\n\nex:dataSet1 a prov:Entity .\n\n"
         }

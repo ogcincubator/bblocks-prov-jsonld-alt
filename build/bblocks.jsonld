@@ -1,7 +1,7 @@
 {
   "@context": [
     {
-      "@base": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined"
+      "@base": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt"
     },
     {
       "bblocks": "https://www.opengis.net/def/bblocks/",
@@ -59,6 +59,16 @@
         "@context": {
           "title": "rdfs:label",
           "link": "@id"
+        }
+      },
+      "license": {
+        "@id": "dct:license",
+        "@context": {
+          "name": "rdfs:label",
+          "url": {
+            "@id": "rdfs:seeAlso",
+            "@type": "@id"
+          }
         }
       },
       "schema": {
@@ -194,42 +204,42 @@
   "name": "Building Blocks - Alternative JSON schemas for W3C PROV model",
   "abstract": "Testing of alternative JSON schemas for PROV",
   "description": "Provenance defined using the [W3C PROV-O model](https://www.w3.org/TR/prov-o/) is a DAG (non-cyclic graph) based on three main object types: Entity, Activity and Agent.\n\nThe candidate \"canonical\" PROV repository (https://ogcincubator.github.io/bblocks-prov-schema ) defines a JSON schema and matching JSON-LD context using the [OGC Building Blocks](https://ogcincubator.github.io/bblocks-docs/) methodology, \nfor W3C PROV-O model, using the canonical terminology used in the PROV ontology as element names.\n\nNote that the PROV working group originally defined a number of JSON serialisation options, however these have limited uptake and do no allow PROV-O to annotate other schemas. This implementation uses modern JSON schema and JSON-LD mechanisms to provide a complete mapping from JSON to PROV-O model.\n\nSince the development of this schema another proposal has been submitted as a W3C member submission: \n[https://www.w3.org/submissions/prov-jsonld/](https://www.w3.org/submissions/prov-jsonld/)\n\nA common thread is the stated rationale:\n\n\"The rationale for this is consistent with the design principles:\n\n\" the family of PROV specifications lacks a serialization capable of simultaneously addressing all of the following requirements:\n\n  - **Lightweight** A serialization MUST support lightweight Web applications.\n  - **Natural** A serialization MUST look natural to its targeted community of users.\n  - **Semantic** A serialization MUST allow for semantic markup and integration with linked data applications.\n  - **Efficient** A serialization MUST be efficiently processable.\nIn our view, none of the existing PROV serializations supports all these requirements simultaneously.\"\n\nThis repository is designed to document and explore the potential for reconciliation of these models.\n",
-  "modified": "2026-09-04T03:46:19.046821",
+  "modified": "2026-09-09T13:15:12.665946",
   "tooling": {
     "bblocks-postprocess": {
-      "commitId": "\"865a527f37dc271186cb8dd7d0386365bf1486d3",
-      "shortCommitId": "\"865a52",
-      "date": "2026-09-03T16:12:25+00:00\""
+      "commitId": "\"5f1ec548149bd0b447b0781f2ce00e5fbe4566e0",
+      "shortCommitId": "\"5f1ec5",
+      "date": "2026-09-08T21:44:17+00:00\""
     }
   },
   "gitRepository": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt",
   "gitHubRepository": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/",
-  "baseURL": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/",
-  "viewerURL": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/",
-  "validationReport": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/report.html",
-  "validationReportJson": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/tests/report.json",
+  "baseURL": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/",
+  "viewerURL": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/",
+  "validationReport": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/report.html",
+  "validationReportJson": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/report.json",
   "imports": [
     "https://opengeospatial.github.io/bblocks/register.json",
     "https://ogcincubator.github.io/bblock-prov-schema/build/register.json",
     "https://ogcincubator.github.io/cross-domain-model/build/register.json"
   ],
-  "remoteCacheDir": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/_cache",
+  "remoteCacheDir": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/_cache",
   "links": [
     {
       "rel": "self",
-      "href": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/register.json",
+      "href": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/register.json",
       "type": "application/json",
       "title": "This Building Blocks Register in JSON format"
     },
     {
       "rel": "self",
-      "href": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/bblocks.ttl",
+      "href": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/bblocks.ttl",
       "type": "text/turtle",
       "title": "This Building Blocks Register in RDF Turtle format"
     },
     {
       "rel": "self",
-      "href": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/bblocks.jsonld",
+      "href": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/bblocks.jsonld",
       "type": "application/ld+json",
       "title": "This Building Blocks Register in JSON-LD format"
     }
@@ -251,7 +261,7 @@
       "itemClass": "schema",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-04",
+      "dateOfLastChange": "2023-07-10",
       "dependsOn": null,
       "sources": [
         {
@@ -267,42 +277,42 @@
       ],
       "shaclShapes": null,
       "ldContext": {
-        "prof:hasArtifact": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld",
+        "prof:hasArtifact": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld",
         "prof:hasRole": "role:mapping",
         "dct:format": "application/ld+json",
         "dct:conformsTo": "https://www.w3.org/TR/json-ld11/"
       },
       "schema": [
         {
-          "prof:hasArtifact": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.yaml",
+          "prof:hasArtifact": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.yaml",
           "prof:hasRole": "role:schema",
           "dct:format": "application/yaml",
           "dct:conformsTo": "https://json-schema.org/draft/2020-12/schema"
         },
         {
-          "prof:hasArtifact": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.json",
+          "prof:hasArtifact": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.json",
           "prof:hasRole": "role:schema",
           "dct:format": "application/json",
           "dct:conformsTo": "https://json-schema.org/draft/2020-12/schema"
         }
       ],
-      "sourceSchema": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/schema.json",
-      "sourceLdContext": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/context.jsonld",
-      "sourceFiles": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/_sources/prov-soton/",
+      "sourceSchema": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/schema.json",
+      "sourceLdContext": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/context.jsonld",
+      "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov-soton/",
       "validationPassed": true,
       "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov-soton/",
       "documentation": {
         "markdown": {
           "mediatype": "text/markdown",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/generateddocs/markdown/ogc-utils/prov-soton/index.md"
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/markdown/ogc-utils/prov-soton/index.md"
         },
         "json-full": {
           "mediatype": "application/json",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/generateddocs/json-full/ogc-utils/prov-soton/index.json"
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/json-full/ogc-utils/prov-soton/index.json"
         },
         "bblocks-viewer": {
           "mediatype": "text/html",
-          "url": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/bblock/ogc.ogc-utils.prov-soton"
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov-soton"
         }
       },
       "@id": "bblocks://ogc.ogc-utils.prov-soton",
@@ -318,7 +328,7 @@
       "rdfData": [],
       "isProfileOf": null,
       "skos:topConceptOf": {
-        "@id": "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/"
+        "@id": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/"
       }
     }
   ],

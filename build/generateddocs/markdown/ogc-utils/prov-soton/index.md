@@ -74,7 +74,7 @@ A BBlock to cross check examples across the University of The PROV-JSONLD Serial
     {
       "iana": "http://www.iana.org/assignments/"
     },
-    "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld",
+    "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld",
     {
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "dcterms": "http://purl.org/dc/terms/",
@@ -452,8 +452,8 @@ x-jsonld-prefixes:
 
 Links to the schema:
 
-* YAML version: [schema.yaml](https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.json)
-* JSON version: [schema.json](https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/schema.yaml)
+* YAML version: [schema.yaml](https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.json)
+* JSON version: [schema.json](https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/schema.yaml)
 
 
 # JSON-LD Context
@@ -796,7 +796,7 @@ Links to the schema:
 ```
 
 You can find the full JSON-LD context here:
-[context.jsonld](https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld)
+[context.jsonld](https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld)
 
 ## Sources
 

@@ -3,7 +3,7 @@
     {
       "iana": "http://www.iana.org/assignments/"
     },
-    "https://raw.githubusercontent.com/ogcincubator/bblocks-prov-jsonld-alt/undefined/build/annotated/ogc-utils/prov-soton/context.jsonld",
+    "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov-soton/context.jsonld",
     {
       "xsd": "http://www.w3.org/2001/XMLSchema#",
       "dcterms": "http://purl.org/dc/terms/",

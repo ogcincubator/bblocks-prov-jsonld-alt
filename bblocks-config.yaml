@@ -56,4 +56,4 @@ imports:
 # Taller default for the per-block dependency graph, since these blocks interconnect densely
 # via isProfileOf/seeAlso and look compressed at the viewer's default height.
 viewer:
-  dependency-graph-height: 700
+  dependency-graph-height: 500

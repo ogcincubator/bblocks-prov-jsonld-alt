@@ -16,7 +16,7 @@
     "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
     "bblocks://ogc.ogc-utils.prov"
   ],
-  "seeAlso": [
+  "hasFormat": [
     "bblocks://ogc.ogc-utils.prov.w3c-prov-n",
     "bblocks://ogc.ogc-utils.prov.w3c-prov-xml",
     "bblocks://ogc.ogc-utils.prov.w3c-prov-json",

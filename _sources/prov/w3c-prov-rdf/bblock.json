@@ -10,7 +10,7 @@
   "dateOfLastChange": "2026-09-11",
   "isProfileOf": "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
   "dependsOn": ["bblocks://ogc.ogc-utils.prov.w3c-prov-base"],
-  "seeAlso": [
+  "hasFormat": [
     "bblocks://ogc.ogc-utils.prov.w3c-prov-n",
     "bblocks://ogc.ogc-utils.prov.w3c-prov-xml",
     "bblocks://ogc.ogc-utils.prov.w3c-prov-json",

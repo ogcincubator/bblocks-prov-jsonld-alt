@@ -52,4 +52,8 @@ description: |
 imports:
   - default
   - https://ogcincubator.github.io/bblock-prov-schema
-  - https://ogcincubator.github.io/cross-domain-model
+
+# Taller default for the per-block dependency graph, since these blocks interconnect densely
+# via isProfileOf/seeAlso and look compressed at the viewer's default height.
+viewer:
+  dependency-graph-height: 700

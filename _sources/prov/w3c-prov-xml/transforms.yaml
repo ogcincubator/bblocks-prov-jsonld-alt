@@ -1,0 +1,57 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/transforms.schema.yaml
+transforms:
+  - id: w3c-prov-xml-to-w3c-prov-json
+    description: |
+      Converts a **W3C PROV-XML** document into **W3C PROV-JSON**, using the `prov` library as
+      both the PROV-XML parser and the PROV-JSON serializer - a direct conversion, not chained
+      through PROV-JSONLD. See `w3c-prov-xml-to-w3c-prov-jsonld` (in the `w3c-prov-jsonld`
+      block) for the PROV-XML parsing caveat shared by all transforms starting from this format.
+    type: python
+    inputs:
+      mediaTypes: [application/provenance+xml, application/xml, text/xml]
+    outputs:
+      mediaTypes: [application/provenance+json, application/json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-json
+    metadata:
+      dependencies:
+        pip: prov[xml]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_xml_to_w3c_prov_json.py
+
+  - id: w3c-prov-xml-to-w3c-prov-rdf
+    description: |
+      Converts a **W3C PROV-XML** document into **W3C PROV-O / RDF** (Turtle), using the `prov`
+      library, which parses PROV-XML natively and serializes RDF via `rdflib` - a direct
+      conversion, not chained through PROV-JSONLD.
+    type: python
+    inputs:
+      mediaTypes: [application/provenance+xml, application/xml, text/xml]
+    outputs:
+      mediaTypes: [text/turtle]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-rdf
+    metadata:
+      dependencies:
+        pip: prov[xml,rdf]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_xml_to_w3c_prov_rdf.py
+
+  - id: w3c-prov-xml-to-w3c-prov-n
+    description: |
+      Converts a **W3C PROV-XML** document into **W3C PROV-N**, using the `prov` library as the
+      PROV-XML parser and PROV-N serializer - a direct conversion, not chained through
+      PROV-JSONLD. There is intentionally no reverse transform: `prov` implements a PROV-N
+      serializer but not a parser.
+    type: python
+    inputs:
+      mediaTypes: [application/provenance+xml, application/xml, text/xml]
+    outputs:
+      mediaTypes: [text/provenance-notation]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-n
+    metadata:
+      dependencies:
+        pip: prov[xml]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_xml_to_w3c_prov_n.py

@@ -989,6 +989,8 @@
         }
       }
     },
+    "Document": "https://openprovenance.org/ns/provext#Document",
+    "Bundle": "http://www.w3.org/ns/prov#Bundle",
     "Entity": {
       "x-jsonld-id": "http://www.w3.org/ns/prov#Entity",
       "x-jsonld-context": {

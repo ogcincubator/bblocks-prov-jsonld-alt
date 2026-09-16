@@ -10,7 +10,7 @@
   "itemClass": "model",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2026-09-09",
+  "dateOfLastChange": "2026-09-08",
   "isProfileOf": [
     "ogc.ogc-utils.prov.w3c-prov-base"
   ],

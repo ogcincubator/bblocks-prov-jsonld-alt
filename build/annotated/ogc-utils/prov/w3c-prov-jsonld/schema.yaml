@@ -670,6 +670,8 @@ x-jsonld-extra-terms:
       endTime:
         '@id': http://www.w3.org/ns/prov#endedAtTime
         '@type': http://www.w3.org/2001/XMLSchema#dateTime
+  Document: https://openprovenance.org/ns/provext#Document
+  Bundle: http://www.w3.org/ns/prov#Bundle
   Entity:
     x-jsonld-id: http://www.w3.org/ns/prov#Entity
     x-jsonld-context:

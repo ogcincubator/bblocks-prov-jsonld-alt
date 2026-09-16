@@ -184,10 +184,10 @@ it), so every representation - including this transform - round-trips it correct
 <https://example.org/cwlprov/activity/step1> a prov:Activity ;
     prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
     prov:qualifiedAssociation [ a prov:Association ;
-            prov:agent <https://example.org/cwlprov/engine/cwltool> ;
-            prov:hadPlan <https://example.org/cwlprov/plan/main> ],
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ],
         [ a prov:Association ;
-            prov:agent <https://example.org/cwlprov/engine/cwltool> ] ;
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ;
+            prov:hadPlan <https://example.org/cwlprov/plan/main> ] ;
     prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
 
 <https://example.org/cwlprov/data/output.txt> a prov:Entity ;
@@ -1893,17 +1893,17 @@ id:_79e5fa0b-4998-46da-bbe8-920533c7940b a wfprov:Artifact,
             prov:atTime "2026-01-15T16:46:11.414795"^^xsd:dateTime ;
             prov:hadRole wf:main_primary_arrayOutput ] ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:c8dbab29-6641-40d9-b5c1-626872f5337d ],
-        [ a provext:Membership ;
-            provext:member id:_64c45605-d8a9-4a56-929d-47dcad5543f1 ],
+            provext:member id:f55d0d44-4cb4-4cd2-a336-7bac9e265583 ],
         [ a provext:Membership ;
             provext:member id:_9718f0ee-b250-4d33-a6df-4b8ad72bf150 ],
         [ a provext:Membership ;
-            provext:member id:b557ccae-b5e3-43ce-bc06-f39d3e12f67f ],
+            provext:member id:c8dbab29-6641-40d9-b5c1-626872f5337d ],
         [ a provext:Membership ;
             provext:member id:_6a99e0ba-c671-4471-aa33-4cc523e0f428 ],
         [ a provext:Membership ;
-            provext:member id:f55d0d44-4cb4-4cd2-a336-7bac9e265583 ] .
+            provext:member id:b557ccae-b5e3-43ce-bc06-f39d3e12f67f ],
+        [ a provext:Membership ;
+            provext:member id:_64c45605-d8a9-4a56-929d-47dcad5543f1 ] .
 
 id:_96f693e2-3eac-4a04-8887-7285b7605f49 a wfprov:Artifact,
         prov:Collection,
@@ -1913,9 +1913,9 @@ id:_96f693e2-3eac-4a04-8887-7285b7605f49 a wfprov:Artifact,
             prov:atTime "2026-01-15T16:46:11.414795"^^xsd:dateTime ;
             prov:hadRole wf:main_primary_imagesOutput ] ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:ef9384d4-880f-4398-9e10-1bce1d54e51e ],
+            provext:member id:_043749d9-938e-4aa4-b5ae-12fc699dbcc9 ],
         [ a provext:Membership ;
-            provext:member id:_043749d9-938e-4aa4-b5ae-12fc699dbcc9 ] .
+            provext:member id:ef9384d4-880f-4398-9e10-1bce1d54e51e ] .
 
 id:a326f7d5-60b5-4b9d-802f-58f2411c993e a wfprov:Artifact,
         prov:Collection,
@@ -1925,9 +1925,9 @@ id:a326f7d5-60b5-4b9d-802f-58f2411c993e a wfprov:Artifact,
             prov:atTime "2026-01-15T16:46:11.414795"^^xsd:dateTime ;
             prov:hadRole wf:main_primary_geometryOutput ] ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:_9c60ce13-37d4-4dd2-98f5-d1c3bea1f304 ],
+            provext:member id:_5ec5c130-692c-48d5-9cef-be41cec00d11 ],
         [ a provext:Membership ;
-            provext:member id:_5ec5c130-692c-48d5-9cef-be41cec00d11 ] .
+            provext:member id:_9c60ce13-37d4-4dd2-98f5-d1c3bea1f304 ] .
 
 id:a9b3da73-190e-4a3a-affb-a12396f0eac3 a wf4ever:File,
         wfprov:Artifact,
@@ -2021,17 +2021,17 @@ id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:a1aa3cbf-8435-4f94-aeb6-110922551843 ],
-        [ a provext:Membership ;
             provext:member id:_5226c081-e3dc-4963-987b-92142bd75102 ],
-        [ a provext:Membership ;
-            provext:member id:f30572d8-60e4-4221-80a7-cb76e1007e9a ],
         [ a provext:Membership ;
             provext:member id:bde07acc-95a9-46f6-be09-6467fa7bd8b8 ],
         [ a provext:Membership ;
             provext:member id:_6d234b31-69fb-4949-b096-924f234097a1 ],
         [ a provext:Membership ;
-            provext:member id:_2a95bd87-116b-42f4-8525-428de8743778 ] .
+            provext:member id:_2a95bd87-116b-42f4-8525-428de8743778 ],
+        [ a provext:Membership ;
+            provext:member id:a1aa3cbf-8435-4f94-aeb6-110922551843 ],
+        [ a provext:Membership ;
+            provext:member id:f30572d8-60e4-4221-80a7-cb76e1007e9a ] .
 
 id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 a wf4ever:File,
         wfprov:Artifact,
@@ -2073,17 +2073,17 @@ id:_88e9a099-e5d4-45f9-8402-c8082168a6f0 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:c790f3f7-ac11-4d13-9c71-4d68c73ed040 ],
+            provext:member id:_6815d3c5-fa14-4153-befe-a5fddc285b06 ],
         [ a provext:Membership ;
-            provext:member id:_6815d3c5-fa14-4153-befe-a5fddc285b06 ] .
+            provext:member id:c790f3f7-ac11-4d13-9c71-4d68c73ed040 ] .
 
 id:_8edd155f-17b1-48d6-ae93-bad0390c9ef3 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:f0020803-854b-4bd3-a70a-f6317d3a6524 ],
+            provext:member id:_6e88c002-b8f6-488e-977f-21ad51073fc6 ],
         [ a provext:Membership ;
-            provext:member id:_6e88c002-b8f6-488e-977f-21ad51073fc6 ] .
+            provext:member id:f0020803-854b-4bd3-a70a-f6317d3a6524 ] .
 
 id:_9718f0ee-b250-4d33-a6df-4b8ad72bf150 a prov:Entity ;
     prov:value "6"^^xsd:int .
@@ -2121,17 +2121,17 @@ id:c68b1b94-7f88-4cda-87da-f5e68beabe42 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:_5e4614e1-101d-4be2-8b66-24f770b3435f ],
-        [ a provext:Membership ;
-            provext:member id:_056f6ec9-f5ca-4630-8b6e-171ea0fe8f3f ],
-        [ a provext:Membership ;
             provext:member id:a45ad975-3387-4b7c-ac1c-a268c65927d1 ],
         [ a provext:Membership ;
-            provext:member id:b4c63361-5926-4b48-be43-df94727a79da ],
+            provext:member id:a68017f5-e2f6-441c-b4ad-cf94dec801d7 ],
         [ a provext:Membership ;
             provext:member id:a19d9289-ab50-4d85-a241-4ef9a0e36deb ],
         [ a provext:Membership ;
-            provext:member id:a68017f5-e2f6-441c-b4ad-cf94dec801d7 ] .
+            provext:member id:_056f6ec9-f5ca-4630-8b6e-171ea0fe8f3f ],
+        [ a provext:Membership ;
+            provext:member id:_5e4614e1-101d-4be2-8b66-24f770b3435f ],
+        [ a provext:Membership ;
+            provext:member id:b4c63361-5926-4b48-be43-df94727a79da ] .
 
 id:c790f3f7-ac11-4d13-9c71-4d68c73ed040 a wf4ever:File,
         wfprov:Artifact,
@@ -2284,11 +2284,11 @@ id:d57aaff6-a93f-4927-a2d8-112beb358d4d a wfprov:WorkflowEngine,
         prov:SoftwareAgent ;
     rdfs:label "cwltool 3.1.20260108082145" ;
     prov:qualifiedStart [ a prov:Start ;
-            prov:atTime "2026-01-15T16:45:56.964000+00:00"^^xsd:dateTime ;
-            prov:entity id:_53f5a04e-b531-466d-81be-62c34a1431ba ],
-        [ a prov:Start ;
             prov:atTime "2026-01-15T16:46:10.775855"^^xsd:dateTime ;
-            prov:hadActivity id:dc49c9ee-a913-4e5c-b89a-2201af36af9c ] ;
+            prov:hadActivity id:dc49c9ee-a913-4e5c-b89a-2201af36af9c ],
+        [ a prov:Start ;
+            prov:atTime "2026-01-15T16:45:56.964000+00:00"^^xsd:dateTime ;
+            prov:entity id:_53f5a04e-b531-466d-81be-62c34a1431ba ] ;
     provext:qualifiedAlternate [ a provext:Alternate ;
             provext:alternate id:_53f5a04e-b531-466d-81be-62c34a1431ba ] ;
     provext:qualifiedSpecialization [ a provext:Specialization ;
@@ -2330,37 +2330,69 @@ id:_53f5a04e-b531-466d-81be-62c34a1431ba a wfdesc:ProcessRun,
             prov:atTime "2026-01-15T16:46:10.775984"^^xsd:dateTime ;
             prov:hadActivity id:d57aaff6-a93f-4927-a2d8-112beb358d4d ] ;
     prov:qualifiedUsage [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.107097"^^xsd:dateTime ;
-            prov:entity id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 ;
-            prov:hadRole wf:main_EchoProcess_arrayInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.812817"^^xsd:dateTime ;
-            prov:entity id:_8edd155f-17b1-48d6-ae93-bad0390c9ef3 ;
-            prov:hadRole wf:main_geometryInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.807975"^^xsd:dateTime ;
-            prov:entity id:cb4c5d07-5b7e-435f-882c-afe14e061f4b ;
-            prov:hadRole wf:main_measureInput ],
-        [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.808789"^^xsd:dateTime ;
             prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
             prov:hadRole wf:main_dateInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.101847"^^xsd:dateTime ;
-            prov:entity id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 ;
-            prov:hadRole wf:main_featureCollectionInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.107662"^^xsd:dateTime ;
-            prov:entity id:_109d6043-7fad-428f-a563-a99a4ebd6dda ;
-            prov:hadRole wf:main_EchoProcess_complexObjectInput ],
+            prov:atTime "2026-01-15T16:46:11.109174"^^xsd:dateTime ;
+            prov:entity id:_160a1cd9-6384-4828-b627-a02e478365fb ;
+            prov:hadRole wf:main_EchoProcess_boundingBoxInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:11.401851"^^xsd:dateTime ;
             prov:entity id:fbb085ae-d3ad-4639-a448-b01188f1ce9f ;
             prov:hadRole wf:main_EchoProcess_featureCollectionInput ],
         [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.107097"^^xsd:dateTime ;
+            prov:entity id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 ;
+            prov:hadRole wf:main_EchoProcess_arrayInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.808944"^^xsd:dateTime ;
+            prov:entity id:f01a7e80-f451-4047-93c0-587666a9847a ;
+            prov:hadRole wf:main_doubleInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.105949"^^xsd:dateTime ;
+            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
+            prov:hadRole wf:main_EchoProcess_stringInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.807975"^^xsd:dateTime ;
+            prov:entity id:cb4c5d07-5b7e-435f-882c-afe14e061f4b ;
+            prov:hadRole wf:main_measureInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.108679"^^xsd:dateTime ;
+            prov:entity id:_1b6185c0-b83d-431b-a2ba-7c2b026b1823 ;
+            prov:hadRole wf:main_EchoProcess_geometryInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.813646"^^xsd:dateTime ;
+            prov:entity id:d4ac4ab8-25a3-4412-82b6-07b92da98795 ;
+            prov:hadRole wf:main_boundingBoxInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.807817"^^xsd:dateTime ;
+            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
+            prov:hadRole wf:main_stringInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.812817"^^xsd:dateTime ;
+            prov:entity id:_8edd155f-17b1-48d6-ae93-bad0390c9ef3 ;
+            prov:hadRole wf:main_geometryInput ],
+        [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.809545"^^xsd:dateTime ;
             prov:entity id:c68b1b94-7f88-4cda-87da-f5e68beabe42 ;
             prov:hadRole wf:main_arrayInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.100961"^^xsd:dateTime ;
+            prov:entity id:_88e9a099-e5d4-45f9-8402-c8082168a6f0 ;
+            prov:hadRole wf:main_imagesInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.106052"^^xsd:dateTime ;
+            prov:entity id:fc017dcf-09ec-4cbf-81ac-741b5a61b482 ;
+            prov:hadRole wf:main_EchoProcess_measureInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.401124"^^xsd:dateTime ;
+            prov:entity id:c14eb1fb-b860-4cfb-ba2c-c9f2f4f5d4e5 ;
+            prov:hadRole wf:main_EchoProcess_imagesInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.107662"^^xsd:dateTime ;
+            prov:entity id:_109d6043-7fad-428f-a563-a99a4ebd6dda ;
+            prov:hadRole wf:main_EchoProcess_complexObjectInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.810650"^^xsd:dateTime ;
             prov:entity id:_5f78096f-fce2-49b1-aa6d-941927d15dcc ;
@@ -2370,45 +2402,13 @@ id:_53f5a04e-b531-466d-81be-62c34a1431ba a wfdesc:ProcessRun,
             prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
             prov:hadRole wf:main_EchoProcess_dateInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.109174"^^xsd:dateTime ;
-            prov:entity id:_160a1cd9-6384-4828-b627-a02e478365fb ;
-            prov:hadRole wf:main_EchoProcess_boundingBoxInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.108679"^^xsd:dateTime ;
-            prov:entity id:_1b6185c0-b83d-431b-a2ba-7c2b026b1823 ;
-            prov:hadRole wf:main_EchoProcess_geometryInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.808944"^^xsd:dateTime ;
-            prov:entity id:f01a7e80-f451-4047-93c0-587666a9847a ;
-            prov:hadRole wf:main_doubleInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.813646"^^xsd:dateTime ;
-            prov:entity id:d4ac4ab8-25a3-4412-82b6-07b92da98795 ;
-            prov:hadRole wf:main_boundingBoxInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.100961"^^xsd:dateTime ;
-            prov:entity id:_88e9a099-e5d4-45f9-8402-c8082168a6f0 ;
-            prov:hadRole wf:main_imagesInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.105949"^^xsd:dateTime ;
-            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
-            prov:hadRole wf:main_EchoProcess_stringInput ],
+            prov:atTime "2026-01-15T16:46:11.101847"^^xsd:dateTime ;
+            prov:entity id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 ;
+            prov:hadRole wf:main_featureCollectionInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:11.106731"^^xsd:dateTime ;
             prov:entity id:_0df32fa2-e262-458f-b1df-5e749c1b19f4 ;
-            prov:hadRole wf:main_EchoProcess_doubleInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.401124"^^xsd:dateTime ;
-            prov:entity id:c14eb1fb-b860-4cfb-ba2c-c9f2f4f5d4e5 ;
-            prov:hadRole wf:main_EchoProcess_imagesInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.106052"^^xsd:dateTime ;
-            prov:entity id:fc017dcf-09ec-4cbf-81ac-741b5a61b482 ;
-            prov:hadRole wf:main_EchoProcess_measureInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.807817"^^xsd:dateTime ;
-            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
-            prov:hadRole wf:main_stringInput ] ;
+            prov:hadRole wf:main_EchoProcess_doubleInput ] ;
     prov:startedAtTime "2026-01-15T16:46:10.775907"^^xsd:dateTime .
 
 
@@ -3089,6 +3089,8 @@ x-jsonld-extra-terms:
       endTime:
         '@id': http://www.w3.org/ns/prov#endedAtTime
         '@type': http://www.w3.org/2001/XMLSchema#dateTime
+  Document: https://openprovenance.org/ns/provext#Document
+  Bundle: http://www.w3.org/ns/prov#Bundle
   Entity:
     x-jsonld-id: http://www.w3.org/ns/prov#Entity
     x-jsonld-context:
@@ -3302,6 +3304,8 @@ Links to the schema:
         }
       }
     },
+    "Document": "provext:Document",
+    "Bundle": "prov:Bundle",
     "Entity": {
       "@id": "prov:Entity",
       "@context": {

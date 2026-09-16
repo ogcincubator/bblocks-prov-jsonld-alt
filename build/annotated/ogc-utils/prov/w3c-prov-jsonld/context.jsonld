@@ -38,6 +38,8 @@
         }
       }
     },
+    "Document": "provext:Document",
+    "Bundle": "prov:Bundle",
     "Entity": {
       "@id": "prov:Entity",
       "@context": {

@@ -10,7 +10,7 @@
   "itemClass": "model",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2026-09-09",
+  "dateOfLastChange": "2026-09-08",
   "dependsOn": [
     "ogc.ogc-utils.prov"
   ],
@@ -111,7 +111,7 @@
           "transformResults": {
             "ogc-prov-chain-object-to-array": {
               "success": false,
-              "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpxedmg0fm.py\", line 253, in <module>\n    exec(_TRANSFORM_CODE, _ns)\n  File \"<transform>\", line 99, in <module>\n  File \"<transform>\", line 58, in convert\nValueError: ogc-prov-chain-object-to-array expects a single top-level JSON object (the OGC PROV Chain 'object' form); got an array instead - it is already flat.\n"
+              "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmpffsalt0l.py\", line 253, in <module>\n    exec(_TRANSFORM_CODE, _ns)\n  File \"<transform>\", line 99, in <module>\n  File \"<transform>\", line 58, in convert\nValueError: ogc-prov-chain-object-to-array expects a single top-level JSON object (the OGC PROV Chain 'object' form); got an array instead - it is already flat.\n"
             },
             "ogc-prov-chain-array-to-object": {
               "success": true,
@@ -159,7 +159,7 @@
             },
             "ogc-prov-chain-array-to-object": {
               "success": false,
-              "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmp4642z3gm.py\", line 253, in <module>\n    exec(_TRANSFORM_CODE, _ns)\n  File \"<transform>\", line 103, in <module>\n  File \"<transform>\", line 47, in convert\nValueError: ogc-prov-chain-array-to-object expects a bare top-level JSON array (the OGC PROV Chain 'array' form); got a single object instead - it is already nested.\n"
+              "stderr": "Traceback (most recent call last):\n  File \"/tmp/tmp_e43d6ds.py\", line 253, in <module>\n    exec(_TRANSFORM_CODE, _ns)\n  File \"<transform>\", line 103, in <module>\n  File \"<transform>\", line 47, in convert\nValueError: ogc-prov-chain-array-to-object expects a bare top-level JSON array (the OGC PROV Chain 'array' form); got a single object instead - it is already nested.\n"
             }
           },
           "sizeBytes": 500,

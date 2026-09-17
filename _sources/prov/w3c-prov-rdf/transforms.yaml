@@ -1,0 +1,60 @@
+$schema: https://raw.githubusercontent.com/opengeospatial/bblocks-postprocess/refs/heads/master/ogc/bblocks/schemas/transforms.schema.yaml
+transforms:
+  - id: w3c-prov-rdf-to-w3c-prov-xml
+    description: |
+      Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-XML**, using the `prov`
+      library, which parses RDF via `rdflib` and serializes PROV-XML natively - a direct
+      conversion, not chained through PROV-JSONLD. See `w3c-prov-rdf-to-w3c-prov-jsonld` (in the
+      `w3c-prov-jsonld` block) for the QName-unsafe identifier caveat shared by all transforms
+      starting from this format.
+    type: python
+    inputs:
+      mediaTypes: [text/turtle]
+    outputs:
+      mediaTypes: [application/provenance+xml]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-xml
+    metadata:
+      dependencies:
+        pip: prov[rdf,xml]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_rdf_to_w3c_prov_xml.py
+
+  - id: w3c-prov-rdf-to-w3c-prov-json
+    description: |
+      Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-JSON**, using the `prov`
+      library, which parses RDF via `rdflib` and serializes PROV-JSON natively - a direct
+      conversion, not chained through PROV-JSONLD. Same QName-unsafe identifier caveat as
+      `w3c-prov-rdf-to-w3c-prov-xml`.
+    type: python
+    inputs:
+      mediaTypes: [text/turtle]
+    outputs:
+      mediaTypes: [application/provenance+json]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-json
+    metadata:
+      dependencies:
+        pip: prov[rdf]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_rdf_to_w3c_prov_json.py
+
+  - id: w3c-prov-rdf-to-w3c-prov-n
+    description: |
+      Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-N**, using the `prov`
+      library, which parses RDF via `rdflib` and serializes PROV-N natively - a direct
+      conversion, not chained through PROV-JSONLD. Same QName-unsafe identifier caveat as
+      `w3c-prov-rdf-to-w3c-prov-xml` applies to parsing. There is intentionally no reverse
+      transform: `prov` implements a PROV-N serializer but not a parser.
+    type: python
+    inputs:
+      mediaTypes: [text/turtle]
+    outputs:
+      mediaTypes: [text/provenance-notation]
+      profiles:
+        - bblocks://ogc.ogc-utils.prov.w3c-prov-n
+    metadata:
+      dependencies:
+        pip: prov[rdf]>=3.1.0
+        python: ">=3.9"
+    ref: transforms/w3c_prov_rdf_to_w3c_prov_n.py

@@ -7,8 +7,15 @@
   "itemClass": "model",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2026-09-08",
+  "dateOfLastChange": "2026-09-11",
   "isProfileOf": "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
+  "dependsOn": ["bblocks://ogc.ogc-utils.prov.w3c-prov-base"],
+  "hasFormat": [
+    "bblocks://ogc.ogc-utils.prov.w3c-prov-xml",
+    "bblocks://ogc.ogc-utils.prov.w3c-prov-json",
+    "bblocks://ogc.ogc-utils.prov.w3c-prov-rdf",
+    "bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld"
+  ],
   "sources": [
     { "link": "https://www.w3.org/TR/prov-n/", "title": "PROV-N: The Provenance Notation" },
     { "link": "https://docs.ogc.org/DRAFTS/26-038.html", "title": "OGC API - Processes - Part 5: Provenance (registers `text/provenance-notation` for PROV-N)" }

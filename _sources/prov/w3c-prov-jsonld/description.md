@@ -1,11 +1,11 @@
 # W3C PROV-JSONLD
 
 PROV-JSONLD is a non-normative W3C Member Submission JSON-LD binding of PROV-DM: a single
-`@context` (this repository plus the vocabulary at the referenced `context.jsonld`) and a flat
-`@graph` array of typed records — as opposed to the nested "Provenance Chain" representation from
-`bblock-prov-schema`'s `ogc.ogc-utils.prov` (OGC PROV Chain) (see the
-[transform](#transforms) below) or the flat but non-linked-data
-`ogc.ogc-utils.prov.w3c-prov-json` (W3C PROV-JSON).
+context (this repository plus the vocabulary at the referenced `context.jsonld`) and a flat
+graph array of typed records — as opposed to the nested "Provenance Chain" representation from
+`bblock-prov-schema`'s [`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov) (OGC PROV Chain) (see
+the Transforms tab below) or the flat but non-linked-data
+[`ogc.ogc-utils.prov.w3c-prov-json`](bblocks://ogc.ogc-utils.prov.w3c-prov-json) (W3C PROV-JSON).
 
 `schema` and `ldContext` reference the authoritative documents directly rather than vendoring
 copies, so this block always tracks the upstream submission.
@@ -24,49 +24,51 @@ correctly in every PROV representation, including PROV-JSONLD.
 This block acts as the **hub** for converting between W3C PROV representations and between W3C
 PROV and OGC PROV Chain: every transform either converts something *into* PROV-JSONLD or
 converts PROV-JSONLD *into* something else, all implemented in Python using the `prov` library
-and explicitly named for the two representations each one bridges.
+and explicitly named for the two representations each one bridges. See the
+[Transforms tab](https://ogcincubator.github.io/bblocks-docs/create/transforms) on this block's
+page for the full, current list with examples.
 
 **Bridging to OGC PROV Chain:**
 
-- `w3c-prov-jsonld-to-ogc-prov-chain` - converts a **W3C PROV-JSONLD** document into the flat
-  **array** form of **OGC PROV Chain** (validated against
-  `ogc.ogc-utils.prov` (OGC PROV Chain)). Always emits the array form with
+- **W3C PROV-JSONLD → OGC PROV Chain**: converts a W3C PROV-JSONLD document into the flat
+  **array** form of OGC PROV Chain (validated against
+  [`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov)). Always emits the array form with
   full-IRI identifiers, since a generic converter can't assume a single natural root exists for
   arbitrary input.
-- `ogc-prov-chain-to-w3c-prov-jsonld` - converts the flat array form of an **OGC PROV Chain**
-  document back into **W3C PROV-JSONLD**.
+- **OGC PROV Chain → W3C PROV-JSONLD**: converts the flat array form of an OGC PROV Chain
+  document back into W3C PROV-JSONLD.
 
 If a single-object OGC PROV Chain result is needed instead of the array form, chain the first
-transform's output into `ogc-prov-chain-array-to-object` from the
-`ogc.ogc-utils.prov.ogc-prov-chain-forms` (OGC PROV Chain: Array ⇄ Object Conversion) block - that block
-also provides the reverse (`ogc-prov-chain-object-to-array`) for feeding a single-object
-document into `ogc-prov-chain-to-w3c-prov-jsonld`. That block's README explains why
-array→object is only conditionally applicable while object→array always is.
+transform's output into the array→object transform from
+[`ogc.ogc-utils.prov.ogc-prov-chain-forms`](bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms)
+(OGC PROV Chain: Array ⇄ Object Conversion) - that block also provides the reverse (object→array)
+for feeding a single-object document into the OGC PROV Chain → W3C PROV-JSONLD transform above.
+That block's description explains why array→object is only conditionally applicable while
+object→array always is.
 
 **Bridging to/from the other W3C PROV representations:**
 
-| Transform | Direction |
+| Direction | Notes |
 |---|---|
-| `w3c-prov-json-to-w3c-prov-jsonld` | PROV-JSON → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-json` | PROV-JSONLD → PROV-JSON |
-| `w3c-prov-rdf-to-w3c-prov-jsonld` | PROV-O/RDF (Turtle) → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-rdf` | PROV-JSONLD → PROV-O/RDF (Turtle) |
-| `w3c-prov-xml-to-w3c-prov-jsonld` | PROV-XML → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-xml` | PROV-JSONLD → PROV-XML |
-| `w3c-prov-jsonld-to-w3c-prov-n` | PROV-JSONLD → PROV-N (one-way only) |
+| PROV-JSON ⇄ PROV-JSONLD | Bidirectional |
+| PROV-O/RDF (Turtle) ⇄ PROV-JSONLD | Bidirectional |
+| PROV-XML ⇄ PROV-JSONLD | Bidirectional |
+| PROV-JSONLD → PROV-N | One-way only |
 
 Combining these with the OGC PROV Chain transforms above gives every W3C PROV representation a
 path to and from OGC PROV Chain via PROV-JSONLD as an intermediate step - e.g. PROV-XML → PROV-JSONLD
 → OGC PROV Chain (array) → (optionally) OGC PROV Chain (object), without needing a separate
-direct transform for every pair of representations.
+direct transform for every pair of representations. Every W3C PROV representation also has direct
+transforms to every other one (see each format block's own Transforms tab, and the interconnection
+table in [`ogc.ogc-utils.prov.w3c-prov-base`](bblocks://ogc.ogc-utils.prov.w3c-prov-base)) - the
+PROV-JSONLD hub above remains the only path to/from OGC PROV Chain specifically.
 
 **PROV-N is a one-way exception:** `prov` implements a PROV-N *serializer* but not a *parser*
-(`ProvDocument.deserialize(..., format="provn")` raises `NotImplementedError`), so no transform
-here (or anywhere in this repository) can take PROV-N as input. To convert data available only
-as PROV-N into another representation, start from that data's original PROV-JSON/XML/RDF source
-instead, if available.
+(deserializing PROV-N raises `NotImplementedError`), so no transform here (or anywhere in this
+repository) can take PROV-N as input. To convert data available only as PROV-N into another
+representation, start from that data's original PROV-JSON/XML/RDF source instead, if available.
 
-**Note on `w3c-prov-rdf-to-w3c-prov-jsonld` and QName-unsafe identifiers:** `prov`'s RDF
+**Note on the RDF→PROV-JSONLD transform and QName-unsafe identifiers:** `prov`'s RDF
 deserializer requires every prefixed name (CURIE) it re-derives while reading Turtle to be
 coercible to an XML `QName`/NCName local part, which must start with a letter or underscore and
 cannot contain `/`, `#`, or `:`. Some real-world identifiers are not QName-safe under their

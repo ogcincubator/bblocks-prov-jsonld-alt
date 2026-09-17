@@ -110,6 +110,14 @@
         "@id": "prof:isProfileOf",
         "@type": "@id"
       },
+      "hasFormat": {
+        "@id": "dct:hasFormat",
+        "@type": "@id"
+      },
+      "seeAlso": {
+        "@id": "rdfs:seeAlso",
+        "@type": "@id"
+      },
       "tags": "dcat:keyword",
       "shaclShapes": {
         "@id": "prof:hasResource",
@@ -201,15 +209,16 @@
       }
     }
   ],
+  "metaRegistry": "https://w3id.org/ogc/bblocks/meta-register.json",
   "name": "Building Blocks - Alternative representations of the W3C PROV model",
   "abstract": "Testing of alternative representations and transforms for the W3C PROV model",
   "description": "Provenance defined using the [W3C PROV model](https://www.w3.org/TR/prov-overview/) is a DAG (non-cyclic graph)\nbased on three main object types: Entity, Activity and Agent.\n\nThe candidate \"canonical\" PROV repository (https://ogcincubator.github.io/bblocks-prov-schema )\ndefines a JSON schema and matching JSON-LD context using the [OGC Building Blocks](https://ogcincubator.github.io/bblocks-docs/) methodology,\nfor the W3C PROV model, using the canonical terminology used in the PROV ontology as element names.\n\nSince the development of this schema, W3C PROV itself defines multiple concrete syntaxes for the\nsame underlying model - PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, and the non-normative member\nsubmission [PROV-JSONLD](https://www.w3.org/submissions/prov-jsonld/) - each with different\ntradeoffs for readability, tooling, and linked-data integration.\n\n## Design Principles\n\n  - **Lightweight** A serialization MUST support lightweight Web applications.\n  - **Natural** A serialization MUST look natural to its targeted community of users.\n  - **Semantic** A serialization MUST allow for semantic markup and integration with linked data applications.\n  - **Efficient** A serialization MUST be efficiently processable.\n\nThis repository is designed to document and explore the potential for reconciliation of\nthese models across multiple profile representations of the PROV concepts.\n\n## How this repository is organized: profiles of a common PROV base\n\nEvery concrete PROV representation defined here (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF,\nPROV-JSONLD) is declared as a **profile** (`isProfileOf`) of a single shared anchor block,\n`ogc.ogc-utils.prov.w3c-prov-base` (\"W3C PROV Representation Base\") - the same relationship as the W3C\n[Profiles Vocabulary (PROF)](https://www.w3.org/TR/dx-prof/)'s `prof:isProfileOf`: each one is a\nconcrete, backward-compatible specialization of the same underlying PROV-DM concepts\n(`Entity`, `Activity`, `Agent` and their relations), differing only in concrete syntax.\n\nA separate, pre-existing register imported here, `ogc.ogc-utils.prov` (\"OGC PROV Chain\", from\n[`bblock-prov-schema`](https://ogcincubator.github.io/bblock-prov-schema/)), models the same\nunderlying PROV-O concepts again, structured as JSON Schema rather than a `@context`/`@graph`\nlinked-data document. **It is also a profile of the same PROV-O base** - not a fundamentally\ndifferent model, just another concrete syntax - and is treated as such throughout this\nrepository: `ogc.ogc-utils.prov.w3c-prov-jsonld` declares `isProfileOf` it directly (alongside\nthe shared `ogc.ogc-utils.prov.w3c-prov-base` anchor), and the transforms in\n`ogc.ogc-utils.prov.ogc-prov-chain-forms` / `ogc.ogc-utils.prov.w3c-prov-jsonld` convert\nlosslessly between W3C PROV-JSONLD and OGC PROV Chain precisely because both are just different\nconcrete syntaxes for the same PROV-O statements. That it is a pre-existing, separately\nmaintained register we don't own only means it cannot itself declare `isProfileOf` back towards\nthis repository's blocks - it does not change the nature of the relationship. See the\n`ogc.ogc-utils.prov.w3c-prov-base` block's own documentation for how the two relate, and the\nblocks above for the transforms that prove and implement that relationship.\n",
-  "modified": "2026-09-16T13:10:08.640511",
+  "modified": "2026-09-17T02:42:15.909990",
   "tooling": {
     "bblocks-postprocess": {
-      "commitId": "\"e9e9cb5c905d4e569b44b4816a663ec450322f6f",
-      "shortCommitId": "\"e9e9cb",
-      "date": "2026-09-14T10:12:51+00:00\""
+      "commitId": "\"3d8bea5cf043babc6562760d91d3841b79f2d7a5",
+      "shortCommitId": "\"3d8bea",
+      "date": "2026-09-16T22:31:53+00:00\""
     }
   },
   "gitRepository": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt",
@@ -261,7 +270,7 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
@@ -336,7 +345,7 @@
       "itemClass": "schema",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
         "bblocks://ogc.ogc-utils.prov"
@@ -747,7 +756,7 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
@@ -821,7 +830,7 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
@@ -908,7 +917,7 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
@@ -990,7 +999,7 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "dependsOn": [
         "bblocks://ogc.ogc-utils.prov"
       ],
@@ -1127,18 +1136,18 @@
       "itemClass": "model",
       "register": "ogc-utils",
       "version": "0.1",
-      "dateOfLastChange": "2026-09-08",
+      "dateOfLastChange": "2026-09-17",
       "concept": [
         "http://www.w3.org/ns/prov#Entity",
         "http://www.w3.org/ns/prov#Activity",
         "http://www.w3.org/ns/prov#Agent"
       ],
       "dependsOn": [
-        "bblocks://ogc.ogc-utils.prov-entity",
-        "bblocks://ogc.ogc-utils.prov-bundled",
-        "bblocks://ogc.ogc-utils.prov-activity",
+        "bblocks://ogc.ogc-utils.prov",
         "bblocks://ogc.ogc-utils.prov-agent",
-        "bblocks://ogc.ogc-utils.prov"
+        "bblocks://ogc.ogc-utils.prov-activity",
+        "bblocks://ogc.ogc-utils.prov-bundled",
+        "bblocks://ogc.ogc-utils.prov-entity"
       ],
       "sources": [
         {

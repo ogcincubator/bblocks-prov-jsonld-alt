@@ -10,18 +10,18 @@
   "itemClass": "model",
   "register": "ogc-utils",
   "version": "0.1",
-  "dateOfLastChange": "2026-09-08",
+  "dateOfLastChange": "2026-09-17",
   "concept": [
     "http://www.w3.org/ns/prov#Entity",
     "http://www.w3.org/ns/prov#Activity",
     "http://www.w3.org/ns/prov#Agent"
   ],
   "dependsOn": [
-    "ogc.ogc-utils.prov-entity",
-    "ogc.ogc-utils.prov-bundled",
-    "ogc.ogc-utils.prov-activity",
+    "ogc.ogc-utils.prov",
     "ogc.ogc-utils.prov-agent",
-    "ogc.ogc-utils.prov"
+    "ogc.ogc-utils.prov-activity",
+    "ogc.ogc-utils.prov-bundled",
+    "ogc.ogc-utils.prov-entity"
   ],
   "sources": [
     {

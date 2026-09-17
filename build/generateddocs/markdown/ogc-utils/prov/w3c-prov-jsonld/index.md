@@ -3,7 +3,7 @@
 
 `ogc.ogc-utils.prov.w3c-prov-jsonld` *v0.1*
 
-The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using `@context`/`@graph` rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.
+The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using context and graph blocks rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -12,11 +12,11 @@ The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of 
 # W3C PROV-JSONLD
 
 PROV-JSONLD is a non-normative W3C Member Submission JSON-LD binding of PROV-DM: a single
-`@context` (this repository plus the vocabulary at the referenced `context.jsonld`) and a flat
-`@graph` array of typed records — as opposed to the nested "Provenance Chain" representation from
-`bblock-prov-schema`'s `ogc.ogc-utils.prov` (OGC PROV Chain) (see the
-[transform](#transforms) below) or the flat but non-linked-data
-`ogc.ogc-utils.prov.w3c-prov-json` (W3C PROV-JSON).
+context (this repository plus the vocabulary at the referenced `context.jsonld`) and a flat
+graph array of typed records — as opposed to the nested "Provenance Chain" representation from
+`bblock-prov-schema`'s [`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov) (OGC PROV Chain) (see
+the Transforms tab below) or the flat but non-linked-data
+[`ogc.ogc-utils.prov.w3c-prov-json`](bblocks://ogc.ogc-utils.prov.w3c-prov-json) (W3C PROV-JSON).
 
 `schema` and `ldContext` reference the authoritative documents directly rather than vendoring
 copies, so this block always tracks the upstream submission.
@@ -35,49 +35,51 @@ correctly in every PROV representation, including PROV-JSONLD.
 This block acts as the **hub** for converting between W3C PROV representations and between W3C
 PROV and OGC PROV Chain: every transform either converts something *into* PROV-JSONLD or
 converts PROV-JSONLD *into* something else, all implemented in Python using the `prov` library
-and explicitly named for the two representations each one bridges.
+and explicitly named for the two representations each one bridges. See the
+[Transforms tab](https://ogcincubator.github.io/bblocks-docs/create/transforms) on this block's
+page for the full, current list with examples.
 
 **Bridging to OGC PROV Chain:**
 
-- `w3c-prov-jsonld-to-ogc-prov-chain` - converts a **W3C PROV-JSONLD** document into the flat
-  **array** form of **OGC PROV Chain** (validated against
-  `ogc.ogc-utils.prov` (OGC PROV Chain)). Always emits the array form with
+- **W3C PROV-JSONLD → OGC PROV Chain**: converts a W3C PROV-JSONLD document into the flat
+  **array** form of OGC PROV Chain (validated against
+  [`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov)). Always emits the array form with
   full-IRI identifiers, since a generic converter can't assume a single natural root exists for
   arbitrary input.
-- `ogc-prov-chain-to-w3c-prov-jsonld` - converts the flat array form of an **OGC PROV Chain**
-  document back into **W3C PROV-JSONLD**.
+- **OGC PROV Chain → W3C PROV-JSONLD**: converts the flat array form of an OGC PROV Chain
+  document back into W3C PROV-JSONLD.
 
 If a single-object OGC PROV Chain result is needed instead of the array form, chain the first
-transform's output into `ogc-prov-chain-array-to-object` from the
-`ogc.ogc-utils.prov.ogc-prov-chain-forms` (OGC PROV Chain: Array ⇄ Object Conversion) block - that block
-also provides the reverse (`ogc-prov-chain-object-to-array`) for feeding a single-object
-document into `ogc-prov-chain-to-w3c-prov-jsonld`. That block's README explains why
-array→object is only conditionally applicable while object→array always is.
+transform's output into the array→object transform from
+[`ogc.ogc-utils.prov.ogc-prov-chain-forms`](bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms)
+(OGC PROV Chain: Array ⇄ Object Conversion) - that block also provides the reverse (object→array)
+for feeding a single-object document into the OGC PROV Chain → W3C PROV-JSONLD transform above.
+That block's description explains why array→object is only conditionally applicable while
+object→array always is.
 
 **Bridging to/from the other W3C PROV representations:**
 
-| Transform | Direction |
+| Direction | Notes |
 |---|---|
-| `w3c-prov-json-to-w3c-prov-jsonld` | PROV-JSON → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-json` | PROV-JSONLD → PROV-JSON |
-| `w3c-prov-rdf-to-w3c-prov-jsonld` | PROV-O/RDF (Turtle) → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-rdf` | PROV-JSONLD → PROV-O/RDF (Turtle) |
-| `w3c-prov-xml-to-w3c-prov-jsonld` | PROV-XML → PROV-JSONLD |
-| `w3c-prov-jsonld-to-w3c-prov-xml` | PROV-JSONLD → PROV-XML |
-| `w3c-prov-jsonld-to-w3c-prov-n` | PROV-JSONLD → PROV-N (one-way only) |
+| PROV-JSON ⇄ PROV-JSONLD | Bidirectional |
+| PROV-O/RDF (Turtle) ⇄ PROV-JSONLD | Bidirectional |
+| PROV-XML ⇄ PROV-JSONLD | Bidirectional |
+| PROV-JSONLD → PROV-N | One-way only |
 
 Combining these with the OGC PROV Chain transforms above gives every W3C PROV representation a
 path to and from OGC PROV Chain via PROV-JSONLD as an intermediate step - e.g. PROV-XML → PROV-JSONLD
 → OGC PROV Chain (array) → (optionally) OGC PROV Chain (object), without needing a separate
-direct transform for every pair of representations.
+direct transform for every pair of representations. Every W3C PROV representation also has direct
+transforms to every other one (see each format block's own Transforms tab, and the interconnection
+table in [`ogc.ogc-utils.prov.w3c-prov-base`](bblocks://ogc.ogc-utils.prov.w3c-prov-base)) - the
+PROV-JSONLD hub above remains the only path to/from OGC PROV Chain specifically.
 
 **PROV-N is a one-way exception:** `prov` implements a PROV-N *serializer* but not a *parser*
-(`ProvDocument.deserialize(..., format="provn")` raises `NotImplementedError`), so no transform
-here (or anywhere in this repository) can take PROV-N as input. To convert data available only
-as PROV-N into another representation, start from that data's original PROV-JSON/XML/RDF source
-instead, if available.
+(deserializing PROV-N raises `NotImplementedError`), so no transform here (or anywhere in this
+repository) can take PROV-N as input. To convert data available only as PROV-N into another
+representation, start from that data's original PROV-JSON/XML/RDF source instead, if available.
 
-**Note on `w3c-prov-rdf-to-w3c-prov-jsonld` and QName-unsafe identifiers:** `prov`'s RDF
+**Note on the RDF→PROV-JSONLD transform and QName-unsafe identifiers:** `prov`'s RDF
 deserializer requires every prefixed name (CURIE) it re-derives while reading Turtle to be
 coercible to an XML `QName`/NCName local part, which must start with a letter or underscore and
 cannot contain `/`, `#`, or `:`. Some real-world identifiers are not QName-safe under their
@@ -184,10 +186,10 @@ it), so every representation - including this transform - round-trips it correct
 <https://example.org/cwlprov/activity/step1> a prov:Activity ;
     prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
     prov:qualifiedAssociation [ a prov:Association ;
-            prov:agent <https://example.org/cwlprov/engine/cwltool> ],
-        [ a prov:Association ;
             prov:agent <https://example.org/cwlprov/engine/cwltool> ;
-            prov:hadPlan <https://example.org/cwlprov/plan/main> ] ;
+            prov:hadPlan <https://example.org/cwlprov/plan/main> ],
+        [ a prov:Association ;
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ] ;
     prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
 
 <https://example.org/cwlprov/data/output.txt> a prov:Entity ;
@@ -1895,15 +1897,15 @@ id:_79e5fa0b-4998-46da-bbe8-920533c7940b a wfprov:Artifact,
     provext:qualifiedMembership [ a provext:Membership ;
             provext:member id:_9718f0ee-b250-4d33-a6df-4b8ad72bf150 ],
         [ a provext:Membership ;
-            provext:member id:_64c45605-d8a9-4a56-929d-47dcad5543f1 ],
-        [ a provext:Membership ;
             provext:member id:b557ccae-b5e3-43ce-bc06-f39d3e12f67f ],
-        [ a provext:Membership ;
-            provext:member id:f55d0d44-4cb4-4cd2-a336-7bac9e265583 ],
         [ a provext:Membership ;
             provext:member id:c8dbab29-6641-40d9-b5c1-626872f5337d ],
         [ a provext:Membership ;
-            provext:member id:_6a99e0ba-c671-4471-aa33-4cc523e0f428 ] .
+            provext:member id:_6a99e0ba-c671-4471-aa33-4cc523e0f428 ],
+        [ a provext:Membership ;
+            provext:member id:_64c45605-d8a9-4a56-929d-47dcad5543f1 ],
+        [ a provext:Membership ;
+            provext:member id:f55d0d44-4cb4-4cd2-a336-7bac9e265583 ] .
 
 id:_96f693e2-3eac-4a04-8887-7285b7605f49 a wfprov:Artifact,
         prov:Collection,
@@ -2021,17 +2023,17 @@ id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:bde07acc-95a9-46f6-be09-6467fa7bd8b8 ],
-        [ a provext:Membership ;
-            provext:member id:a1aa3cbf-8435-4f94-aeb6-110922551843 ],
-        [ a provext:Membership ;
-            provext:member id:_5226c081-e3dc-4963-987b-92142bd75102 ],
-        [ a provext:Membership ;
             provext:member id:_2a95bd87-116b-42f4-8525-428de8743778 ],
         [ a provext:Membership ;
             provext:member id:f30572d8-60e4-4221-80a7-cb76e1007e9a ],
         [ a provext:Membership ;
-            provext:member id:_6d234b31-69fb-4949-b096-924f234097a1 ] .
+            provext:member id:_5226c081-e3dc-4963-987b-92142bd75102 ],
+        [ a provext:Membership ;
+            provext:member id:_6d234b31-69fb-4949-b096-924f234097a1 ],
+        [ a provext:Membership ;
+            provext:member id:bde07acc-95a9-46f6-be09-6467fa7bd8b8 ],
+        [ a provext:Membership ;
+            provext:member id:a1aa3cbf-8435-4f94-aeb6-110922551843 ] .
 
 id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 a wf4ever:File,
         wfprov:Artifact,
@@ -2113,25 +2115,25 @@ id:c14eb1fb-b860-4cfb-ba2c-c9f2f4f5d4e5 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:_043749d9-938e-4aa4-b5ae-12fc699dbcc9 ],
+            provext:member id:ef9384d4-880f-4398-9e10-1bce1d54e51e ],
         [ a provext:Membership ;
-            provext:member id:ef9384d4-880f-4398-9e10-1bce1d54e51e ] .
+            provext:member id:_043749d9-938e-4aa4-b5ae-12fc699dbcc9 ] .
 
 id:c68b1b94-7f88-4cda-87da-f5e68beabe42 a wfprov:Artifact,
         prov:Collection,
         prov:Entity ;
     provext:qualifiedMembership [ a provext:Membership ;
-            provext:member id:a68017f5-e2f6-441c-b4ad-cf94dec801d7 ],
-        [ a provext:Membership ;
-            provext:member id:a19d9289-ab50-4d85-a241-4ef9a0e36deb ],
+            provext:member id:a45ad975-3387-4b7c-ac1c-a268c65927d1 ],
         [ a provext:Membership ;
             provext:member id:_5e4614e1-101d-4be2-8b66-24f770b3435f ],
         [ a provext:Membership ;
-            provext:member id:a45ad975-3387-4b7c-ac1c-a268c65927d1 ],
-        [ a provext:Membership ;
             provext:member id:_056f6ec9-f5ca-4630-8b6e-171ea0fe8f3f ],
         [ a provext:Membership ;
-            provext:member id:b4c63361-5926-4b48-be43-df94727a79da ] .
+            provext:member id:a68017f5-e2f6-441c-b4ad-cf94dec801d7 ],
+        [ a provext:Membership ;
+            provext:member id:b4c63361-5926-4b48-be43-df94727a79da ],
+        [ a provext:Membership ;
+            provext:member id:a19d9289-ab50-4d85-a241-4ef9a0e36deb ] .
 
 id:c790f3f7-ac11-4d13-9c71-4d68c73ed040 a wf4ever:File,
         wfprov:Artifact,
@@ -2325,86 +2327,86 @@ id:_53f5a04e-b531-466d-81be-62c34a1431ba a wfdesc:ProcessRun,
     prov:qualifiedGeneration [ a prov:Generation ;
             prov:activity data:_4e5feeeb8209de47c8dfb7c3f50a893e505af067_EchoProcess ] ;
     prov:qualifiedStart [ a prov:Start ;
-            prov:entity data:_4e5feeeb8209de47c8dfb7c3f50a893e505af067 ],
-        [ a prov:Start ;
             prov:atTime "2026-01-15T16:46:10.775984"^^xsd:dateTime ;
-            prov:hadActivity id:d57aaff6-a93f-4927-a2d8-112beb358d4d ] ;
+            prov:hadActivity id:d57aaff6-a93f-4927-a2d8-112beb358d4d ],
+        [ a prov:Start ;
+            prov:entity data:_4e5feeeb8209de47c8dfb7c3f50a893e505af067 ] ;
     prov:qualifiedUsage [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.808789"^^xsd:dateTime ;
-            prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
-            prov:hadRole wf:main_dateInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.106625"^^xsd:dateTime ;
-            prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
-            prov:hadRole wf:main_EchoProcess_dateInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.105949"^^xsd:dateTime ;
-            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
-            prov:hadRole wf:main_EchoProcess_stringInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.107662"^^xsd:dateTime ;
-            prov:entity id:_109d6043-7fad-428f-a563-a99a4ebd6dda ;
-            prov:hadRole wf:main_EchoProcess_complexObjectInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.101847"^^xsd:dateTime ;
-            prov:entity id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 ;
-            prov:hadRole wf:main_featureCollectionInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.109174"^^xsd:dateTime ;
-            prov:entity id:_160a1cd9-6384-4828-b627-a02e478365fb ;
-            prov:hadRole wf:main_EchoProcess_boundingBoxInput ],
+            prov:atTime "2026-01-15T16:46:10.808944"^^xsd:dateTime ;
+            prov:entity id:f01a7e80-f451-4047-93c0-587666a9847a ;
+            prov:hadRole wf:main_doubleInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:11.401124"^^xsd:dateTime ;
             prov:entity id:c14eb1fb-b860-4cfb-ba2c-c9f2f4f5d4e5 ;
             prov:hadRole wf:main_EchoProcess_imagesInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.107097"^^xsd:dateTime ;
-            prov:entity id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 ;
-            prov:hadRole wf:main_EchoProcess_arrayInput ],
+            prov:atTime "2026-01-15T16:46:11.105949"^^xsd:dateTime ;
+            prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
+            prov:hadRole wf:main_EchoProcess_stringInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.808944"^^xsd:dateTime ;
-            prov:entity id:f01a7e80-f451-4047-93c0-587666a9847a ;
-            prov:hadRole wf:main_doubleInput ],
+            prov:atTime "2026-01-15T16:46:11.106625"^^xsd:dateTime ;
+            prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
+            prov:hadRole wf:main_EchoProcess_dateInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.106731"^^xsd:dateTime ;
-            prov:entity id:_0df32fa2-e262-458f-b1df-5e749c1b19f4 ;
-            prov:hadRole wf:main_EchoProcess_doubleInput ],
+            prov:atTime "2026-01-15T16:46:10.808789"^^xsd:dateTime ;
+            prov:entity data:_9ddf13e345a6b6376bc2fa817bd4b749f4cfae72 ;
+            prov:hadRole wf:main_dateInput ],
         [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.100961"^^xsd:dateTime ;
-            prov:entity id:_88e9a099-e5d4-45f9-8402-c8082168a6f0 ;
-            prov:hadRole wf:main_imagesInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.807975"^^xsd:dateTime ;
-            prov:entity id:cb4c5d07-5b7e-435f-882c-afe14e061f4b ;
-            prov:hadRole wf:main_measureInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.108679"^^xsd:dateTime ;
-            prov:entity id:_1b6185c0-b83d-431b-a2ba-7c2b026b1823 ;
-            prov:hadRole wf:main_EchoProcess_geometryInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.812817"^^xsd:dateTime ;
-            prov:entity id:_8edd155f-17b1-48d6-ae93-bad0390c9ef3 ;
-            prov:hadRole wf:main_geometryInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.106052"^^xsd:dateTime ;
-            prov:entity id:fc017dcf-09ec-4cbf-81ac-741b5a61b482 ;
-            prov:hadRole wf:main_EchoProcess_measureInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:11.401851"^^xsd:dateTime ;
-            prov:entity id:fbb085ae-d3ad-4639-a448-b01188f1ce9f ;
-            prov:hadRole wf:main_EchoProcess_featureCollectionInput ],
-        [ a prov:Usage ;
-            prov:atTime "2026-01-15T16:46:10.813646"^^xsd:dateTime ;
-            prov:entity id:d4ac4ab8-25a3-4412-82b6-07b92da98795 ;
-            prov:hadRole wf:main_boundingBoxInput ],
+            prov:atTime "2026-01-15T16:46:11.109174"^^xsd:dateTime ;
+            prov:entity id:_160a1cd9-6384-4828-b627-a02e478365fb ;
+            prov:hadRole wf:main_EchoProcess_boundingBoxInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.807817"^^xsd:dateTime ;
             prov:entity data:_0cf60d40470fde378076afacf5812f961208a018 ;
             prov:hadRole wf:main_stringInput ],
         [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.101847"^^xsd:dateTime ;
+            prov:entity id:_54f9b9d5-641c-4e66-8c9d-c65f2ad0be63 ;
+            prov:hadRole wf:main_featureCollectionInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.807975"^^xsd:dateTime ;
+            prov:entity id:cb4c5d07-5b7e-435f-882c-afe14e061f4b ;
+            prov:hadRole wf:main_measureInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.106052"^^xsd:dateTime ;
+            prov:entity id:fc017dcf-09ec-4cbf-81ac-741b5a61b482 ;
+            prov:hadRole wf:main_EchoProcess_measureInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.100961"^^xsd:dateTime ;
+            prov:entity id:_88e9a099-e5d4-45f9-8402-c8082168a6f0 ;
+            prov:hadRole wf:main_imagesInput ],
+        [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.809545"^^xsd:dateTime ;
             prov:entity id:c68b1b94-7f88-4cda-87da-f5e68beabe42 ;
             prov:hadRole wf:main_arrayInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.812817"^^xsd:dateTime ;
+            prov:entity id:_8edd155f-17b1-48d6-ae93-bad0390c9ef3 ;
+            prov:hadRole wf:main_geometryInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.108679"^^xsd:dateTime ;
+            prov:entity id:_1b6185c0-b83d-431b-a2ba-7c2b026b1823 ;
+            prov:hadRole wf:main_EchoProcess_geometryInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.107097"^^xsd:dateTime ;
+            prov:entity id:_541c0738-ac5c-4a35-b592-a3cbc87246f1 ;
+            prov:hadRole wf:main_EchoProcess_arrayInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:10.813646"^^xsd:dateTime ;
+            prov:entity id:d4ac4ab8-25a3-4412-82b6-07b92da98795 ;
+            prov:hadRole wf:main_boundingBoxInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.106731"^^xsd:dateTime ;
+            prov:entity id:_0df32fa2-e262-458f-b1df-5e749c1b19f4 ;
+            prov:hadRole wf:main_EchoProcess_doubleInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.401851"^^xsd:dateTime ;
+            prov:entity id:fbb085ae-d3ad-4639-a448-b01188f1ce9f ;
+            prov:hadRole wf:main_EchoProcess_featureCollectionInput ],
+        [ a prov:Usage ;
+            prov:atTime "2026-01-15T16:46:11.107662"^^xsd:dateTime ;
+            prov:entity id:_109d6043-7fad-428f-a563-a99a4ebd6dda ;
+            prov:hadRole wf:main_EchoProcess_complexObjectInput ],
         [ a prov:Usage ;
             prov:atTime "2026-01-15T16:46:10.810650"^^xsd:dateTime ;
             prov:entity id:_5f78096f-fce2-49b1-aa6d-941927d15dcc ;

@@ -2,7 +2,7 @@
   "title": "Validation report for ogc.ogc-utils.prov.w3c-prov-json - W3C PROV-JSON",
   "bblockName": "W3C PROV-JSON",
   "bblockId": "ogc.ogc-utils.prov.w3c-prov-json",
-  "generated": "2026-09-17T02:42:22.502595+00:00",
+  "generated": "2026-09-17T15:38:35.612629+00:00",
   "result": true,
   "items": [
     {
@@ -24,6 +24,18 @@
             {
               "isError": false,
               "message": "Using examples/example.json from examples"
+            }
+          ]
+        },
+        {
+          "name": "JSON_SCHEMA",
+          "title": "JSON Schema",
+          "entries": [
+            {
+              "op": "validation",
+              "result": true,
+              "isError": false,
+              "message": "Validation passed"
             }
           ]
         }
@@ -48,6 +60,18 @@
             {
               "isError": false,
               "message": "Using examples/example-ogcapi-processes-job.json from examples"
+            }
+          ]
+        },
+        {
+          "name": "JSON_SCHEMA",
+          "title": "JSON Schema",
+          "entries": [
+            {
+              "op": "validation",
+              "result": true,
+              "isError": false,
+              "message": "Validation passed"
             }
           ]
         }

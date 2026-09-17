@@ -1,0 +1,37 @@
+{
+  "title": "Validation report for ogc.ogc-utils.prov.w3c-prov-n - W3C PROV-N",
+  "bblockName": "W3C PROV-N",
+  "bblockId": "ogc.ogc-utils.prov.w3c-prov-n",
+  "generated": "2026-09-17T15:39:37.408448+00:00",
+  "result": true,
+  "items": [
+    {
+      "source": {
+        "type": "TRANSFORM_OUTPUT",
+        "requireFail": false,
+        "filename": "build/tests/ogc-utils/prov/w3c-prov-xml/transforms/example_1_1.w3c-prov-xml-to-w3c-prov-n",
+        "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/ogc-utils/prov/w3c-prov-xml/transforms/example_1_1.w3c-prov-xml-to-w3c-prov-n",
+        "transformId": "w3c-prov-xml-to-w3c-prov-n"
+      },
+      "result": true,
+      "sections": []
+    },
+    {
+      "source": {
+        "type": "TRANSFORM_OUTPUT",
+        "requireFail": false,
+        "filename": "build/tests/ogc-utils/prov/w3c-prov-xml/transforms/example_2_1.w3c-prov-xml-to-w3c-prov-n",
+        "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/ogc-utils/prov/w3c-prov-xml/transforms/example_2_1.w3c-prov-xml-to-w3c-prov-n",
+        "transformId": "w3c-prov-xml-to-w3c-prov-n"
+      },
+      "result": true,
+      "sections": []
+    }
+  ],
+  "globalErrors": {},
+  "counts": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0
+  }
+}

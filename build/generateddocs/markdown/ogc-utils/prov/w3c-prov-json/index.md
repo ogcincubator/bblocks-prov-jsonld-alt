@@ -1,5 +1,5 @@
 
-# W3C PROV-JSON (Model)
+# W3C PROV-JSON (Schema)
 
 `ogc.ogc-utils.prov.w3c-prov-json` *v0.1*
 
@@ -12,10 +12,39 @@ The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON enco
 # W3C PROV-JSON
 
 PROV-JSON is a non-normative W3C Member Submission (not a Recommendation) predating PROV-JSONLD.
-It has no published JSON Schema — the format is described only in prose in the submission — so
-this block references the specification directly (`sources`) rather than a `schema`. It is the
-flat, statement-keyed sibling of `ogc.ogc-utils.prov.w3c-prov-jsonld` (W3C PROV-JSONLD): both
-group records by relation type, but PROV-JSON has no `@context`/`@graph` and is not linked data.
+It has no *official* published JSON Schema — the format is described only in prose in the
+submission — so this block references the specification directly (`sources`) and additionally
+supplies its own JSON Schema, written to capture that prose as an enforceable structural
+constraint (see below), rather than treating a third-party schema as normative. It is the flat,
+statement-keyed sibling of [`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld)
+(W3C PROV-JSONLD): both group records by relation type, but PROV-JSON has no context/graph blocks
+and is not linked data.
+
+## W3C PROV-JSON vs. OGC PROV JSON ([`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov)) - not the same shape
+
+Both are JSON encodings of the same underlying PROV-DM concepts, but they structure records
+completely differently - **this is not a case of one being "the JSON form" of the other**:
+
+| | W3C PROV-JSON (this block) | OGC PROV Chain ([`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov)) |
+|---|---|---|
+| Top-level grouping | By **record/relation type** (`entity`, `activity`, `wasGeneratedBy`, ...) | By **individual record**, each self-describing via its own `provType` field |
+| Shape | Object of objects: `{"entity": {"id1": {...}, "id2": {...}}, ...}` | Either a flat **array** of `{id, provType, ...}` records, or a single **nested object** embedding related records inline |
+| Cross-references between records | Always a bare identifier (string, or array of strings) | Array form: bare identifier (like PROV-JSON). Object form: the related record is **embedded inline**, not referenced |
+| Nesting one record inside another | **Never** (only `bundle` nests, and that's a distinct PROV concept - a sub-graph, not a record) | **Yes**, in its object form - that's the whole point of that form |
+
+This block's [JSON Schema](https://ogcincubator.github.io/bblocks-docs/create/schema) enforces the
+"never nests a record inside another" rule structurally: every attribute value must be a literal,
+a PROV-JSON typed-value wrapper (`{"$": ..., "type": ...}`), or an array of these - never an object
+embedding a full nested record. Feeding this block's schema a document using OGC PROV Chain's
+nested-object style (e.g. `"wasGeneratedBy": {"id": "...", "provType": "Activity", ...}` instead of
+`"wasGeneratedBy": {"_:id1": {"prov:activity": "..."}}`) fails validation - that's precisely the
+distinction this schema exists to catch.
+
+This block's [Transforms](https://ogcincubator.github.io/bblocks-docs/create/transforms) to and
+from W3C PROV-JSONLD and the other W3C PROV representations always produce/consume this
+never-nested shape, since they go through the `prov` library's own native PROV-JSON
+parser/serializer rather than any hand-written conversion logic.
+
 
 ## Examples
 
@@ -1444,6 +1473,94 @@ group records by relation type, but PROV-JSON has no `@context`/`@graph` and is 
   }
 }
 ```
+
+## Schema
+
+```yaml
+$schema: https://json-schema.org/draft/2020-12/schema
+title: W3C PROV-JSON
+description: Structural constraints for the W3C PROV-JSON serialization. PROV-JSON
+  groups records **by relation/record type** at the top level (`entity`, `activity`,
+  `agent`, `wasGeneratedBy`, ...), each mapping an identifier to a flat attribute
+  map. Unlike the OGC PROV Chain JSON representation (`ogc.ogc-utils.prov`), which
+  supports *nesting* one record inside another (its single-object form) as well as
+  a flat array of `id`/`provType`-tagged records (its array form), PROV-JSON never
+  embeds one record's full attribute map inside another record, in either of OGC's
+  two styles - relations always reference other records by bare identifier (a string,
+  or an array of strings), never by an inline nested object.
+type: object
+properties:
+  prefix:
+    type: object
+    additionalProperties:
+      type: string
+  bundle:
+    description: Named sub-graphs (a distinct PROV-DM concept, not "nesting" in the
+      OGC PROV Chain sense). Each bundle's own content follows the same record/relation-type-keyed
+      shape as the top-level document, but is intentionally not constrained recursively
+      here to avoid unbounded schema recursion; see the `$defs/record` constraint
+      applied at the top level.
+    type: object
+    additionalProperties:
+      type: object
+patternProperties:
+  ^(entity|activity|agent)$:
+    type: object
+    additionalProperties:
+      $ref: '#/$defs/recordOrRecords'
+  ? ^(wasGeneratedBy|used|wasInformedBy|wasStartedBy|wasEndedBy|wasInvalidatedBy|wasDerivedFrom|wasAttributedTo|wasAssociatedWith|actedOnBehalfOf|wasInfluencedBy|specializationOf|alternateOf|hadMember|mentionOf|wasPlanOf)$
+  : type: object
+    additionalProperties:
+      $ref: '#/$defs/recordOrRecords'
+additionalProperties: false
+$defs:
+  recordOrRecords:
+    description: Either a single flat attribute map for this identifier, or an array
+      of such maps (PROV-JSON allows multiple independent assertions to share the
+      same identifier) - in both cases, never a nested object embedding another record's
+      own attribute map.
+    oneOf:
+    - $ref: '#/$defs/record'
+    - type: array
+      items:
+        $ref: '#/$defs/record'
+  record:
+    description: 'A single PROV-JSON record''s flat attribute map. Every attribute
+      value must be a literal (string/number/boolean), a typed-value object (`{"$":
+      ..., "type": ...}`), or an array of these - never a nested object embedding
+      another record''s own attribute map (that is the OGC PROV Chain "object" form''s
+      mechanism, not PROV-JSON''s).'
+    type: object
+    additionalProperties:
+      $ref: '#/$defs/value'
+  value:
+    oneOf:
+    - type:
+      - string
+      - number
+      - boolean
+    - type: array
+      items:
+        $ref: '#/$defs/value'
+    - type: object
+      description: A PROV-JSON typed/qualified value wrapper - not a nested record.
+      properties:
+        $:
+          description: The literal value or identifier reference.
+        type:
+          type: string
+        lang:
+          type: string
+      required:
+      - $
+      additionalProperties: false
+
+```
+
+Links to the schema:
+
+* YAML version: [schema.yaml](https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-json/schema.json)
+* JSON version: [schema.json](https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-json/schema.yaml)
 
 ## Sources
 

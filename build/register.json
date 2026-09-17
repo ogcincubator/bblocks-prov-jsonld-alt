@@ -3,7 +3,7 @@
   "name": "Alternative representations of the W3C PROV model",
   "abstract": "Testing of alternative representations and transforms for the W3C PROV model",
   "description": "Provenance defined using the [W3C PROV model](https://www.w3.org/TR/prov-overview/) is a DAG (non-cyclic graph)\nbased on three main object types: Entity, Activity and Agent.\n\nThe candidate \"canonical\" PROV repository (https://ogcincubator.github.io/bblocks-prov-schema )\ndefines a JSON schema and matching JSON-LD context using the [OGC Building Blocks](https://ogcincubator.github.io/bblocks-docs/) methodology,\nfor the W3C PROV model, using the canonical terminology used in the PROV ontology as element names.\n\nSince the development of this schema, W3C PROV itself defines multiple concrete syntaxes for the\nsame underlying model - PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, and the non-normative member\nsubmission [PROV-JSONLD](https://www.w3.org/submissions/prov-jsonld/) - each with different\ntradeoffs for readability, tooling, and linked-data integration.\n\n## Design Principles\n\n  - **Lightweight** A serialization MUST support lightweight Web applications.\n  - **Natural** A serialization MUST look natural to its targeted community of users.\n  - **Semantic** A serialization MUST allow for semantic markup and integration with linked data applications.\n  - **Efficient** A serialization MUST be efficiently processable.\n\nThis repository is designed to document and explore the potential for reconciliation of\nthese models across multiple profile representations of the PROV concepts.\n\n## How this repository is organized: profiles of a common PROV base\n\nEvery concrete PROV representation defined here (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF,\nPROV-JSONLD) is declared as a **profile** (`isProfileOf`) of a single shared anchor block,\n`ogc.ogc-utils.prov.w3c-prov-base` (\"W3C PROV Representation Base\") - the same relationship as the W3C\n[Profiles Vocabulary (PROF)](https://www.w3.org/TR/dx-prof/)'s `prof:isProfileOf`: each one is a\nconcrete, backward-compatible specialization of the same underlying PROV-DM concepts\n(`Entity`, `Activity`, `Agent` and their relations), differing only in concrete syntax.\n\nA separate, pre-existing register imported here, `ogc.ogc-utils.prov` (\"OGC PROV Chain\", from\n[`bblock-prov-schema`](https://ogcincubator.github.io/bblock-prov-schema/)), models the same\nunderlying PROV-O concepts again, structured as JSON Schema rather than a `@context`/`@graph`\nlinked-data document. **It is also a profile of the same PROV-O base** - not a fundamentally\ndifferent model, just another concrete syntax - and is treated as such throughout this\nrepository: `ogc.ogc-utils.prov.w3c-prov-jsonld` declares `isProfileOf` it directly (alongside\nthe shared `ogc.ogc-utils.prov.w3c-prov-base` anchor), and the transforms in\n`ogc.ogc-utils.prov.ogc-prov-chain-forms` / `ogc.ogc-utils.prov.w3c-prov-jsonld` convert\nlosslessly between W3C PROV-JSONLD and OGC PROV Chain precisely because both are just different\nconcrete syntaxes for the same PROV-O statements. That it is a pre-existing, separately\nmaintained register we don't own only means it cannot itself declare `isProfileOf` back towards\nthis repository's blocks - it does not change the nature of the relationship. See the\n`ogc.ogc-utils.prov.w3c-prov-base` block's own documentation for how the two relate, and the\nblocks above for the transforms that prove and implement that relationship.\n",
-  "modified": "2026-09-17T02:42:15.909990",
+  "modified": "2026-09-17T15:38:29.746736",
   "tooling": {
     "bblocks-postprocess": {
       "commitId": "\"3d8bea5cf043babc6562760d91d3841b79f2d7a5",
@@ -19,14 +19,13 @@
   "validationReportJson": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/tests/report.json",
   "imports": [
     "https://opengeospatial.github.io/bblocks/register.json",
-    "https://ogcincubator.github.io/bblock-prov-schema/build/register.json",
-    "https://ogcincubator.github.io/cross-domain-model/build/register.json"
+    "https://ogcincubator.github.io/bblock-prov-schema/build/register.json"
   ],
   "bblocks": [
     {
-      "itemIdentifier": "ogc.ogc-utils.prov.w3c-prov-json",
-      "name": "W3C PROV-JSON",
-      "abstract": "The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON encoding of the W3C PROV data model (W3C Member Submission). A profile of the W3C PROV Representation Base.",
+      "itemIdentifier": "ogc.ogc-utils.prov.ogc-prov-chain-forms",
+      "name": "OGC PROV Chain: Array \u21c4 Object Conversion",
+      "abstract": "Two transforms that convert an OGC PROV Chain document (from the bblock-prov-schema register) between its two allowed shapes: a flat top-level array (every record referencing others by full-IRI id) and a nested single object (one root record with related records inlined). Both shapes validate against the same imported schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see the W3C PROV-JSONLD block for the transforms that bridge to/from W3C PROV-JSONLD.",
       "status": "under-development",
       "dateTimeAddition": "2026-09-08T00:00:00Z",
       "highlighted": true,
@@ -34,8 +33,200 @@
       "register": "ogc-utils",
       "version": "0.1",
       "dateOfLastChange": "2026-09-17",
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov"
+      ],
+      "seeAlso": [
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld"
+      ],
+      "tags": [
+        "prov",
+        "utils",
+        "ogc",
+        "transform"
+      ],
+      "shaclShapes": {
+        "ogc.model.cross-domain.prov": [
+          "https://ogcincubator.github.io/cross-domain-model/_sources/prov/shapes.shacl"
+        ]
+      },
+      "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/",
+      "validationPassed": true,
+      "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov/ogc-prov-chain-forms/",
+      "transforms": [
+        {
+          "id": "ogc-prov-chain-object-to-array",
+          "description": "Flattens a single-**object** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`),\nwith relation targets inlined and/or supplied via a `has_provenance` sibling list, into\nits flat top-level **array** form (every record referencing others by `id`). Always\napplicable - any single-object OGC PROV Chain document, however deeply nested, can be\nflattened. Purely internal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any\nother W3C PROV representation.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/transforms/ogc_prov_chain_object_to_array.py",
+          "code": "\"\"\"Flatten a single-**object** form **OGC PROV Chain** document (``ogc.ogc-utils.prov``,\nhttps://ogcincubator.github.io/bblock-prov-schema/) into its flat top-level **array** form.\n\nThis transform is purely internal to OGC PROV Chain: both the input (single-object, possibly\nwith inline-nested relation targets and/or a ``has_provenance`` sibling list) and the output\n(flat array, every record referencing others by ``id``) validate against the same\n``ogc.ogc-utils.prov`` schema. It does not involve W3C PROV-JSONLD or any other W3C PROV\nrepresentation.\n\nThis direction is **always applicable**: any single-object OGC PROV Chain document, however\ndeeply nested, can be flattened. The reverse direction\n(``ogc-prov-chain-array-to-object``) is only conditionally applicable, since a flat array does\nnot always reduce to a single natural root.\n\nIf the input declares a top-level ``@context`` with simple ``\"prefix\": \"http://...#/\"``\nmappings, CURIE ``id``/reference values are expanded to full IRIs using it, since the flat\narray form has no room for a sibling ``@context`` (the same convention used by\n``w3c_prov_jsonld_to_ogc_prov_chain.py``). Any other ``@context`` shape (e.g. per-term\n``@context`` overrides) is left unresolved; ids that aren't found are copied through unchanged.\n\"\"\"\n\nimport json\n\n_RELATION_PROPS = (\n    \"wasGeneratedBy\",\n    \"used\",\n    \"wasAssociatedWith\",\n    \"wasAttributedTo\",\n    \"wasDerivedFrom\",\n    \"actedOnBehalfOf\",\n)\n\n\ndef _values(value):\n    if value is None:\n        return []\n    return value if isinstance(value, list) else [value]\n\n\ndef _make_expander(context: dict):\n    prefixes = {k: v for k, v in context.items() if isinstance(v, str)}\n\n    def expand(value):\n        if not isinstance(value, str) or \":\" not in value:\n            return value\n        prefix, _, local = value.partition(\":\")\n        base = prefixes.get(prefix)\n        return f\"{base}{local}\" if base else value\n\n    return expand\n\n\ndef convert(ogc_prov_chain_object_json: str) -> str:\n    \"\"\"Convert a single-object OGC PROV Chain document (as a string) to its flat array form\n    (as a string).\"\"\"\n    data = json.loads(ogc_prov_chain_object_json)\n    if not isinstance(data, dict):\n        raise ValueError(\n            \"ogc-prov-chain-object-to-array expects a single top-level JSON object \"\n            \"(the OGC PROV Chain 'object' form); got an array instead - it is already flat.\"\n        )\n\n    expand = _make_expander(data.get(\"@context\") or {})\n    flattened = {}\n    order = []\n\n    def flatten(record: dict) -> str:\n        \"\"\"Recursively flatten `record` (and everything reachable through its relation\n        properties / has_provenance), returning the (expanded) id of `record` itself.\"\"\"\n        record_id = expand(record.get(\"id\"))\n        flat = {k: v for k, v in record.items() if k not in (\"@context\", \"has_provenance\")}\n        flat[\"id\"] = record_id\n\n        for prop in _RELATION_PROPS:\n            if prop not in flat:\n                continue\n            targets = []\n            for target in _values(flat[prop]):\n                if isinstance(target, dict):\n                    targets.append(flatten(target))\n                else:\n                    targets.append(expand(target))\n            flat[prop] = targets[0] if len(targets) == 1 else targets\n\n        if record_id not in flattened:\n            flattened[record_id] = flat\n            order.append(record_id)\n        for nested in _values(record.get(\"has_provenance\")):\n            if isinstance(nested, dict):\n                flatten(nested)\n\n        return record_id\n\n    flatten(data)\n    chain = [flattened[key] for key in order]\n    return json.dumps(chain, indent=2)\n\n\noutput_data = convert(input_data)\n"
+        },
+        {
+          "id": "ogc-prov-chain-array-to-object",
+          "description": "Nests a flat top-level **array** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`)\ninto its single-**object** form, by inlining relation targets recursively from a single\ndetected root record. Only **conditionally applicable**: fails with a descriptive error\n(rather than a malformed result) when the input does not reduce to exactly one\nunreferenced root reachable from a cycle-free walk of every other record - callers should\ntreat that failure as \"not applicable to this input\", not a transform bug. Purely\ninternal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any other W3C PROV\nrepresentation.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/transforms/ogc_prov_chain_array_to_object.py",
+          "code": "\"\"\"Nest a flat top-level **array** form **OGC PROV Chain** document (``ogc.ogc-utils.prov``,\nhttps://ogcincubator.github.io/bblock-prov-schema/) into its single-**object** form, by\ninlining relation targets recursively from a single detected root record.\n\nThis transform is purely internal to OGC PROV Chain: both the input (flat array, every record\nreferencing others by ``id``) and the output (single object, with related records inlined into\nits relation properties) validate against the same ``ogc.ogc-utils.prov`` schema. It does not\ninvolve W3C PROV-JSONLD or any other W3C PROV representation.\n\nThis direction is only **conditionally applicable**: a root is only detected when exactly one\nrecord in the array is never referenced as a relation target by any other record (an\n\"in-degree zero\" node), and every other record is reachable from it by following relation\nproperties without revisiting a record already inlined elsewhere. If zero or more than one such\nroot exists, or the graph is disconnected/cyclic, this raises a ``ValueError`` describing why -\ncallers should treat that as \"not applicable to this input\" rather than a transform bug. The\nreverse direction (``ogc-prov-chain-object-to-array``) is always applicable.\n\nRecords reachable from the root through more than one path (e.g. two records both relating to\nthe same shared target) are inlined only the *first* time they're reached; subsequent\nreferences to them are left as plain ``id`` strings, since a JSON object can't repeat the same\ninlined content in two places without duplication.\n\"\"\"\n\nimport json\n\n_RELATION_PROPS = (\n    \"wasGeneratedBy\",\n    \"used\",\n    \"wasAssociatedWith\",\n    \"wasAttributedTo\",\n    \"wasDerivedFrom\",\n    \"actedOnBehalfOf\",\n)\n\n\ndef _values(value):\n    if value is None:\n        return []\n    return value if isinstance(value, list) else [value]\n\n\ndef convert(ogc_prov_chain_array_json: str) -> str:\n    \"\"\"Convert a flat-array OGC PROV Chain document (as a string) to its single-object,\n    inline-nested form (as a string).\"\"\"\n    chain = json.loads(ogc_prov_chain_array_json)\n    if not isinstance(chain, list):\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object expects a bare top-level JSON array \"\n            \"(the OGC PROV Chain 'array' form); got a single object instead - it is already nested.\"\n        )\n\n    records = {record[\"id\"]: record for record in chain if \"id\" in record}\n\n    in_degree = {identifier: 0 for identifier in records}\n    for record in records.values():\n        for prop in _RELATION_PROPS:\n            for target in _values(record.get(prop)):\n                if target in in_degree:\n                    in_degree[target] += 1\n\n    roots = [identifier for identifier, degree in in_degree.items() if degree == 0]\n    if len(roots) != 1:\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object is not applicable to this input: expected exactly \"\n            f\"one record with no incoming relation references (found {len(roots)}: {roots}). \"\n            \"The array does not reduce to a single natural root - keep it in array form, or \"\n            \"restructure it so a single record is never referenced by any other.\"\n        )\n\n    inlined = set()\n\n    def build(identifier: str) -> dict:\n        record = records[identifier]\n        inlined.add(identifier)\n        node = dict(record)\n        for prop in _RELATION_PROPS:\n            if prop not in node:\n                continue\n            targets = _values(node[prop])\n            resolved = []\n            for target in targets:\n                if target in records and target not in inlined:\n                    resolved.append(build(target))\n                else:\n                    resolved.append(target)\n            node[prop] = resolved[0] if len(targets) == 1 else resolved\n        return node\n\n    root_object = build(roots[0])\n\n    unreachable = set(records) - inlined\n    if unreachable:\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object is not applicable to this input: \"\n            f\"{len(unreachable)} record(s) are not reachable from the single root {roots[0]!r} \"\n            f\"by following relation properties: {sorted(unreachable)}. \"\n            \"The array likely contains a disconnected component or a relation cycle.\"\n        )\n\n    return json.dumps(root_object, indent=2)\n\n\noutput_data = convert(input_data)\n"
+        }
+      ],
+      "documentation": {
+        "markdown": {
+          "mediatype": "text/markdown",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/markdown/ogc-utils/prov/ogc-prov-chain-forms/index.md"
+        },
+        "json-full": {
+          "mediatype": "application/json",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/json-full/ogc-utils/prov/ogc-prov-chain-forms/index.json"
+        },
+        "bblocks-viewer": {
+          "mediatype": "text/html",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov.ogc-prov-chain-forms"
+        }
+      }
+    },
+    {
+      "itemIdentifier": "ogc.ogc-utils.prov.w3c-prov-base",
+      "name": "W3C PROV Representation Base",
+      "highlighted": true,
+      "abstract": "Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares itself a profile of this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts, and documents how those can be used as an extension point substitution target for anyone wanting a specialized OGC PROV Chain profile. See the full description for details.",
+      "status": "under-development",
+      "dateTimeAddition": "2026-09-08T00:00:00Z",
+      "itemClass": "model",
+      "register": "ogc-utils",
+      "version": "0.1",
+      "dateOfLastChange": "2026-09-17",
+      "concept": [
+        "http://www.w3.org/ns/prov#Entity",
+        "http://www.w3.org/ns/prov#Activity",
+        "http://www.w3.org/ns/prov#Agent"
+      ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov",
+        "bblocks://ogc.ogc-utils.prov-entity",
+        "bblocks://ogc.ogc-utils.prov-activity",
+        "bblocks://ogc.ogc-utils.prov-agent",
+        "bblocks://ogc.ogc-utils.prov-bundled"
+      ],
+      "sources": [
+        {
+          "link": "https://www.w3.org/TR/prov-overview/",
+          "title": "PROV-Overview: An Overview of the PROV Family of Documents"
+        },
+        {
+          "link": "https://www.w3.org/TR/prov-dm/",
+          "title": "PROV-DM: The PROV Data Model"
+        },
+        {
+          "link": "https://www.w3.org/TR/prov-o/",
+          "title": "PROV-O: The PROV Ontology"
+        }
+      ],
+      "seeAlso": [
+        "bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms"
+      ],
+      "tags": [
+        "prov",
+        "utils",
+        "base"
+      ],
+      "shaclShapes": {
+        "ogc.model.cross-domain.prov": [
+          "https://ogcincubator.github.io/cross-domain-model/_sources/prov/shapes.shacl"
+        ]
+      },
+      "ontology": "https://www.w3.org/ns/prov-o#",
+      "remoteCacheDir": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-base/remote_cache/",
+      "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-base/",
+      "validationPassed": true,
+      "documentation": {
+        "markdown": {
+          "mediatype": "text/markdown",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/markdown/ogc-utils/prov/w3c-prov-base/index.md"
+        },
+        "json-full": {
+          "mediatype": "application/json",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/json-full/ogc-utils/prov/w3c-prov-base/index.json"
+        },
+        "bblocks-viewer": {
+          "mediatype": "text/html",
+          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov.w3c-prov-base"
+        }
+      }
+    },
+    {
+      "itemIdentifier": "ogc.ogc-utils.prov.w3c-prov-json",
+      "name": "W3C PROV-JSON",
+      "abstract": "The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON encoding of the W3C PROV data model (W3C Member Submission). A profile of the W3C PROV Representation Base.",
+      "status": "under-development",
+      "dateTimeAddition": "2026-09-08T00:00:00Z",
+      "highlighted": true,
+      "itemClass": "schema",
+      "register": "ogc-utils",
+      "version": "0.1",
+      "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "hasFormat": [
+        "ogc.ogc-utils.prov.w3c-prov-n",
+        "ogc.ogc-utils.prov.w3c-prov-xml",
+        "ogc.ogc-utils.prov.w3c-prov-rdf",
+        "ogc.ogc-utils.prov.w3c-prov-jsonld"
       ],
       "sources": [
         {
@@ -57,9 +248,124 @@
           "https://ogcincubator.github.io/cross-domain-model/_sources/prov/shapes.shacl"
         ]
       },
+      "schema": {
+        "application/yaml": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-json/schema.yaml",
+        "application/json": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-json/schema.json"
+      },
+      "sourceSchema": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-json/schema.yaml",
+      "resolvedSchemaProperties": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-json/resolvedProperties.json",
       "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-json/",
       "validationPassed": true,
       "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov/w3c-prov-json/",
+      "transforms": [
+        {
+          "id": "w3c-prov-json-to-w3c-prov-xml",
+          "description": "Converts a **W3C PROV-JSON** document into **W3C PROV-XML**, using the `prov` library as\nboth the PROV-JSON parser and the PROV-XML serializer - a direct conversion, not chained\nthrough PROV-JSONLD.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+json"
+              },
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+xml"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-xml"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[xml]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-json/transforms/w3c_prov_json_to_w3c_prov_xml.py",
+          "code": "\"\"\"Convert a **W3C PROV-JSON** document into **W3C PROV-XML**, using the `prov` library\n(https://prov.readthedocs.io/) as both the PROV-JSON parser and the PROV-XML serializer - a\ndirect conversion, not chained through PROV-JSONLD.\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"json\")\noutput_data = document.serialize(format=\"xml\")\n"
+        },
+        {
+          "id": "w3c-prov-json-to-w3c-prov-rdf",
+          "description": "Converts a **W3C PROV-JSON** document into **W3C PROV-O / RDF** (Turtle), using the `prov`\nlibrary, which parses PROV-JSON natively and serializes RDF via `rdflib` - a direct\nconversion, not chained through PROV-JSONLD. See `w3c-prov-json-to-w3c-prov-jsonld` (in\nthe `w3c-prov-jsonld` block) for the literal-vs-resource ``prov:location``-style caveat\nshared by all transforms starting from this format.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+json"
+              },
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/turtle",
+                "label": "RDF/Turtle",
+                "defaultExtension": "ttl"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-rdf"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[rdf]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-json/transforms/w3c_prov_json_to_w3c_prov_rdf.py",
+          "code": "\"\"\"Convert a **W3C PROV-JSON** document into **W3C PROV-O / RDF** (Turtle), using the `prov`\nlibrary (https://prov.readthedocs.io/) as the PROV-JSON parser and `rdflib` (via `prov`'s RDF\nserializer) for Turtle output - a direct conversion, not chained through PROV-JSONLD.\n\nKnown caveat - literal vs. resource-typed values: as with `w3c-prov-json-to-w3c-prov-jsonld`, an\nattribute such as ``prov:location`` declared as a plain untyped string in PROV-JSON (rather than\n``{\"$\": \"...\", \"type\": \"prov:QUALIFIED_NAME\"}`` or ``xsd:anyURI``) is carried through to RDF as a\nplain literal rather than a resource (IRI), even if the value looks like a URI. Type the source\nvalue explicitly in PROV-JSON if a downstream RDF profile expects a resource there (see the\n``example-ogcapi-processes-job`` example fixtures in this repository).\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"json\")\noutput_data = document.serialize(format=\"rdf\", rdf_format=\"turtle\")\n"
+        },
+        {
+          "id": "w3c-prov-json-to-w3c-prov-n",
+          "description": "Converts a **W3C PROV-JSON** document into **W3C PROV-N**, using the `prov` library as the\nPROV-JSON parser and PROV-N serializer - a direct conversion, not chained through\nPROV-JSONLD. There is intentionally no reverse transform: `prov` implements a PROV-N\nserializer but not a parser.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+json"
+              },
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/provenance-notation"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-n"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-json/transforms/w3c_prov_json_to_w3c_prov_n.py",
+          "code": "\"\"\"Convert a **W3C PROV-JSON** document into **W3C PROV-N**, using the `prov` library\n(https://prov.readthedocs.io/) as the PROV-JSON parser and PROV-N serializer - a direct\nconversion, not chained through PROV-JSONLD.\n\nThere is intentionally no reverse (``w3c-prov-n-to-w3c-prov-json``) transform: `prov` implements\na PROV-N *serializer* but not a parser, so PROV-N can only ever be a transform *target*, never a\nsource (see `w3c-prov-jsonld-to-w3c-prov-n` for the same caveat).\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"json\")\noutput_data = document.serialize(format=\"provn\")\n"
+        }
+      ],
       "documentation": {
         "markdown": {
           "mediatype": "text/markdown",
@@ -78,7 +384,7 @@
     {
       "itemIdentifier": "ogc.ogc-utils.prov.w3c-prov-jsonld",
       "name": "W3C PROV-JSONLD",
-      "abstract": "The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using `@context`/`@graph` rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.",
+      "abstract": "The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using context and graph blocks rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.",
       "status": "under-development",
       "dateTimeAddition": "2026-09-08T00:00:00Z",
       "highlighted": true,
@@ -89,6 +395,16 @@
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base",
         "bblocks://ogc.ogc-utils.prov"
+      ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov",
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "hasFormat": [
+        "ogc.ogc-utils.prov.w3c-prov-n",
+        "ogc.ogc-utils.prov.w3c-prov-xml",
+        "ogc.ogc-utils.prov.w3c-prov-json",
+        "ogc.ogc-utils.prov.w3c-prov-rdf"
       ],
       "schema": {
         "application/yaml": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-jsonld/schema.yaml",
@@ -464,6 +780,15 @@
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "hasFormat": [
+        "ogc.ogc-utils.prov.w3c-prov-xml",
+        "ogc.ogc-utils.prov.w3c-prov-json",
+        "ogc.ogc-utils.prov.w3c-prov-rdf",
+        "ogc.ogc-utils.prov.w3c-prov-jsonld"
+      ],
       "sources": [
         {
           "link": "https://www.w3.org/TR/prov-n/",
@@ -515,6 +840,15 @@
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
       ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "hasFormat": [
+        "ogc.ogc-utils.prov.w3c-prov-n",
+        "ogc.ogc-utils.prov.w3c-prov-xml",
+        "ogc.ogc-utils.prov.w3c-prov-json",
+        "ogc.ogc-utils.prov.w3c-prov-jsonld"
+      ],
       "concept": [
         "http://www.w3.org/ns/prov#Entity",
         "http://www.w3.org/ns/prov#Activity",
@@ -546,6 +880,104 @@
       "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-rdf/",
       "validationPassed": true,
       "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov/w3c-prov-rdf/",
+      "transforms": [
+        {
+          "id": "w3c-prov-rdf-to-w3c-prov-xml",
+          "description": "Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-XML**, using the `prov`\nlibrary, which parses RDF via `rdflib` and serializes PROV-XML natively - a direct\nconversion, not chained through PROV-JSONLD. See `w3c-prov-rdf-to-w3c-prov-jsonld` (in the\n`w3c-prov-jsonld` block) for the QName-unsafe identifier caveat shared by all transforms\nstarting from this format.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/turtle",
+                "label": "RDF/Turtle",
+                "defaultExtension": "ttl"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+xml"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-xml"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[rdf,xml]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-rdf/transforms/w3c_prov_rdf_to_w3c_prov_xml.py",
+          "code": "\"\"\"Convert a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-XML**, using the `prov`\nlibrary (https://prov.readthedocs.io/), which parses RDF via `rdflib` and serializes PROV-XML\nnatively - a direct conversion, not chained through PROV-JSONLD.\n\nKnown caveats when parsing RDF into `prov`'s data model, both discovered against the\n``example-ogcapi-processes-job`` example fixtures in this repository (see their source Turtle\nfor concrete instances) and applicable regardless of the RDF-to-non-RDF target format:\n\n- **QName-unsafe identifiers.** RDF identifiers whose local name would not be a valid XML QName\n  local part (starting with a digit, or containing ``/``, ``#`` or ``:``, e.g. SHA1-hash-based\n  ``data:`` identifiers) must be sanitized *in place* before being handed to `prov` - prepend\n  ``_`` if the local part doesn't start with a letter/underscore, and replace any embedded\n  ``/``, ``#``, ``:`` with ``_`` - while keeping the identifier's namespace unchanged. Do not\n  invent narrow per-identifier namespaces instead: overlapping/ambiguous namespaces make\n  `prov`'s ``NamespaceManager`` prefix resolution non-deterministic on re-serialization.\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"rdf\", rdf_format=\"turtle\")\noutput_data = document.serialize(format=\"xml\")\n"
+        },
+        {
+          "id": "w3c-prov-rdf-to-w3c-prov-json",
+          "description": "Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-JSON**, using the `prov`\nlibrary, which parses RDF via `rdflib` and serializes PROV-JSON natively - a direct\nconversion, not chained through PROV-JSONLD. Same QName-unsafe identifier caveat as\n`w3c-prov-rdf-to-w3c-prov-xml`.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/turtle",
+                "label": "RDF/Turtle",
+                "defaultExtension": "ttl"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+json"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-json"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[rdf]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-rdf/transforms/w3c_prov_rdf_to_w3c_prov_json.py",
+          "code": "\"\"\"Convert a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-JSON**, using the `prov`\nlibrary (https://prov.readthedocs.io/), which parses RDF via `rdflib` and serializes PROV-JSON\nnatively - a direct conversion, not chained through PROV-JSONLD.\n\nSame QName-unsafe identifier caveat as `w3c-prov-rdf-to-w3c-prov-xml` (sanitize the local part\nin place, keep the original namespace) - see that transform's docstring for details.\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"rdf\", rdf_format=\"turtle\")\noutput_data = document.serialize(format=\"json\")\n"
+        },
+        {
+          "id": "w3c-prov-rdf-to-w3c-prov-n",
+          "description": "Converts a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-N**, using the `prov`\nlibrary, which parses RDF via `rdflib` and serializes PROV-N natively - a direct\nconversion, not chained through PROV-JSONLD. Same QName-unsafe identifier caveat as\n`w3c-prov-rdf-to-w3c-prov-xml` applies to parsing. There is intentionally no reverse\ntransform: `prov` implements a PROV-N serializer but not a parser.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/turtle",
+                "label": "RDF/Turtle",
+                "defaultExtension": "ttl"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/provenance-notation"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-n"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[rdf]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-rdf/transforms/w3c_prov_rdf_to_w3c_prov_n.py",
+          "code": "\"\"\"Convert a **W3C PROV-O / RDF** document (Turtle) into **W3C PROV-N**, using the `prov` library\n(https://prov.readthedocs.io/), which parses RDF via `rdflib` and serializes PROV-N natively - a\ndirect conversion, not chained through PROV-JSONLD.\n\nSame QName-unsafe identifier caveat as `w3c-prov-rdf-to-w3c-prov-xml` applies to parsing. There is\nintentionally no reverse (``w3c-prov-n-to-w3c-prov-rdf``) transform: `prov` implements a PROV-N\n*serializer* but not a parser, so PROV-N can only ever be a transform *target*, never a source\n(see `w3c-prov-jsonld-to-w3c-prov-n` for the same caveat).\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"rdf\", rdf_format=\"turtle\")\noutput_data = document.serialize(format=\"provn\")\n"
+        }
+      ],
       "documentation": {
         "markdown": {
           "mediatype": "text/markdown",
@@ -574,6 +1006,15 @@
       "dateOfLastChange": "2026-09-17",
       "isProfileOf": [
         "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "dependsOn": [
+        "bblocks://ogc.ogc-utils.prov.w3c-prov-base"
+      ],
+      "hasFormat": [
+        "ogc.ogc-utils.prov.w3c-prov-n",
+        "ogc.ogc-utils.prov.w3c-prov-json",
+        "ogc.ogc-utils.prov.w3c-prov-rdf",
+        "ogc.ogc-utils.prov.w3c-prov-jsonld"
       ],
       "resources": [
         {
@@ -605,6 +1046,135 @@
       },
       "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-xml/",
       "validationPassed": true,
+      "transforms": [
+        {
+          "id": "w3c-prov-xml-to-w3c-prov-json",
+          "description": "Converts a **W3C PROV-XML** document into **W3C PROV-JSON**, using the `prov` library as\nboth the PROV-XML parser and the PROV-JSON serializer - a direct conversion, not chained\nthrough PROV-JSONLD. See `w3c-prov-xml-to-w3c-prov-jsonld` (in the `w3c-prov-jsonld`\nblock) for the PROV-XML parsing caveat shared by all transforms starting from this format.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+json"
+              },
+              {
+                "mimeType": "application/json",
+                "label": "JSON",
+                "defaultExtension": "json"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-json"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[xml]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-xml/transforms/w3c_prov_xml_to_w3c_prov_json.py",
+          "code": "\"\"\"Convert a **W3C PROV-XML** document into **W3C PROV-JSON**, using the `prov` library\n(https://prov.readthedocs.io/) as both the PROV-XML parser and the PROV-JSON serializer -\na direct conversion, not chained through PROV-JSONLD.\n\nThe `prov` library's PROV-XML parser only understands XML produced by its own serializer (or\nstrictly XSD-conformant PROV-XML); hand-written or third-party PROV-XML using non-standard\nelement names for typed records may fail to parse - re-serialize such documents through\nPROV-JSON or RDF first if this transform raises an error on otherwise-valid PROV-XML.\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"xml\")\noutput_data = document.serialize(format=\"json\")\n"
+        },
+        {
+          "id": "w3c-prov-xml-to-w3c-prov-rdf",
+          "description": "Converts a **W3C PROV-XML** document into **W3C PROV-O / RDF** (Turtle), using the `prov`\nlibrary, which parses PROV-XML natively and serializes RDF via `rdflib` - a direct\nconversion, not chained through PROV-JSONLD.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/turtle",
+                "label": "RDF/Turtle",
+                "defaultExtension": "ttl"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-rdf"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[xml,rdf]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-xml/transforms/w3c_prov_xml_to_w3c_prov_rdf.py",
+          "code": "\"\"\"Convert a **W3C PROV-XML** document into **W3C PROV-O / RDF** (Turtle), using the `prov`\nlibrary (https://prov.readthedocs.io/) as the PROV-XML parser and `rdflib` (via `prov`'s RDF\nserializer) for Turtle output - a direct conversion, not chained through PROV-JSONLD.\n\nSame PROV-XML parsing caveat as `w3c-prov-xml-to-w3c-prov-json`: only XML produced by `prov`\nitself, or strictly XSD-conformant PROV-XML, is guaranteed to parse.\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"xml\")\noutput_data = document.serialize(format=\"rdf\", rdf_format=\"turtle\")\n"
+        },
+        {
+          "id": "w3c-prov-xml-to-w3c-prov-n",
+          "description": "Converts a **W3C PROV-XML** document into **W3C PROV-N**, using the `prov` library as the\nPROV-XML parser and PROV-N serializer - a direct conversion, not chained through\nPROV-JSONLD. There is intentionally no reverse transform: `prov` implements a PROV-N\nserializer but not a parser.\n",
+          "type": "python",
+          "inputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "application/provenance+xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              },
+              {
+                "mimeType": "application/xml",
+                "label": "XML",
+                "defaultExtension": "xml"
+              }
+            ]
+          },
+          "outputs": {
+            "mediaTypes": [
+              {
+                "mimeType": "text/provenance-notation"
+              }
+            ],
+            "profiles": [
+              "bblocks://ogc.ogc-utils.prov.w3c-prov-n"
+            ]
+          },
+          "metadata": {
+            "dependencies": {
+              "pip": "prov[xml]>=3.1.0",
+              "python": ">=3.9"
+            }
+          },
+          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-xml/transforms/w3c_prov_xml_to_w3c_prov_n.py",
+          "code": "\"\"\"Convert a **W3C PROV-XML** document into **W3C PROV-N**, using the `prov` library\n(https://prov.readthedocs.io/) as the PROV-XML parser and PROV-N serializer - a direct\nconversion, not chained through PROV-JSONLD.\n\nThere is intentionally no reverse (``w3c-prov-n-to-w3c-prov-xml``) transform: `prov` implements\na PROV-N *serializer* but not a parser, so PROV-N can only ever be a transform *target*, never a\nsource (see `w3c-prov-jsonld-to-w3c-prov-n` for the same caveat).\n\"\"\"\n\nfrom prov.model import ProvDocument\n\ndocument = ProvDocument.deserialize(content=input_data, format=\"xml\")\noutput_data = document.serialize(format=\"provn\")\n"
+        }
+      ],
       "documentation": {
         "markdown": {
           "mediatype": "text/markdown",
@@ -619,191 +1189,11 @@
           "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov.w3c-prov-xml"
         }
       }
-    },
-    {
-      "itemIdentifier": "ogc.ogc-utils.prov.ogc-prov-chain-forms",
-      "name": "OGC PROV Chain: Array \u21c4 Object Conversion",
-      "abstract": "Two transforms that convert an **OGC PROV Chain** document (`ogc.ogc-utils.prov`, from https://ogcincubator.github.io/bblock-prov-schema/) between its two allowed shapes: a flat top-level **array** (every record referencing others by full-IRI `id`) and a nested single **object** (one root record with related records inlined). Both shapes validate against the same imported `ogc.ogc-utils.prov` schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see `ogc.ogc-utils.prov.w3c-prov-jsonld` for the transforms that bridge to/from W3C PROV-JSONLD.",
-      "status": "under-development",
-      "dateTimeAddition": "2026-09-08T00:00:00Z",
-      "highlighted": true,
-      "itemClass": "model",
-      "register": "ogc-utils",
-      "version": "0.1",
-      "dateOfLastChange": "2026-09-17",
-      "dependsOn": [
-        "bblocks://ogc.ogc-utils.prov"
-      ],
-      "seeAlso": [
-        "bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld"
-      ],
-      "tags": [
-        "prov",
-        "utils",
-        "ogc",
-        "transform"
-      ],
-      "shaclShapes": {
-        "ogc.model.cross-domain.prov": [
-          "https://ogcincubator.github.io/cross-domain-model/_sources/prov/shapes.shacl"
-        ]
-      },
-      "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/",
-      "validationPassed": true,
-      "testOutputs": "https://github.com/ogcincubator/bblocks-prov-jsonld-alt/blob/master/build/tests/ogc-utils/prov/ogc-prov-chain-forms/",
-      "transforms": [
-        {
-          "id": "ogc-prov-chain-object-to-array",
-          "description": "Flattens a single-**object** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`),\nwith relation targets inlined and/or supplied via a `has_provenance` sibling list, into\nits flat top-level **array** form (every record referencing others by `id`). Always\napplicable - any single-object OGC PROV Chain document, however deeply nested, can be\nflattened. Purely internal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any\nother W3C PROV representation.\n",
-          "type": "python",
-          "inputs": {
-            "mediaTypes": [
-              {
-                "mimeType": "application/json",
-                "label": "JSON",
-                "defaultExtension": "json"
-              }
-            ]
-          },
-          "outputs": {
-            "mediaTypes": [
-              {
-                "mimeType": "application/json",
-                "label": "JSON",
-                "defaultExtension": "json"
-              }
-            ],
-            "profiles": [
-              "bblocks://ogc.ogc-utils.prov"
-            ]
-          },
-          "metadata": {
-            "dependencies": {
-              "python": ">=3.9"
-            }
-          },
-          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/transforms/ogc_prov_chain_object_to_array.py",
-          "code": "\"\"\"Flatten a single-**object** form **OGC PROV Chain** document (``ogc.ogc-utils.prov``,\nhttps://ogcincubator.github.io/bblock-prov-schema/) into its flat top-level **array** form.\n\nThis transform is purely internal to OGC PROV Chain: both the input (single-object, possibly\nwith inline-nested relation targets and/or a ``has_provenance`` sibling list) and the output\n(flat array, every record referencing others by ``id``) validate against the same\n``ogc.ogc-utils.prov`` schema. It does not involve W3C PROV-JSONLD or any other W3C PROV\nrepresentation.\n\nThis direction is **always applicable**: any single-object OGC PROV Chain document, however\ndeeply nested, can be flattened. The reverse direction\n(``ogc-prov-chain-array-to-object``) is only conditionally applicable, since a flat array does\nnot always reduce to a single natural root.\n\nIf the input declares a top-level ``@context`` with simple ``\"prefix\": \"http://...#/\"``\nmappings, CURIE ``id``/reference values are expanded to full IRIs using it, since the flat\narray form has no room for a sibling ``@context`` (the same convention used by\n``w3c_prov_jsonld_to_ogc_prov_chain.py``). Any other ``@context`` shape (e.g. per-term\n``@context`` overrides) is left unresolved; ids that aren't found are copied through unchanged.\n\"\"\"\n\nimport json\n\n_RELATION_PROPS = (\n    \"wasGeneratedBy\",\n    \"used\",\n    \"wasAssociatedWith\",\n    \"wasAttributedTo\",\n    \"wasDerivedFrom\",\n    \"actedOnBehalfOf\",\n)\n\n\ndef _values(value):\n    if value is None:\n        return []\n    return value if isinstance(value, list) else [value]\n\n\ndef _make_expander(context: dict):\n    prefixes = {k: v for k, v in context.items() if isinstance(v, str)}\n\n    def expand(value):\n        if not isinstance(value, str) or \":\" not in value:\n            return value\n        prefix, _, local = value.partition(\":\")\n        base = prefixes.get(prefix)\n        return f\"{base}{local}\" if base else value\n\n    return expand\n\n\ndef convert(ogc_prov_chain_object_json: str) -> str:\n    \"\"\"Convert a single-object OGC PROV Chain document (as a string) to its flat array form\n    (as a string).\"\"\"\n    data = json.loads(ogc_prov_chain_object_json)\n    if not isinstance(data, dict):\n        raise ValueError(\n            \"ogc-prov-chain-object-to-array expects a single top-level JSON object \"\n            \"(the OGC PROV Chain 'object' form); got an array instead - it is already flat.\"\n        )\n\n    expand = _make_expander(data.get(\"@context\") or {})\n    flattened = {}\n    order = []\n\n    def flatten(record: dict) -> str:\n        \"\"\"Recursively flatten `record` (and everything reachable through its relation\n        properties / has_provenance), returning the (expanded) id of `record` itself.\"\"\"\n        record_id = expand(record.get(\"id\"))\n        flat = {k: v for k, v in record.items() if k not in (\"@context\", \"has_provenance\")}\n        flat[\"id\"] = record_id\n\n        for prop in _RELATION_PROPS:\n            if prop not in flat:\n                continue\n            targets = []\n            for target in _values(flat[prop]):\n                if isinstance(target, dict):\n                    targets.append(flatten(target))\n                else:\n                    targets.append(expand(target))\n            flat[prop] = targets[0] if len(targets) == 1 else targets\n\n        if record_id not in flattened:\n            flattened[record_id] = flat\n            order.append(record_id)\n        for nested in _values(record.get(\"has_provenance\")):\n            if isinstance(nested, dict):\n                flatten(nested)\n\n        return record_id\n\n    flatten(data)\n    chain = [flattened[key] for key in order]\n    return json.dumps(chain, indent=2)\n\n\noutput_data = convert(input_data)\n"
-        },
-        {
-          "id": "ogc-prov-chain-array-to-object",
-          "description": "Nests a flat top-level **array** form **OGC PROV Chain** document (`ogc.ogc-utils.prov`)\ninto its single-**object** form, by inlining relation targets recursively from a single\ndetected root record. Only **conditionally applicable**: fails with a descriptive error\n(rather than a malformed result) when the input does not reduce to exactly one\nunreferenced root reachable from a cycle-free walk of every other record - callers should\ntreat that failure as \"not applicable to this input\", not a transform bug. Purely\ninternal to OGC PROV Chain; does not involve W3C PROV-JSONLD or any other W3C PROV\nrepresentation.\n",
-          "type": "python",
-          "inputs": {
-            "mediaTypes": [
-              {
-                "mimeType": "application/json",
-                "label": "JSON",
-                "defaultExtension": "json"
-              }
-            ]
-          },
-          "outputs": {
-            "mediaTypes": [
-              {
-                "mimeType": "application/json",
-                "label": "JSON",
-                "defaultExtension": "json"
-              }
-            ],
-            "profiles": [
-              "bblocks://ogc.ogc-utils.prov"
-            ]
-          },
-          "metadata": {
-            "dependencies": {
-              "python": ">=3.9"
-            }
-          },
-          "ref": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/ogc-prov-chain-forms/transforms/ogc_prov_chain_array_to_object.py",
-          "code": "\"\"\"Nest a flat top-level **array** form **OGC PROV Chain** document (``ogc.ogc-utils.prov``,\nhttps://ogcincubator.github.io/bblock-prov-schema/) into its single-**object** form, by\ninlining relation targets recursively from a single detected root record.\n\nThis transform is purely internal to OGC PROV Chain: both the input (flat array, every record\nreferencing others by ``id``) and the output (single object, with related records inlined into\nits relation properties) validate against the same ``ogc.ogc-utils.prov`` schema. It does not\ninvolve W3C PROV-JSONLD or any other W3C PROV representation.\n\nThis direction is only **conditionally applicable**: a root is only detected when exactly one\nrecord in the array is never referenced as a relation target by any other record (an\n\"in-degree zero\" node), and every other record is reachable from it by following relation\nproperties without revisiting a record already inlined elsewhere. If zero or more than one such\nroot exists, or the graph is disconnected/cyclic, this raises a ``ValueError`` describing why -\ncallers should treat that as \"not applicable to this input\" rather than a transform bug. The\nreverse direction (``ogc-prov-chain-object-to-array``) is always applicable.\n\nRecords reachable from the root through more than one path (e.g. two records both relating to\nthe same shared target) are inlined only the *first* time they're reached; subsequent\nreferences to them are left as plain ``id`` strings, since a JSON object can't repeat the same\ninlined content in two places without duplication.\n\"\"\"\n\nimport json\n\n_RELATION_PROPS = (\n    \"wasGeneratedBy\",\n    \"used\",\n    \"wasAssociatedWith\",\n    \"wasAttributedTo\",\n    \"wasDerivedFrom\",\n    \"actedOnBehalfOf\",\n)\n\n\ndef _values(value):\n    if value is None:\n        return []\n    return value if isinstance(value, list) else [value]\n\n\ndef convert(ogc_prov_chain_array_json: str) -> str:\n    \"\"\"Convert a flat-array OGC PROV Chain document (as a string) to its single-object,\n    inline-nested form (as a string).\"\"\"\n    chain = json.loads(ogc_prov_chain_array_json)\n    if not isinstance(chain, list):\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object expects a bare top-level JSON array \"\n            \"(the OGC PROV Chain 'array' form); got a single object instead - it is already nested.\"\n        )\n\n    records = {record[\"id\"]: record for record in chain if \"id\" in record}\n\n    in_degree = {identifier: 0 for identifier in records}\n    for record in records.values():\n        for prop in _RELATION_PROPS:\n            for target in _values(record.get(prop)):\n                if target in in_degree:\n                    in_degree[target] += 1\n\n    roots = [identifier for identifier, degree in in_degree.items() if degree == 0]\n    if len(roots) != 1:\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object is not applicable to this input: expected exactly \"\n            f\"one record with no incoming relation references (found {len(roots)}: {roots}). \"\n            \"The array does not reduce to a single natural root - keep it in array form, or \"\n            \"restructure it so a single record is never referenced by any other.\"\n        )\n\n    inlined = set()\n\n    def build(identifier: str) -> dict:\n        record = records[identifier]\n        inlined.add(identifier)\n        node = dict(record)\n        for prop in _RELATION_PROPS:\n            if prop not in node:\n                continue\n            targets = _values(node[prop])\n            resolved = []\n            for target in targets:\n                if target in records and target not in inlined:\n                    resolved.append(build(target))\n                else:\n                    resolved.append(target)\n            node[prop] = resolved[0] if len(targets) == 1 else resolved\n        return node\n\n    root_object = build(roots[0])\n\n    unreachable = set(records) - inlined\n    if unreachable:\n        raise ValueError(\n            \"ogc-prov-chain-array-to-object is not applicable to this input: \"\n            f\"{len(unreachable)} record(s) are not reachable from the single root {roots[0]!r} \"\n            f\"by following relation properties: {sorted(unreachable)}. \"\n            \"The array likely contains a disconnected component or a relation cycle.\"\n        )\n\n    return json.dumps(root_object, indent=2)\n\n\noutput_data = convert(input_data)\n"
-        }
-      ],
-      "documentation": {
-        "markdown": {
-          "mediatype": "text/markdown",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/markdown/ogc-utils/prov/ogc-prov-chain-forms/index.md"
-        },
-        "json-full": {
-          "mediatype": "application/json",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/json-full/ogc-utils/prov/ogc-prov-chain-forms/index.json"
-        },
-        "bblocks-viewer": {
-          "mediatype": "text/html",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov.ogc-prov-chain-forms"
-        }
-      }
-    },
-    {
-      "itemIdentifier": "ogc.ogc-utils.prov.w3c-prov-base",
-      "name": "W3C PROV Representation Base",
-      "highlighted": true,
-      "abstract": "Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares `isProfileOf` this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts (`dependsOn`), and documents how those can be used as an `extensionPoints` substitution target for anyone wanting a specialized OGC PROV Chain profile.",
-      "status": "under-development",
-      "dateTimeAddition": "2026-09-08T00:00:00Z",
-      "itemClass": "model",
-      "register": "ogc-utils",
-      "version": "0.1",
-      "dateOfLastChange": "2026-09-17",
-      "concept": [
-        "http://www.w3.org/ns/prov#Entity",
-        "http://www.w3.org/ns/prov#Activity",
-        "http://www.w3.org/ns/prov#Agent"
-      ],
-      "dependsOn": [
-        "bblocks://ogc.ogc-utils.prov",
-        "bblocks://ogc.ogc-utils.prov-agent",
-        "bblocks://ogc.ogc-utils.prov-activity",
-        "bblocks://ogc.ogc-utils.prov-bundled",
-        "bblocks://ogc.ogc-utils.prov-entity"
-      ],
-      "sources": [
-        {
-          "link": "https://www.w3.org/TR/prov-overview/",
-          "title": "PROV-Overview: An Overview of the PROV Family of Documents"
-        },
-        {
-          "link": "https://www.w3.org/TR/prov-dm/",
-          "title": "PROV-DM: The PROV Data Model"
-        },
-        {
-          "link": "https://www.w3.org/TR/prov-o/",
-          "title": "PROV-O: The PROV Ontology"
-        }
-      ],
-      "seeAlso": [
-        "bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms"
-      ],
-      "tags": [
-        "prov",
-        "utils",
-        "base"
-      ],
-      "shaclShapes": {
-        "ogc.model.cross-domain.prov": [
-          "https://ogcincubator.github.io/cross-domain-model/_sources/prov/shapes.shacl"
-        ]
-      },
-      "ontology": "https://www.w3.org/ns/prov-o#",
-      "remoteCacheDir": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/ogc-utils/prov/w3c-prov-base/remote_cache/",
-      "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-base/",
-      "validationPassed": true,
-      "documentation": {
-        "markdown": {
-          "mediatype": "text/markdown",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/markdown/ogc-utils/prov/w3c-prov-base/index.md"
-        },
-        "json-full": {
-          "mediatype": "application/json",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/generateddocs/json-full/ogc-utils/prov/w3c-prov-base/index.json"
-        },
-        "bblocks-viewer": {
-          "mediatype": "text/html",
-          "url": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/bblock/ogc.ogc-utils.prov.w3c-prov-base"
-        }
-      }
     }
   ],
+  "viewer": {
+    "dependencyGraphHeight": 500
+  },
   "remoteCacheDir": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/build/annotated/_cache",
   "links": [
     {

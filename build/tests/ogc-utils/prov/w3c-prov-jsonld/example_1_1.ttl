@@ -7,10 +7,10 @@
 <https://example.org/cwlprov/activity/step1> a prov:Activity ;
     prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
     prov:qualifiedAssociation [ a prov:Association ;
-            prov:agent <https://example.org/cwlprov/engine/cwltool> ],
-        [ a prov:Association ;
             prov:agent <https://example.org/cwlprov/engine/cwltool> ;
-            prov:hadPlan <https://example.org/cwlprov/plan/main> ] ;
+            prov:hadPlan <https://example.org/cwlprov/plan/main> ],
+        [ a prov:Association ;
+            prov:agent <https://example.org/cwlprov/engine/cwltool> ] ;
     prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
 
 <https://example.org/cwlprov/data/output.txt> a prov:Entity ;

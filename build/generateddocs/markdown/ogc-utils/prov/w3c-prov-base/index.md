@@ -3,7 +3,7 @@
 
 `ogc.ogc-utils.prov.w3c-prov-base` *v0.1*
 
-Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares `isProfileOf` this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts (`dependsOn`), and documents how those can be used as an `extensionPoints` substitution target for anyone wanting a specialized OGC PROV Chain profile.
+Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares itself a profile of this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts, and documents how those can be used as an extension point substitution target for anyone wanting a specialized OGC PROV Chain profile. See the full description for details.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -19,93 +19,121 @@ below is a concrete, backward-compatible specialization of the same underlying P
 (`Entity`, `Activity`, `Agent` and their relations), differing only in concrete syntax, instead of
 being unrelated islands.
 
-> **Note on links below:** identifiers are given in `code` form (e.g. `ogc.ogc-utils.prov.w3c-prov-n`)
-> rather than as clickable Markdown links. The `bblocks://` URI scheme used elsewhere in this
-> repository (e.g. in `bblock.json` metadata) is resolved by the Building Blocks tooling and
-> viewer for structured fields, but is not a real browser-navigable URL scheme - writing it as a
-> plain link target in prose produces a dead link once rendered. Look up any identifier below in
-> this register's block list to open its page.
-
 ## The W3C PROV representation profiles
 
-All five are declared `isProfileOf` this block:
+All five are declared `isProfileOf` this block, and cross-link one another (`seeAlso`) as
+alternative representations of the same underlying model:
 
-| Profile | Identifier | Syntax | Normative status | What distinguishes it |
-|---|---|---|---|---|
-| W3C PROV-N | `ogc.ogc-utils.prov.w3c-prov-n` | Custom textual notation | W3C Recommendation | Human-readable notation for specs/diagnostics; not XML or JSON |
-| W3C PROV-XML | `ogc.ogc-utils.prov.w3c-prov-xml` | XML (XSD-defined) | W3C Note | XML Schema binding of PROV-DM |
-| W3C PROV-JSON | `ogc.ogc-utils.prov.w3c-prov-json` | JSON, flat statement-keyed | Non-normative (W3C Member Submission) | Predates PROV-JSONLD; flat but not linked-data |
-| W3C PROV-O / RDF | `ogc.ogc-utils.prov.w3c-prov-rdf` | RDF (Turtle, N-Triples, RDF/XML, N-Quads, TriG, ...) | W3C Recommendation (PROV-O) | Full ontology binding; any RDF serialization applies |
-| W3C PROV-JSONLD | `ogc.ogc-utils.prov.w3c-prov-jsonld` | JSON-LD (`@context`/`@graph`) | Non-normative (W3C Member Submission) | Linked-data JSON; flat `@graph` array of typed records |
+| Profile | Syntax | Normative status | What distinguishes it |
+|---|---|---|---|
+| [`W3C PROV-N`](bblocks://ogc.ogc-utils.prov.w3c-prov-n) | Custom textual notation | W3C Recommendation | Human-readable notation for specs/diagnostics; not XML or JSON |
+| [`W3C PROV-XML`](bblocks://ogc.ogc-utils.prov.w3c-prov-xml) | XML (XSD-defined) | W3C Note | XML Schema binding of PROV-DM |
+| [`W3C PROV-JSON`](bblocks://ogc.ogc-utils.prov.w3c-prov-json) | JSON, flat statement-keyed (never nests one record inside another) | Non-normative (W3C Member Submission) | Predates PROV-JSONLD; flat but not linked-data |
+| [`W3C PROV-O / RDF`](bblocks://ogc.ogc-utils.prov.w3c-prov-rdf) | RDF (Turtle, N-Triples, RDF/XML, N-Quads, TriG, ...) | W3C Recommendation (PROV-O) | Full ontology binding; any RDF serialization applies |
+| [`W3C PROV-JSONLD`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld) | JSON-LD (context/graph blocks) | Non-normative (W3C Member Submission) | Linked-data JSON; flat graph array of typed records |
 
 ## Cross-references to the OGC PROV Chain schema blocks
+
+> **Not to be confused:** despite both being "PROV JSON", **W3C PROV-JSON**
+> ([`ogc.ogc-utils.prov.w3c-prov-json`](bblocks://ogc.ogc-utils.prov.w3c-prov-json)) and
+> **OGC PROV Chain**'s JSON representation
+> ([`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov), cross-referenced below) use fundamentally
+> different shapes - the former groups records by type and never nests one record inside another,
+> the latter supports embedding related records inline in its single-object form. See
+> [`ogc.ogc-utils.prov.w3c-prov-json`](bblocks://ogc.ogc-utils.prov.w3c-prov-json)'s description
+> for a detailed side-by-side comparison and the JSON Schema that enforces it.
 
 A separately maintained representation of the same PROV-O concepts - the **OGC PROV Chain** JSON
 Schema family from [`bblock-prov-schema`](https://ogcincubator.github.io/bblock-prov-schema/) -
 predates this repository and is reused here directly (`dependsOn`) rather than duplicated. It is,
 in effect, **also a profile** of the same underlying PROV-O base as the five above: just JSON
 Schema-structured (nested object graph, or flat array of full-IRI-referencing records) rather than
-a `@context`/`@graph` linked-data document. The `w3c-prov-jsonld-to-ogc-prov-chain` /
-`ogc-prov-chain-to-w3c-prov-jsonld` transforms (in `ogc.ogc-utils.prov.w3c-prov-jsonld`) losslessly
+a context/graph linked-data document. The transforms declared in
+[`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld) losslessly
 convert between it and W3C PROV-JSONLD precisely *because* both describe the same PROV-O
 statements - that interoperability is the practical proof of the profile relationship, which is
-now declared formally: `ogc.ogc-utils.prov.w3c-prov-jsonld` lists `ogc.ogc-utils.prov` in its own
-`isProfileOf`, alongside this base block. The OGC PROV Chain register cannot reciprocate that
-declaration (it is a pre-existing register we don't own, so we can't add metadata to it), but that
-is an ownership limitation, not evidence the relationship is one-sided or conceptually different:
+now declared formally: [`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld)
+lists [`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov) in its own `isProfileOf`, alongside this
+base block. The OGC PROV Chain register cannot reciprocate that declaration (it is a pre-existing
+register we don't own, so we can't add metadata to it), but that is an ownership limitation, not
+evidence the relationship is one-sided or conceptually different:
 
-| Block | Identifier | Role |
-|---|---|---|
-| Provenance Chain | `ogc.ogc-utils.prov` | Top-level schema; a `Prov` mix-in accepting either a flat array of records or a single nested object |
-| Single Schema for PROV | `ogc.ogc-utils.prov-bundled` | The original, pre-split single-schema PROV mix-in |
-| Prov Entity | `ogc.ogc-utils.prov-entity` | Sub-schema for `Entity` records |
-| Prov Activity | `ogc.ogc-utils.prov-activity` | Sub-schema for `Activity` records |
-| Prov Agent | `ogc.ogc-utils.prov-agent` | Sub-schema for `Agent` records |
+| Block | Role |
+|---|---|
+| [`Provenance Chain`](bblocks://ogc.ogc-utils.prov) | Top-level schema; accepts either a flat array of records or a single nested object |
+| [`Single Schema for PROV`](bblocks://ogc.ogc-utils.prov-bundled) | The original, pre-split single-schema PROV mix-in |
+| [`Prov Entity`](bblocks://ogc.ogc-utils.prov-entity) | Sub-schema for `Entity` records |
+| [`Prov Activity`](bblocks://ogc.ogc-utils.prov-activity) | Sub-schema for `Activity` records |
+| [`Prov Agent`](bblocks://ogc.ogc-utils.prov-agent) | Sub-schema for `Agent` records |
 
 These model the same underlying concepts as the W3C representations above, but as JSON Schema:
 either a nested/inline JSON object graph, or a flat array of full-IRI-referencing records - rather
-than a flat statement list keyed by `@graph` like PROV-JSON/PROV-JSONLD. See:
+than a flat statement list keyed by a graph array like PROV-JSON/PROV-JSONLD. See:
 
-- `ogc.ogc-utils.prov.w3c-prov-jsonld` for transforms between W3C PROV-JSONLD and the OGC PROV Chain
-  array form;
-- `ogc.ogc-utils.prov.ogc-prov-chain-forms` for transforms between OGC PROV Chain's own array and
-  single-object forms.
+- [`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld)'s
+  [Transforms tab](https://ogcincubator.github.io/bblocks-docs/create/transforms) for the
+  conversions between W3C PROV-JSONLD and the OGC PROV Chain array form;
+- [`ogc.ogc-utils.prov.ogc-prov-chain-forms`](bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms)'s
+  Transforms tab for the conversions between OGC PROV Chain's own array and single-object forms.
 
 ## How everything interconnects
 
-```
-                     W3C PROV representations (this repo, all isProfileOf ogc.ogc-utils.prov.w3c-prov-base)
-        ┌──────────┬───────────┬────────────┬─────────────┬───────────────┐
-     PROV-N      PROV-XML   PROV-JSON    PROV-O/RDF    PROV-JSONLD
- (w3c-prov-n) (w3c-prov-xml) (w3c-prov-json) (w3c-prov-rdf) (w3c-prov-jsonld)
-                                                             │
-                                     w3c-prov-jsonld-to-ogc-prov-chain
-                                     ogc-prov-chain-to-w3c-prov-jsonld
-                                                             │
-                                                             ▼
-                                       OGC PROV Chain, ARRAY form  (ogc.ogc-utils.prov)
-                                                             │
-                                     ogc-prov-chain-array-to-object     (conditional)
-                                     ogc-prov-chain-object-to-array     (always applicable)
-                                     — both in ogc.ogc-utils.prov.ogc-prov-chain-forms —
-                                                             │
-                                                             ▼
-                                      OGC PROV Chain, OBJECT form  (ogc.ogc-utils.prov)
-```
+All five W3C PROV representations below are mutually interchangeable via `prov`-library
+transforms, declared as each format's own
+[Transforms](https://ogcincubator.github.io/bblocks-docs/create/transforms). The table reads as
+"row → column": a ✅ means a direct transform exists from the row format to the column format.
 
-Only W3C PROV-JSONLD currently has transforms to/from OGC PROV Chain (the `prov` Python library
-used for these transforms doesn't natively expose the same round-trip for PROV-N/XML/JSON/RDF,
-though it could in principle - see that block's description for details). The two OGC-internal
-transforms are purely about OGC PROV Chain's own array/object duality and never touch any W3C
-representation.
+| from \ to | PROV-XML | PROV-JSON | PROV-O/RDF | PROV-JSONLD | PROV-N |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **PROV-XML** | - | ✅ | ✅ | ✅ | ✅ |
+| **PROV-JSON** | ✅ | - | ✅ | ✅ | ✅ |
+| **PROV-O/RDF** | ✅ | ✅ | - | ✅ | ✅ |
+| **PROV-JSONLD** | ✅ | ✅ | ✅ | - | ✅ |
+| **PROV-N** | - | - | - | - | - |
+
+PROV-N is a transform *target only*: the `prov` library has no PROV-N parser, so nothing
+converts *from* PROV-N to any other format. All other pairs above are fully bidirectional,
+converting directly - none of them need to hop through PROV-JSONLD (or any other format) as an
+intermediate.
+
+PROV-JSONLD additionally connects one level further, to the separately maintained **OGC PROV
+Chain** JSON representation ([`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov), see the
+previous section):
+
+| Step | Direction | Declared in |
+|---|---|---|
+| 1 | PROV-JSONLD ↔ OGC PROV Chain, **array** form | [`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld) |
+| 2 | OGC PROV Chain **array** form ↔ **object** form | [`ogc.ogc-utils.prov.ogc-prov-chain-forms`](bblocks://ogc.ogc-utils.prov.ogc-prov-chain-forms) |
+
+This path is exclusively via PROV-JSONLD because the `prov` library's OGC PROV Chain support is
+implemented against its native PROV-JSONLD model, not against PROV-XML/JSON/RDF directly. See
+each format block's own Transforms tab for the full, current list of transforms.
+
+## Extension points vs. `isProfileOf`: how the interconnection graph is actually built
+
+The viewer's block-relationship graph for the five W3C PROV representations above is built from
+their `isProfileOf` declarations (all pointing here), rendered as blue edges, plus a redundant
+`dependsOn` pointing at the same target (a workaround for a viewer display limitation: at the time
+of writing, the viewer only draws a block's dependency graph when it has a `dependsOn` entry, so a
+block declaring `isProfileOf` alone renders no graph at all even though the graph-drawing code
+itself does understand `isProfileOf` edges once that check is passed) - **not** from the
+`extensionPoints` mechanism. `extensionPoints` substitutes a `$ref`'d sub-schema inside a *JSON
+Schema*-backed block; PROV-N, PROV-XML and PROV-O/RDF aren't JSON at all, and PROV-JSON/PROV-JSONLD
+don't structure records as composable `$ref`s either, so there's no schema fragment to substitute.
+`isProfileOf` (declaring "this is the same underlying model, differently encoded") plus
+documented, working transforms (the practical, testable proof of that relationship) is the
+correct/only applicable mechanism for these five blocks. `extensionPoints` *does* apply below, one
+level down, to the JSON-Schema-backed OGC PROV Chain sub-schemas.
 
 ## Using this as an extension point
 
 This block itself has no JSON Schema (see below for why), so it cannot declare `extensionPoints`
-directly. But since it cross-references `ogc.ogc-utils.prov-entity`, `ogc.ogc-utils.prov-activity`
-and `ogc.ogc-utils.prov-agent` - the exact sub-schemas that `ogc.ogc-utils.prov` references
-internally - anyone wanting a *specialized* OGC PROV Chain profile (e.g. an `Entity` constrained to
-a specific application schema) can use the
+directly. But since it cross-references [`ogc.ogc-utils.prov-entity`](bblocks://ogc.ogc-utils.prov-entity),
+[`ogc.ogc-utils.prov-activity`](bblocks://ogc.ogc-utils.prov-activity) and
+[`ogc.ogc-utils.prov-agent`](bblocks://ogc.ogc-utils.prov-agent) - the exact sub-schemas that
+[`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov) references internally - anyone wanting a
+*specialized* OGC PROV Chain profile (e.g. an `Entity` constrained to a specific application
+schema) can use the
 [extension points mechanism](https://ogcincubator.github.io/bblocks-docs/create/extension-points)
 to substitute them, without having to replicate the whole "Provenance Chain" schema structure:
 

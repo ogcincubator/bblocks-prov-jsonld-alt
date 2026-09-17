@@ -1,0 +1,11 @@
+document
+  prefix ex <https://example.org/cwlprov/>
+  
+  entity(ex:plan/main)
+  entity(ex:data/output.txt)
+  activity(ex:activity/step1, 2024-01-01T00:00:00+00:00, 2024-01-01T00:01:00+00:00)
+  agent(ex:engine/cwltool, [prov:type='prov:SoftwareAgent'])
+  wasAssociatedWith(ex:activity/step1, ex:engine/cwltool, ex:plan/main)
+  wasAssociatedWith(ex:activity/step1, ex:engine/cwltool, -)
+  wasGeneratedBy(ex:data/output.txt, ex:activity/step1, -)
+endDocument

@@ -3,7 +3,7 @@
 
 `ogc.ogc-utils.prov.ogc-prov-chain-forms` *v0.1*
 
-Two transforms that convert an **OGC PROV Chain** document (`ogc.ogc-utils.prov`, from https://ogcincubator.github.io/bblock-prov-schema/) between its two allowed shapes: a flat top-level **array** (every record referencing others by full-IRI `id`) and a nested single **object** (one root record with related records inlined). Both shapes validate against the same imported `ogc.ogc-utils.prov` schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see `ogc.ogc-utils.prov.w3c-prov-jsonld` for the transforms that bridge to/from W3C PROV-JSONLD.
+Two transforms that convert an OGC PROV Chain document (from the bblock-prov-schema register) between its two allowed shapes: a flat top-level array (every record referencing others by full-IRI id) and a nested single object (one root record with related records inlined). Both shapes validate against the same imported schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see the W3C PROV-JSONLD block for the transforms that bridge to/from W3C PROV-JSONLD.
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -11,7 +11,7 @@ Two transforms that convert an **OGC PROV Chain** document (`ogc.ogc-utils.prov`
 
 # OGC PROV Chain: Array ⇄ Object Conversion
 
-The **OGC PROV Chain** JSON Schema (`ogc.ogc-utils.prov`, from
+The **OGC PROV Chain** JSON Schema ([`ogc.ogc-utils.prov`](bblocks://ogc.ogc-utils.prov), from
 [`bblock-prov-schema`](https://ogcincubator.github.io/bblock-prov-schema/)) allows a document to
 take either of two shapes:
 
@@ -22,19 +22,22 @@ take either of two shapes:
   `wasAssociatedWith`, ...) and/or listed alongside it via `has_provenance`.
 
 Both shapes describe the same underlying records and relations; this block provides two
-transforms to convert between them:
+transforms to convert between them (see the
+[Transforms tab](https://ogcincubator.github.io/bblocks-docs/create/transforms) for the full
+details):
 
-| Transform | Direction | Applicability |
-|---|---|---|
-| `ogc-prov-chain-object-to-array` | object → array | Always applicable |
-| `ogc-prov-chain-array-to-object` | array → object | Conditional - only when the array reduces to a single natural root |
+| Direction | Applicability |
+|---|---|
+| object → array | Always applicable |
+| array → object | Conditional - only when the array reduces to a single natural root |
 
 > **Not involving W3C PROV.** Both the input and output of both transforms are OGC PROV Chain
 > documents - neither W3C PROV-JSONLD nor any other W3C PROV representation is read or produced
 > here. For converting a W3C PROV-JSONLD document into OGC PROV Chain (and back), see the
-> `w3c-prov-jsonld-to-ogc-prov-chain` / `ogc-prov-chain-to-w3c-prov-jsonld` transforms declared on
-> the `ogc.ogc-utils.prov.w3c-prov-jsonld` block instead - those two blocks can be chained with the
-> ones here if a single-object (rather than array) OGC PROV Chain result is wanted.
+> transforms declared on the
+> [`ogc.ogc-utils.prov.w3c-prov-jsonld`](bblocks://ogc.ogc-utils.prov.w3c-prov-jsonld) block
+> instead - those two blocks can be chained with the ones here if a single-object (rather than
+> array) OGC PROV Chain result is wanted.
 
 ## Why array → object is only conditional
 
@@ -44,14 +47,15 @@ to be the root that everything else hangs off of. A root only exists when exactl
 the array is never referenced as a relation target by any other record, and every other record
 is reachable from it without revisiting one already inlined elsewhere. An arbitrary array (e.g.
 one with several disconnected subgraphs, or none/multiple candidate roots) has no such natural
-single-object form. When that's the case, `ogc-prov-chain-array-to-object` raises a descriptive
+single-object form. When that's the case, the array → object transform raises a descriptive
 error rather than guessing - callers should treat that as "not applicable to this input" and
 keep the array form instead.
 
 ## How this fits with the rest of the repository
 
-See `ogc.ogc-utils.prov.w3c-prov-base` ("W3C PROV Representation Base") for a diagram of how this block,
-the W3C PROV representation profiles, and the OGC PROV Chain schema blocks all interconnect.
+See [`ogc.ogc-utils.prov.w3c-prov-base`](bblocks://ogc.ogc-utils.prov.w3c-prov-base)
+("W3C PROV Representation Base") for how this block, the W3C PROV representation profiles, and
+the OGC PROV Chain schema blocks all interconnect.
 
 ## Examples
 

@@ -51,9 +51,21 @@ blocks above for the transforms that prove and implement that relationship.
 
 ## Building Blocks
 
-### `ogc.ogc-utils.prov.w3c-prov-json` — W3C PROV-JSON
+### `ogc.ogc-utils.prov.ogc-prov-chain-forms` — OGC PROV Chain: Array ⇄ Object Conversion
 
 **Type:** model
+
+Two transforms that convert an OGC PROV Chain document (from the bblock-prov-schema register) between its two allowed shapes: a flat top-level array (every record referencing others by full-IRI id) and a nested single object (one root record with related records inlined). Both shapes validate against the same imported schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see the W3C PROV-JSONLD block for the transforms that bridge to/from W3C PROV-JSONLD.
+
+### `ogc.ogc-utils.prov.w3c-prov-base` — W3C PROV Representation Base
+
+**Type:** model
+
+Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares itself a profile of this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts, and documents how those can be used as an extension point substitution target for anyone wanting a specialized OGC PROV Chain profile. See the full description for details.
+
+### `ogc.ogc-utils.prov.w3c-prov-json` — W3C PROV-JSON
+
+**Type:** schema
 
 The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON encoding of the W3C PROV data model (W3C Member Submission). A profile of the W3C PROV Representation Base.
 
@@ -61,7 +73,7 @@ The PROV-JSON serialization: a non-normative, flat, statement-oriented JSON enco
 
 **Type:** schema
 
-The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using `@context`/`@graph` rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.
+The PROV-JSONLD serialization: a non-normative, linked-data JSON-LD encoding of the W3C PROV data model (W3C Member Submission), using context and graph blocks rather than the flat statement-keyed layout of PROV-JSON. A profile of the W3C PROV Representation Base.
 
 ### `ogc.ogc-utils.prov.w3c-prov-n` — W3C PROV-N
 
@@ -80,16 +92,4 @@ The RDF binding of the W3C PROV data model via the PROV Ontology (PROV-O), seria
 **Type:** model
 
 The PROV-XML serialization: an XML Schema binding of the W3C PROV data model. A profile of the W3C PROV Representation Base.
-
-### `ogc.ogc-utils.prov.ogc-prov-chain-forms` — OGC PROV Chain: Array ⇄ Object Conversion
-
-**Type:** model
-
-Two transforms that convert an **OGC PROV Chain** document (`ogc.ogc-utils.prov`, from https://ogcincubator.github.io/bblock-prov-schema/) between its two allowed shapes: a flat top-level **array** (every record referencing others by full-IRI `id`) and a nested single **object** (one root record with related records inlined). Both shapes validate against the same imported `ogc.ogc-utils.prov` schema. Purely internal to OGC PROV Chain - no W3C PROV representation is involved here; see `ogc.ogc-utils.prov.w3c-prov-jsonld` for the transforms that bridge to/from W3C PROV-JSONLD.
-
-### `ogc.ogc-utils.prov.w3c-prov-base` — W3C PROV Representation Base
-
-**Type:** model
-
-Cross-reference anchor for the W3C PROV data model (PROV-DM), shared by every concrete PROV serialization/representation profile (W3C PROV-N, PROV-XML, PROV-JSON, PROV-O/RDF, PROV-JSONLD). This block carries no concrete syntax of its own; each representation-specific sibling block declares `isProfileOf` this one and supplies its own schema/context/examples. It directly cross-references the canonical OGC PROV Chain schema blocks for the same PROV-DM concepts (`dependsOn`), and documents how those can be used as an `extensionPoints` substitution target for anyone wanting a specialized OGC PROV Chain profile.
 

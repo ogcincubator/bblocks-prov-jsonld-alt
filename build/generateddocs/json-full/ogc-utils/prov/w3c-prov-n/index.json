@@ -14,6 +14,15 @@
   "isProfileOf": [
     "ogc.ogc-utils.prov.w3c-prov-base"
   ],
+  "dependsOn": [
+    "ogc.ogc-utils.prov.w3c-prov-base"
+  ],
+  "hasFormat": [
+    "ogc.ogc-utils.prov.w3c-prov-xml",
+    "ogc.ogc-utils.prov.w3c-prov-json",
+    "ogc.ogc-utils.prov.w3c-prov-rdf",
+    "ogc.ogc-utils.prov.w3c-prov-jsonld"
+  ],
   "sources": [
     {
       "link": "https://www.w3.org/TR/prov-n/",
@@ -36,7 +45,7 @@
   },
   "sourceFiles": "https://ogcincubator.github.io/bblocks-prov-jsonld-alt/_sources/prov/w3c-prov-n/",
   "validationPassed": true,
-  "description": "# W3C PROV-N\n\nPROV-N is a textual, human-readable notation for PROV-DM instances. It has no JSON Schema of its\nown (see the `ogc.ogc-utils.prov.w3c-prov-base` (W3C PROV Representation Base) for why); this block exists only to\nregister PROV-N as a first-class representation profile, with an example for cross-reference and\nround-trip testing against the other profiles via the `prov` library's PROV-N parser/serializer.\n",
+  "description": "# W3C PROV-N\n\nPROV-N is a textual, human-readable notation for PROV-DM instances. It has no JSON Schema of its\nown (see [`ogc.ogc-utils.prov.w3c-prov-base`](bblocks://ogc.ogc-utils.prov.w3c-prov-base)\n(W3C PROV Representation Base) for why); this block exists only to register PROV-N as a\nfirst-class representation profile, with an example for cross-reference and round-trip testing\nagainst the other profiles via the `prov` library's PROV-N parser/serializer.\n",
   "examples": [
     {
       "title": "A minimal CWL-style run (activity, plan-qualified and plain association, generation)",

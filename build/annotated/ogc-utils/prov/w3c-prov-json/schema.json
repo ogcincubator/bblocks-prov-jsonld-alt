@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "W3C PROV-JSON",
+  "description": "Structural constraints for the W3C PROV-JSON serialization. PROV-JSON groups records **by relation/record type** at the top level (`entity`, `activity`, `agent`, `wasGeneratedBy`, ...), each mapping an identifier to a flat attribute map. Unlike the OGC PROV Chain JSON representation (`ogc.ogc-utils.prov`), which supports *nesting* one record inside another (its single-object form) as well as a flat array of `id`/`provType`-tagged records (its array form), PROV-JSON never embeds one record's full attribute map inside another record, in either of OGC's two styles - relations always reference other records by bare identifier (a string, or an array of strings), never by an inline nested object.",
+  "type": "object",
+  "properties": {
+    "prefix": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "bundle": {
+      "description": "Named sub-graphs (a distinct PROV-DM concept, not \"nesting\" in the OGC PROV Chain sense). Each bundle's own content follows the same record/relation-type-keyed shape as the top-level document, but is intentionally not constrained recursively here to avoid unbounded schema recursion; see the `$defs/record` constraint applied at the top level.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "patternProperties": {
+    "^(entity|activity|agent)$": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/recordOrRecords"
+      }
+    },
+    "^(wasGeneratedBy|used|wasInformedBy|wasStartedBy|wasEndedBy|wasInvalidatedBy|wasDerivedFrom|wasAttributedTo|wasAssociatedWith|actedOnBehalfOf|wasInfluencedBy|specializationOf|alternateOf|hadMember|mentionOf|wasPlanOf)$": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/recordOrRecords"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "recordOrRecords": {
+      "description": "Either a single flat attribute map for this identifier, or an array of such maps (PROV-JSON allows multiple independent assertions to share the same identifier) - in both cases, never a nested object embedding another record's own attribute map.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/record"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/record"
+          }
+        }
+      ]
+    },
+    "record": {
+      "description": "A single PROV-JSON record's flat attribute map. Every attribute value must be a literal (string/number/boolean), a typed-value object (`{\"$\": ..., \"type\": ...}`), or an array of these - never a nested object embedding another record's own attribute map (that is the OGC PROV Chain \"object\" form's mechanism, not PROV-JSON's).",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/value"
+          }
+        },
+        {
+          "type": "object",
+          "description": "A PROV-JSON typed/qualified value wrapper - not a nested record.",
+          "properties": {
+            "$": {
+              "description": "The literal value or identifier reference."
+            },
+            "type": {
+              "type": "string"
+            },
+            "lang": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "$"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

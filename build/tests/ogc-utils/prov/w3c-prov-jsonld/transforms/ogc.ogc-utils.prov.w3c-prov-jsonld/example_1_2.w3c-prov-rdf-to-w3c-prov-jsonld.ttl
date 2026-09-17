@@ -12,10 +12,10 @@ ns3:output.txt a prov:Entity ;
 ns2:step1 a prov:Activity ;
     prov:endedAtTime "2024-01-01T00:01:00+00:00"^^xsd:dateTime ;
     prov:qualifiedAssociation [ a prov:Association ;
-            prov:agent ns5:cwltool ],
-        [ a prov:Association ;
             prov:agent ns5:cwltool ;
-            prov:hadPlan ns4:main ] ;
+            prov:hadPlan ns4:main ],
+        [ a prov:Association ;
+            prov:agent ns5:cwltool ] ;
     prov:startedAtTime "2024-01-01T00:00:00+00:00"^^xsd:dateTime .
 
 ns4:main a prov:Entity .

@@ -1,8 +1,13 @@
-# OGC Provenance option for JSON
+# OGC Provenance options for JSON
 
-Repo for testing alternative approaches for encoding the PROV model in JSON.
+Repo for testing alternative approaches for encoding the PROV model in JSON, and transformations between them.
 
 There is a pre-JSON schema legacy, and a more recent proposal (SOTON) for a JSON-LD native schema (using JSON-LD keywords), with specific encoding options enforced by JSON schema (JSON-LD has many isomorphic forms)
+
+The implementation strategy is to support alternative schemas that uplift to the common model.
+
+<img width="1175" height="644" alt="image" src="https://github.com/user-attachments/assets/c0d6bcd0-a030-4d9f-92dc-41445163de8a" />
+
 
 ## (Claude) analysis of the options
 
